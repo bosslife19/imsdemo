@@ -1,0 +1,19 @@
+/* tableStyles.css */
+
+.table-responsive {
+    overflow-x: auto;
+  }
+  
+  .table-responsive table {
+    width: 100%;
+    min-width: 700px; /* Adjust based on your table content */
+  }
+  
+  .data-table {
+    font-size: 0.9em; /* Adjust font size for better readability */
+  }
+  
+  .data-table-header {
+    background-color: #E2EFCB;
+  }
+  

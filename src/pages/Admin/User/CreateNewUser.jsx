@@ -121,17 +121,7 @@ function CreateNewUser() {
                     />
                   </Col>
                 </Row>
-                <Row className="mb-3">
-                  <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-                    <Form.Control
-                      type="text"
-                      className="UserCreateInput"
-                      placeholder="Username"
-                      name="username"
-                      required
-                    />
-                  </Col>
-                </Row>
+                
                 <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
@@ -170,9 +160,8 @@ function CreateNewUser() {
                     <Form.Select
                       className="UserCreateInput"
                       name="level"
-                      required
-                    >
-                      <option value="">School Level</option>
+                      required >
+                      <option value="">User Category</option>
                       <option value="Elementery">Elementery</option>
                     </Form.Select>
                   </Col>
@@ -197,7 +186,7 @@ function CreateNewUser() {
                 </Row>
               </Form.Group>
             </Row>
-            <Row>
+            {/* <Row>
               <TitleHeader
                 text={"Account Settings"}
                 headerTextStyle={"headerTextStyle"}
@@ -225,7 +214,7 @@ function CreateNewUser() {
                   </Form.Select>
                 </Col>
               </Row>
-            </Row>
+            </Row> */}
             <Row>
               <TitleHeader
                 text={"Addittional Information"}
@@ -259,7 +248,7 @@ function CreateNewUser() {
                   {buttonLoading ? (
                     <FontAwesomeIcon icon={faSpinner} spin size="2x" />
                   ) : (
-                    "Save User"
+                    "Save User Information"
                   )}
                 </Button>
               </Row>

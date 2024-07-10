@@ -42,6 +42,7 @@ export const AuthenticationProvider = ({ children }) => {
       password: e.target.password.value,
     };
     try {
+      console.log(baseUrl)
       const result = await axios.post(`${baseUrl}/api/auth/register`, formData);
       setSigUpResponse(result.data);
     } catch (error) {

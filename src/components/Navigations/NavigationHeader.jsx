@@ -5,7 +5,6 @@ import {
   Nav,
   Dropdown,
   Container,
-  NavDropdown,
   Image,
 } from "react-bootstrap";
 import "./Navigation.css";
@@ -76,10 +75,6 @@ function NavigationHeader({ toggleSidebar }) {
             <Nav.Link href="#search">
               <i className="fa-solid fa-magnifying-glass"></i>
             </Nav.Link>
-            <NavDropdown title="English" id="language-switcher">
-              <NavDropdown.Item href="#action/3.1">English</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">French</NavDropdown.Item>
-            </NavDropdown>
             <Nav.Link as={NavLink} to="*">
               <i className="fa-regular fa-envelope"></i>
             </Nav.Link>

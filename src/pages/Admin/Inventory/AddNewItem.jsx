@@ -240,9 +240,26 @@ function AddNewItem() {
                       required
                     />
                   </Col>
+                  {/* <Row className="mt-5"> */}
+                  <Col lg={12} md={12} xl={12} sm={12} xs={12} className="mt-3">
+                    <Form.Control
+                      type="text"
+                      className="UserCreateInput"
+                      placeholder="please enter your barcode id"
+                      name="supplier"
+                      required
+                    />
+                  </Col>
+                  {/* </Row> */}
                 </Row>
+              
+              
+                
               </Form.Group>
             </Row>
+
+            {/* Barcode id */}
+          
             <Row>
               <TitleHeader
                 text={"Addittional Information"}

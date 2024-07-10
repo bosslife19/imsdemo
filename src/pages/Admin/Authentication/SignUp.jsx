@@ -117,6 +117,17 @@ function SignUp() {
                 required
               />
             </Form.Group>
+            <Form.Group controlId="phoneNumber">
+              <Form.Control
+                type="text"
+                placeholder="Phone Number"
+                className="mb-3 inputField"
+                name="Phone number"
+                // required
+                // pattern="[0-9]*"
+                onInput={(e) => (e.target.value = e.target.value.replace(/[^0-9]/g, ''))}
+              />
+            </Form.Group>
             <Form.Group controlId="formPassword">
               <Form.Control
                 type="password"

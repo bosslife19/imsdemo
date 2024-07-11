@@ -1,0 +1,43 @@
+.quailtyDashboardDisplayCardText{
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 25.6px;
+    text-wrap: nowrap;
+    }
+    .quailtyDashboardDisplayCard, .quailtyDashboardDisplayCard:hover {
+        background-color: rgba(255, 255, 255, 1);
+        color: inherit;
+        border: none;
+    }
+    .quailtyDashboardDisplayCardWrapper::-webkit-scrollbar {
+        display: none;
+      }
+    .quailtyDashboardDisplayCardWrapper {
+        overflow-x: scroll;
+        -ms-overflow-style: none;  
+        scrollbar-width: none; 
+    }
+    .quailtyDashboardDisplaySchoolWrapper::-webkit-scrollbar {
+        display: none;
+      }
+    .quailtyDashboardDisplaySchoolWrapper {
+        display: flex;
+        gap: 1rem;
+        overflow-x: scroll;
+        -ms-overflow-style: none;  
+        scrollbar-width: none; 
+    }
+    .quailtyDashboardListText {
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22.4px;
+    text-align: left;
+    color: rgba(160, 160, 160, 1);
+    }
+    .quailtyListViewButton {
+        background-color: transparent;
+        border: 2px solid rgba(106, 90, 44, 1);  
+        color: rgba(106, 90, 44, 1);       
+    }

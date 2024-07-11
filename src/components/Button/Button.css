@@ -1,0 +1,8 @@
+.backButtonIcon {
+  cursor: pointer;
+}
+.primaryMainButton:hover {
+  background-color: inherit ;
+  color: inherit;
+  border-color: inherit ;
+}

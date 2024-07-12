@@ -35,13 +35,8 @@ export const AuthenticationProvider = ({ children }) => {
 
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
 
-  const getUser = async ()=>{
-    const response = await axios.get(`${baseUrl}/api/user/1`);
-    setMessages(response.data.user.message_count);
-  }
-  useEffect(()=>{
-   getUser()
-  });
+  
+  
 
   const handleSigUpSubmit = async (e) => {
     setSignInIsLoading(true);
@@ -81,6 +76,9 @@ export const AuthenticationProvider = ({ children }) => {
         setUserToken(result.data.token);
         sessionStorage.setItem("edoUserData", JSON.stringify(result.data.user));
         sessionStorage.setItem("edoUserToken", JSON.stringify(result.data.token));
+        const response = await axios.get(`${baseUrl}/api/user/${result.data.user.id}`);
+        setMessages(response.data.user.message_count);
+
       }
     } catch (error) {
       setloginError(error.response.data.message);

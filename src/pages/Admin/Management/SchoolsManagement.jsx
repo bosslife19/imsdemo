@@ -336,7 +336,7 @@ function SchoolsManagement() {
                   >
                     <Col xs={9} md={9} sm={9} lg={9} className="d-flex gap-3">
                       <Image
-                        src={school.school_image}
+                        src='https://img.freepik.com/free-vector/education-logo-templates_1198-200.jpg?size=626&ext=jpg&ga=GA1.1.869143472.1720893411&semt=ais_user'
                         rounded
                         width="50"
                         height="50"

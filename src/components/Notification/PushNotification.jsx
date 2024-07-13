@@ -30,7 +30,8 @@ function PushNotification({audience}) {
       const response = await axios.post(`${baseUrl}/api/notification/sendnotification`, data);
 
       console.log(response.data);
-      setMessages(response.data.message);
+      // temporal
+      // setMessages(response.data.message);
     
      
     } catch (error) {

@@ -5,6 +5,7 @@ import {
   Nav,
   Dropdown,
   Container,
+  NavDropdown,
   Image,
 } from "react-bootstrap";
 import "./Navigation.css";
@@ -13,7 +14,7 @@ import AuthenticationContext from "../../context/Authentication/AuthenticationCo
 
 
 function NavigationHeader({ toggleSidebar }) {
-  
+  const { userData, messages, } = useContext(AuthenticationContext);
   return (
     <Navbar
       expand="lg"

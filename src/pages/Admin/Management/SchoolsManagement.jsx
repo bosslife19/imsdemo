@@ -68,10 +68,7 @@ function SchoolsManagement() {
   };
 
   const filterOptionForType = useMemo(()=>[
-    {
-      pk: 1,
-      type: 'School Type'
-    },
+    
     {
       pk: 2,
       type: 'JSS'
@@ -87,10 +84,7 @@ function SchoolsManagement() {
   ])
 
   const filterOption = useMemo(() => [
-    {
-      pk: 1,
-      type: "LGA",
-    },
+   
     {
       pk: 2,
       type: "AKOKO EDO",
@@ -308,14 +302,14 @@ function SchoolsManagement() {
               <Filter
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
                 Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOptionForType}
-                defult={"Ramdom"}
+                defult={"School Type"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <PrimaryButton

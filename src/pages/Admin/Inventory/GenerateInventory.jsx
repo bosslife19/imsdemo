@@ -14,6 +14,8 @@ function GenerateInventory() {
   const [buttonClick, setButtonClick] = useState(false);
   const [buttonText, setButtonText] = useState("Generate Report");
   const [format, setFormat] = useState("");
+  const [lga, setLga] = useState('');
+  const [schoolType, setSchoolType] = useState('');
 
   const {
     generateReport,
@@ -38,6 +40,101 @@ function GenerateInventory() {
     ],
     []
   );
+  const filterOptionforLGA = useMemo(() => [
+    
+    {
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
+  ], []);
+
+  const filterOptionForType = useMemo(()=>[
+    {
+      pk: 1,
+      type: 'School Type'
+    },
+    {
+      pk: 2,
+      type: 'JSS'
+    },
+    {
+      pk: 3,
+      type: 'Primary'
+    },
+    {
+      pk: 4,
+      type: 'Progressive'
+    }
+  ])
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -78,7 +175,7 @@ function GenerateInventory() {
       alert('Select a format')
       return;
     }
-    generateReport(format);
+    generateReport(format, lga, schoolType);
     handleLoadingClick();
   };
 
@@ -117,14 +214,17 @@ function GenerateInventory() {
             </Col>
             <Col lg={12} md={12} xl={6} sm={12} xs={12}>
               <Row>
-                <Col lg={12} md={12} xl={6} sm={12} xs={12} className="mb-3">
+                <Col lg={12} md={12} xl={6} sm={12} xs={12} className="mb-3" style={{marginTop:'5%'}}>
                   <Filter
-                    defult={"Aisle 2, Shelf C1"}
+                    defult={"AKOKO EDO"}
+                    options={filterOptionforLGA}
                     optionTitle={"LGA"}
+                    onSelect={(value) => setLga(value)}
                   />
                 </Col>
-                <Col lg={12} md={12} xl={6} sm={12} xs={12}>
-                  <Filter defult={"Office Supplies"} optionTitle={"item Category"} />
+                <Col lg={12} md={12} xl={6} sm={12} xs={12} style={{marginTop:'5%'}}>
+                  <Filter defult={"Primary"} optionTitle={"School Type"} options={filterOptionForType} 
+                  onSelect={(value)=>setSchoolType(value)}/>
                 </Col>
               </Row>
             </Col>

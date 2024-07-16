@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo} from "react";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -112,6 +112,99 @@ function AdminDashboard() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const filterOptionforLGA = useMemo(() => [
+    
+    {
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
+  ], []);
+
+  const filterOptionForType = useMemo(()=>[
+   
+    {
+      pk: 2,
+      type: 'JSS'
+    },
+    {
+      pk: 3,
+      type: 'Primary'
+    },
+    {
+      pk: 4,
+      type: 'Progressive'
+    }
+  ])
 
   const handleComfirmationPopUps = (messageInfo, messageBgColor) => {
     setmessage(messageInfo);
@@ -400,17 +493,26 @@ function AdminDashboard() {
                   text={"Material Availability Overview"}
                   headerTextStyle={"headerTextStyle"}
                 />
-                <Filter
-                  optionTitle={"School"}
-                  options={filterData}
+                 <Filter
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
                   defult={"All"}
-                  Filterstyle={"d-none d-lg-block"}
+                />
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
+                  defult={"All"}
                 />
               </div>
               <div className=" d-lg-none d-flex justify-content-end ">
                 <Filter
-                  optionTitle={"School"}
-                  options={filterData}
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
+                  defult={"All"}
+                />
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
                   defult={"All"}
                 />
               </div>

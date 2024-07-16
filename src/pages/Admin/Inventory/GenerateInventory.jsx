@@ -216,14 +216,14 @@ function GenerateInventory() {
               <Row>
                 <Col lg={12} md={12} xl={6} sm={12} xs={12} className="mb-3" style={{marginTop:'5%'}}>
                   <Filter
-                    defult={"AKOKO EDO"}
+                    defult={"All"}
                     options={filterOptionforLGA}
                     optionTitle={"LGA"}
                     onSelect={(value) => setLga(value)}
                   />
                 </Col>
                 <Col lg={12} md={12} xl={6} sm={12} xs={12} style={{marginTop:'5%'}}>
-                  <Filter defult={"Primary"} optionTitle={"School Type"} options={filterOptionForType} 
+                  <Filter defult={"All"} optionTitle={"School Type"} options={filterOptionForType} 
                   onSelect={(value)=>setSchoolType(value)}/>
                 </Col>
               </Row>

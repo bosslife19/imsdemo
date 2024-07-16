@@ -76,12 +76,17 @@ function NavigationHeader({ toggleSidebar }) {
             <Nav.Link href="#search">
               <i className="fa-solid fa-magnifying-glass"></i>
             </Nav.Link>
+            <div style={{position:'relative'}}>
             <Nav.Link as={NavLink} to="*">
               <i className="fa-regular fa-envelope"></i>
+              
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/Notifications">
+            <p style={{position:'absolute', color:'coral', fontSize:12, top:1.5, right:'12%'}}>{messages}</p>
+            </div>
+           
+            {/* <Nav.Link as={NavLink} to="/Notifications">
               <i className="fa-regular fa-bell"></i>
-            </Nav.Link>
+            </Nav.Link> */}
             <Dropdown align="end">
               <Dropdown.Toggle
                 variant="light"

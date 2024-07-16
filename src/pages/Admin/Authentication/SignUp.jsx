@@ -61,7 +61,7 @@ function SignUp() {
   };
 
   const handleSubmit = (e) => {
-    handleSigUpSubmit(e);
+    //handleSigUpSubmit(e);
     handleLoadingClick();
   };
 

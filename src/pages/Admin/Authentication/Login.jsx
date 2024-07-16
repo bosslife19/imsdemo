@@ -82,7 +82,7 @@ function Login() {
   };
 
   const handleSubmit = (e) => {
-    //handleLoginSubmit(e);
+    handleLoginSubmit(e);
     handleLoadingClick();
   };
 

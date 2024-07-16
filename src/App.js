@@ -31,7 +31,7 @@ function App() {
                           <ProfileProvider>
                             <TrackingProvider>
                               <ItemRequestProvider>
-                                <NavigationControl />
+                                <NavigationControlss />
                               </ItemRequestProvider>
                             </TrackingProvider>
                           </ProfileProvider>

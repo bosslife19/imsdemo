@@ -108,6 +108,15 @@ function SignUp() {
                 </Col>
               </Row>
             </Form.Group>
+            <Form.Group controlId="phone_number">
+              <Form.Control
+                type="text"
+                placeholder="phone number"
+                className="mb-3 inputField"
+                name="phone_number"
+                required
+              />
+            </Form.Group>
             <Form.Group controlId="formEmail">
               <Form.Control
                 type="email"
@@ -115,17 +124,6 @@ function SignUp() {
                 className="mb-3 inputField"
                 name="email"
                 required
-              />
-            </Form.Group>
-            <Form.Group controlId="phoneNumber">
-              <Form.Control
-                type="text"
-                placeholder="Phone Number"
-                className="mb-3 inputField"
-                name="Phone number"
-                // required
-                // pattern="[0-9]*"
-                onInput={(e) => (e.target.value = e.target.value.replace(/[^0-9]/g, ''))}
               />
             </Form.Group>
             <Form.Group controlId="formPassword">

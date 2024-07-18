@@ -52,6 +52,10 @@ import QualityPushNotification from "../../pages/QualityAssurance/QualityPushNot
 import EditSchool from "../../pages/Admin/School/EditSchool";
 import EditUser from "../../pages/Admin/User/EditUser";
 import EditItem from "../../pages/Admin/Inventory/EditItem";
+import Forgotemail from "../../pages/Admin/Authentication/Forgotpassword/Forgotemail";
+import ResetPassword from "../../pages/Admin/Authentication/Forgotpassword/Forgetpasswords";
+import ForgotPasswordPage from "../../pages/Admin/Authentication/Forgotpassword/Forgotemail";
+import SearchResults from "../Search/SearchResults";
 
 function NavigationControl() {
   return (
@@ -73,6 +77,22 @@ function NavigationControl() {
             </PrivatteAuthentactionRoute>
           }
         />
+         <Route
+          path="/Forgotemail"
+          element={
+            <PrivatteAuthentactionRoute>
+              <ForgotPasswordPage />
+            </PrivatteAuthentactionRoute>
+          }
+        />
+         <Route
+          path="/Forgotpasswords"
+          element={
+            <PrivatteAuthentactionRoute>
+              <ResetPassword />
+            </PrivatteAuthentactionRoute>
+          }
+        />
 
         <Route element={<PrivateRoute />}>
           <Route path="/Logout" element={<Logout />} />
@@ -84,7 +104,7 @@ function NavigationControl() {
           <Route path="/ItemDetail/:pk" element={<ItemDetail />} />
           <Route path="/AddNewItem" element={<AddNewItem />} />
           <Route path="/EditItem/:pk" element={<EditItem />} />
-
+          
 
           <Route element={<PrivatteAdminRoute />}>
             <Route path="/AdminDashboard" element={<AdminDashboard />} />
@@ -99,6 +119,7 @@ function NavigationControl() {
               path="/InventoryManagement"
               element={<InventoryManagement />}
             />
+            <Route path="/search/:query" element={<SearchResults />} />
             <Route path="/ReportAnalytics" element={<ReportAnalytics />} />
             <Route
               path="/DiscrepancyDetail/:pk"
@@ -119,6 +140,7 @@ function NavigationControl() {
           <Route path="/WareHouseInventory" element={<WareHouseInventory />} />
           <Route path="/WareHouseTrack" element={<WareHouseTrack />} />
           <Route path="/ScanMaterial" element={<ScanMaterial />} />
+           <Route path="/WareHouseGenerateInventory" element={<GenerateInventory />} />
           <Route
             path="/WareHousePushNotification"
             element={<WareHousePushNotification />}
@@ -140,7 +162,7 @@ function NavigationControl() {
             path="/HeadTeacherRequestMaterial"
             element={<HeadTeacherRequestMaterial />}
           />
-
+           <Route path="/HeadTeacherGenerateInventory" element={<GenerateInventory />} />
           <Route
             path="/HeadTeacherPushNotification"
             element={<HeadTeacherPushNotification />}

@@ -67,19 +67,97 @@ function SchoolsManagement() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const filterOption = useMemo(() => [
-    {
-      pk: 1,
-      type: "All",
-    },
+  const filterOptionForType = useMemo(()=>[
+    
     {
       pk: 2,
-      type: "active",
+      type: 'JSS'
     },
     {
       pk: 3,
-      type: "pending",
+      type: 'Primary'
     },
+    {
+      pk: 4,
+      type: 'Progressive'
+    }
+  ])
+
+  const filterOption = useMemo(() => [
+   
+    {
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
   ], []);
 
   const sortOption = useMemo(() => [
@@ -100,9 +178,22 @@ function SchoolsManagement() {
   const handleFilterSortSearch = () => {
     let filtered = [...getSchoolsData];
 
-    if (filterBy && filterBy !== "All") {
-      filtered = filtered.filter((item) => item.status === filterBy);
+    
+    if (filterBy && filterBy === "JSS") {
+      filtered = filtered.filter((item) => item.SCHOOL_TYPE === filterBy);
+      
+    }else if(filterBy && filterBy === "Primary"){
+      filtered = filtered.filter((item) => item.SCHOOL_TYPE === filterBy);
     }
+    else if(filterBy && filterBy === "Progressive"){
+      filtered = filtered.filter((item) => item.SCHOOL_TYPE === filterBy);
+    } 
+
+    else if(filterBy && filterBy !=='JSS' && filterBy!== 'Primary' && filterBy !=='Progressive'){
+   
+      filtered = filtered.filter((item) => item.LGA === filterBy);
+    }
+    
 
     if (sortBy) {
       filtered.sort((a, b) => {
@@ -193,15 +284,16 @@ function SchoolsManagement() {
                 Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"Rdom"}
                 onSelect={(value) => setFilterBy(value)}
               />
+              
               <Filter
                 Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setSortBy(value)}
+                optionTitle={"Filter by"}
+                options={filterOptionForType}
+                defult={"Random"}
+                onSelect={(value) => setFilterBy(value)}
               />
             </Col>
           </Row>
@@ -210,14 +302,15 @@ function SchoolsManagement() {
               <Filter
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setSortBy(value)}
+                Filterstyle={"responsive"}
+                optionTitle={"Filter by"}
+                options={filterOptionForType}
+                defult={"School Type"}
+                onSelect={(value) => setFilterBy(value)}
               />
               <PrimaryButton
                 icPrimaryiconon={faAdd}
@@ -230,28 +323,29 @@ function SchoolsManagement() {
           <Container>
             {!getSchoolsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
-                filteredData.map((school) => (
+                filteredData.map((school, index) => (
                   <Row
-                    key={school.id}
+                    key={index}
                     className="UserListRow my-2 py-2 align-items-center"
                   >
                     <Col xs={9} md={9} sm={9} lg={9} className="d-flex gap-3">
                       <Image
-                        src={school.school_image}
+                        src='https://img.freepik.com/free-vector/education-logo-templates_1198-200.jpg?size=626&ext=jpg&ga=GA1.1.869143472.1720893411&semt=ais_user'
                         rounded
                         width="50"
                         height="50"
                       />
                       <div>
-                        <h6>{school.name}</h6>
+                        <h6>{school.SCHOOL_NAME}</h6>
                         <h6 className="fs-6">
                           {" "}
-                          SCH-{school.id}
+                          SCH-{}
                           <span className="text-muted InventoryCategoryText">
                             {" "}
-                            | {school.address}{" "}
+                            | {school.LGA}{" "}
                             <span className="d-none d-lg-inline me">
-                              {school.city} | {school.level} |{" "}
+                              {school.SENATORIAL_DISTRICT} | {school.SCHOOL_TYPE
+                              } |{" "}
                               {school.phone_number} |{" "}
                               <b>{school.postal_code}</b> |
                               <span
@@ -264,7 +358,7 @@ function SchoolsManagement() {
                                 {" "}
                                 {school.status}
                               </span>{" "}
-                              | {convertDate(school.created_at)}
+                              | {convertDate(Date.now())}
                             </span>{" "}
                           </span>
                         </h6>

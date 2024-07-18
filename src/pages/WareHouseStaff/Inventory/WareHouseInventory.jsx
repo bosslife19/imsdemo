@@ -131,7 +131,7 @@ function WareHouseInventory() {
   };
 
   const handleGenerateReport = () => {
-    navigate('/GenerateInventory')
+    navigate('/WareHouseGenerateInventory')
   }
   const handleAdditem = () => {
     navigate("/AddNewItem");
@@ -196,14 +196,14 @@ function WareHouseInventory() {
               Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
               Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
+                optionTitle={"Filter by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"School type"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
@@ -225,7 +225,7 @@ function WareHouseInventory() {
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
-            <Col xl={6}>
+            <Col xl={6}> 
             <PrimaryButton
                 text={"Generate Inventory Report"}
                 Primarystyle={"WareHouseGenerateInventoryButton w-100"}

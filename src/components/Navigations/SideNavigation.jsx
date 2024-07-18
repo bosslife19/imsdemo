@@ -28,7 +28,17 @@ function SideNavigation({ isOpen, toggleSidebar }) {
       {" "}
       <Search Searchstyle={"seachSideBar"} searchText={'Search'}/>
       <Nav className="flex-column">
-        
+        <Nav.Link
+          as={NavLink}
+          to="/Translate"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          {/* <SideNavButton
+            text={"Translate"}
+            icon={faLanguage}
+            hoverStyle={"sideNavPrimaryHoverButton"}
+          /> */}
+        </Nav.Link>
         <Nav.Link
           as={NavLink}
           to="/AdminDashboard"

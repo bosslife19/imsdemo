@@ -5,6 +5,7 @@ import {
   Nav,
   Dropdown,
   Container,
+  NavDropdown,
   Image,
 } from "react-bootstrap";
 import "./Navigation.css";
@@ -13,7 +14,7 @@ import AuthenticationContext from "../../context/Authentication/AuthenticationCo
 
 
 function NavigationHeader({ toggleSidebar }) {
-  const { userData } = useContext(AuthenticationContext);
+  const { userData, messages, } = useContext(AuthenticationContext);
   return (
     <Navbar
       expand="lg"
@@ -75,12 +76,20 @@ function NavigationHeader({ toggleSidebar }) {
             <Nav.Link href="#search">
               <i className="fa-solid fa-magnifying-glass"></i>
             </Nav.Link>
+            {/* <NavDropdown title="English" id="language-switcher">
+              <NavDropdown.Item href="#action/3.1">English</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">French</NavDropdown.Item>
+            </NavDropdown> */}
             <Nav.Link as={NavLink} to="*">
+              <div style={{position:'relative'}}>
               <i className="fa-regular fa-envelope"></i>
+              <p style={{color:'coral', position:'absolute', top:-5, right:-2,fontSize:11, fontWeight:"bold" }}>{messages}</p>
+              </div>
+              
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/Notifications">
+            {/* <Nav.Link as={NavLink} to="/Notifications">
               <i className="fa-regular fa-bell"></i>
-            </Nav.Link>
+            </Nav.Link> */}
             <Dropdown align="end">
               <Dropdown.Toggle
                 variant="light"

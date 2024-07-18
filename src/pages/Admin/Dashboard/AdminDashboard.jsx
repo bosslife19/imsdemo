@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -49,15 +50,19 @@ ChartJS.register(
 function AdminDashboard() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [count, setCount] = useState(0);
+  
 
   const {
     getInventoryItems, getItemsData, getItemsIsLoading
   } = useContext(InventoryItemContext);
 
+  
   const {
     getSchoolsData, getSchools, getSchoolsIsLoading
   } = useContext(SchoolContext);
 
+  
   const { ProcessAnalysis, itemDataAnalysis, schoolDataAnalysis} =
   useContext(AnalysisContext);
 
@@ -87,6 +92,22 @@ function AdminDashboard() {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, []);
+  const getSchoolsNew = async () => {
+     
+    const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+    try {
+      const response = await axios.get(`${baseUrl}/api/school`);
+      console.log(response.data);
+      
+      setCount(response.data.count);
+    } catch (error) {
+      console.log(error)
+    } 
+  };
+
+  useEffect(()=>{
+    getSchoolsNew()
+  },[])
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -116,7 +137,8 @@ function AdminDashboard() {
     },
   ];
   const Bardata = {
-    labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    // labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    labels: getItemsData.map(item=>item.name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     datasets: [
       {
         label: "Stock Level",
@@ -125,7 +147,7 @@ function AdminDashboard() {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(146, 216, 200, 1)",
         hoverBorderColor: "rgba(75,192,192,1)",
-        data: [650, 590, 800, 810, 560, 550, 400, 700, 650, 520],
+        data:  getItemsData.map(item=>item.quantity),
       },
     ],
   };
@@ -172,10 +194,10 @@ function AdminDashboard() {
   };
 
   const Piedata = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: getItemsData.map(item=>item.name)||["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [
       {
-        data: [300, 50, 100, 40, 120, 75],
+        data: getItemsData.map(item=>item.quantity) ||[300, 50, 100, 40, 120, 75],
         backgroundColor: [
           "#FF6384",
           "#36A2EB",
@@ -317,6 +339,7 @@ function AdminDashboard() {
     },
   ];
 
+  
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
@@ -350,9 +373,9 @@ function AdminDashboard() {
             </Col>
             <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
               <PrimaryButton
-                text={"Create New Material Entry"}
+                text={"Add New Item"}
                 Primarystyle={"InventoryReportButton"}
-                clickEvent={() => null}
+                clickEvent={() => navigate('/AddNewItem')}
               />
             </Col>
             <Col lg={3} md={3} xl={3} sm={6} xs={6}>
@@ -400,7 +423,7 @@ function AdminDashboard() {
                 <PresentaionCard
                   title={"Total EdoSUBEB Schools"}
                   image={schoolImage}
-                  figure={getSchoolsData? getSchoolsData.length :0}
+                  figure={count? count :0}
                   margin={`${SchoolTrend === 'up' ? '↑' : SchoolTrend === 'down' ? '↓' : '~'} ${SchoolDifference}`}
                   marginColor={SchoolTrend === 'up' ? 'text-success': SchoolTrend === 'down' ? 'text-danger' : 'text-primary'}
                   />

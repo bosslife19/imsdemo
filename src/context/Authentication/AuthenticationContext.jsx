@@ -1,4 +1,4 @@
-import { React, createContext, useState } from "react";
+import { React, createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 const AuthenticationContext = createContext();
@@ -31,6 +31,12 @@ export const AuthenticationProvider = ({ children }) => {
   const [loginError, setloginError] = useState(null);
   const [loginIsLoading, setloginIsLoading] = useState(true);
   const [signInIsLoading, setSignInIsLoading] = useState(true);
+  const [messages, setMessages] = useState(0);
+
+  const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+
+  
+  
 
   const handleSigUpSubmit = async (e) => {
     setSignInIsLoading(true);
@@ -40,9 +46,9 @@ export const AuthenticationProvider = ({ children }) => {
       role: e.target.role.value,
       email: e.target.email.value,
       password: e.target.password.value,
+      phone_number: e.target.phone_number.value,
     };
     try {
-      console.log(baseUrl)
       const result = await axios.post(`${baseUrl}/api/auth/register`, formData);
       setSigUpResponse(result.data);
     } catch (error) {
@@ -70,6 +76,9 @@ export const AuthenticationProvider = ({ children }) => {
         setUserToken(result.data.token);
         sessionStorage.setItem("edoUserData", JSON.stringify(result.data.user));
         sessionStorage.setItem("edoUserToken", JSON.stringify(result.data.token));
+        const response = await axios.get(`${baseUrl}/api/user/${result.data.user.id}`);
+        setMessages(response.data.user.message_count);
+
       }
     } catch (error) {
       setloginError(error.response.data.message);
@@ -130,6 +139,8 @@ export const AuthenticationProvider = ({ children }) => {
     setloginError:setloginError,
     setSigUpResponse: setSigUpResponse,
     setSigUpError: setSigUpError,
+    messages,
+    setMessages
   };
 
   return (

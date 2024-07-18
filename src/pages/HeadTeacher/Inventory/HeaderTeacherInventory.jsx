@@ -109,7 +109,7 @@ function HeaderTeacherInventory() {
   };
 
   const handleGenerateReport = () => {
-    navigate("/GenerateInventory");
+    navigate("/HeadTeacherGenerateInventory");
   };
   return (
     <div>

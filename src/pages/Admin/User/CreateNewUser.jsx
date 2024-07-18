@@ -14,10 +14,13 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import UserContext from "../../../context/User/UserContext";
 import { scrollToTop } from "../../../utils/HelperFunc";
+import axios from "axios";
 
 function CreateNewUser() {
+  const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const [csvFile, setCsvFile] = useState(null);
 
   const {
     handleAddUser,
@@ -85,6 +88,28 @@ function CreateNewUser() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const handleCsvSubmit = async(e)=>{
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('file', csvFile);
+
+    try {
+      const response = await axios.post(`${baseUrl}/api/user/upload-users`,formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+  const handleCsvChange = (e)=>{
+    setCsvFile(e.target.files[0])
+  }
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
@@ -103,6 +128,29 @@ function CreateNewUser() {
                 />
               )
             : null}
+            <Form onSubmit={handleCsvSubmit}>
+              <h2>Upload CSV</h2>
+            <Row className="mb-3">
+                  <Col lg={12} md={12} xl={12} sm={12} xs={12}>
+                    <Form.Control
+                      type="file"
+                      placeholder="Full Name"
+                      className="UserCreateInput"
+                      name="users"
+                      accept=".csv"
+                      onChange={handleCsvChange}
+                      
+                    />
+                  </Col>
+                </Row>
+                <Button variant="success" className="w-100 p-2" type="submit">
+                  {buttonLoading ? (
+                    <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+                  ) : (
+                    "Save Users"
+                  )}
+                </Button>
+            </Form>
           <Form onSubmit={handleAddSubmit}>
             <Row>
               <TitleHeader
@@ -121,7 +169,17 @@ function CreateNewUser() {
                     />
                   </Col>
                 </Row>
-                
+                <Row className="mb-3">
+                  <Col lg={12} md={12} xl={12} sm={12} xs={12}>
+                    <Form.Control
+                      type="text"
+                      className="UserCreateInput"
+                      placeholder="Username"
+                      name="username"
+                      required
+                    />
+                  </Col>
+                </Row>
                 <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
@@ -160,8 +218,9 @@ function CreateNewUser() {
                     <Form.Select
                       className="UserCreateInput"
                       name="level"
-                      required >
-                      <option value="">User Category</option>
+                      required
+                    >
+                      <option value="">School Level</option>
                       <option value="Elementery">Elementery</option>
                     </Form.Select>
                   </Col>
@@ -186,7 +245,7 @@ function CreateNewUser() {
                 </Row>
               </Form.Group>
             </Row>
-            {/* <Row>
+            <Row>
               <TitleHeader
                 text={"Account Settings"}
                 headerTextStyle={"headerTextStyle"}
@@ -214,7 +273,7 @@ function CreateNewUser() {
                   </Form.Select>
                 </Col>
               </Row>
-            </Row> */}
+            </Row>
             <Row>
               <TitleHeader
                 text={"Addittional Information"}
@@ -248,7 +307,7 @@ function CreateNewUser() {
                   {buttonLoading ? (
                     <FontAwesomeIcon icon={faSpinner} spin size="2x" />
                   ) : (
-                    "Save User Information"
+                    "Save User"
                   )}
                 </Button>
               </Row>

@@ -134,14 +134,17 @@ function UserManagement() {
         }
       });
     }
+  
 
     if (searchTerm) {
       filtered = filtered.filter((item) =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
+     
+      setFilteredData(filtered);
     }
 
-    setFilteredData(filtered);
+   
   };
 
   const handleLoadingClick = () => {

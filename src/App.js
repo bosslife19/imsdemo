@@ -4,7 +4,7 @@ import NavigationControl from "./components/Navigations/NavigationControl";
 import { AuthenticationProvider } from "./context/Authentication/AuthenticationContext";
 import { InventoryItemProvider } from "./context/Item/InventoryItemContext";
 import { ThemeProvider } from "./context/Theme/ThemeContext";
-import { SchoolProvider } from "./context/School/SchoolContext";
+import { SchoolProvider } from "./context/School/SchoolContext"; 
 import { UsersProvider } from "./context/User/UserContext";
 import { GeneralProvider } from "./context/General/GeneralContext";
 import { DiscrepancyProvider } from "./context/Discrepancy/DiscrepancyContext";
@@ -14,6 +14,7 @@ import { TrackingProvider } from "./context/Tracking/TrackingContext";
 import { ItemRequestProvider } from "./context/ItemRequest/ItemRequestContext";
 import { MessageProvider } from "./context/Message/MessageContext";
 import { AnalysisProvider } from "./context/Analysis/AnalysisContext";
+import { SearchProvider } from "./components/Search/SearchContext";
 
 function App() {
   return (
@@ -31,7 +32,9 @@ function App() {
                           <ProfileProvider>
                             <TrackingProvider>
                               <ItemRequestProvider>
+                              <SearchProvider>
                                 <NavigationControl />
+                                </SearchProvider>
                               </ItemRequestProvider>
                             </TrackingProvider>
                           </ProfileProvider>

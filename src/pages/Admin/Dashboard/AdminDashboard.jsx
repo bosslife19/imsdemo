@@ -101,13 +101,13 @@ function AdminDashboard() {
     }
     
     if(filter==='AKOKO EDO'){
-      
+     
       setGetItemsData(originalItems.filter(item =>
         item.name === 'Pencil' ||
         item.name === 'Eraser' ||
         item.name === 'Sharpner'
       ));
-     
+    
     } if(filter ==='EGOR'){
       setGetItemsData(originalItems.filter(item =>
         item.name === 'Mathematics Textbook – Grade 1' ||

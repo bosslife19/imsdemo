@@ -48,9 +48,9 @@ function Login() {
               />
                <Form.Control
                 type="password"
-                placeholder="Email Address"
+                placeholder="password"
                 className="mb-3 inputField"
-                name="email"
+                name="password"
                 required
                 onChange={(e)=>setPassword(e.target.value)}
               />

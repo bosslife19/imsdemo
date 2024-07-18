@@ -51,10 +51,11 @@ function AdminDashboard() {
   const location = useLocation();
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
+  const [schools, setSchools] = useState([]);
   
 
   const {
-    getInventoryItems, getItemsData, getItemsIsLoading
+    getInventoryItems, getItemsData, getItemsIsLoading,setGetItemsData
   } = useContext(InventoryItemContext);
 
   
@@ -70,17 +71,77 @@ function AdminDashboard() {
   const [comfirmationAction, setComfirmationAction] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
-
-
+  const [filter, setFilter] = useState();
+  const [originalItems, setOriginalItems] = useState([])
   useEffect(() => {
     getInventoryItems();
     getSchools();
+    setOriginalItems(getItemsData);
   }, [ ])
 
   useEffect(() => {
     ProcessAnalysis(getSchoolsData);
     ProcessAnalysis(getItemsData);
-  }, [getItemsIsLoading, getSchoolsIsLoading ])
+    
+    if(filter && schools){
+      let schoolsMatch = schools.filter(item=>item.
+        LGA === filter
+        );
+        
+        if(schoolsMatch.length ===0){
+          
+          let schoolType = schools.filter(item=>item.SCHOOL_TYPE===filter);
+          setCount(schoolType.length);
+        }else{
+          setCount(schoolsMatch.length);
+        }
+        
+        
+        
+    }
+    
+    if(filter==='AKOKO EDO'){
+      
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Pencil' ||
+        item.name === 'Eraser' ||
+        item.name === 'Sharpner'
+      ));
+     
+    } if(filter ==='EGOR'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Mathematics Textbook – Grade 1' ||
+        item.name === 'Mathematics Textbook - Grade 2' ||
+        item.name === 'Literacy Text Book - Grade 1'
+      ))
+    }
+     if(filter ==='ESAN CENTRAL'){
+      
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Laptops' ||
+        item.name === 'ChalkBoard'
+      ));
+    } if(filter && filter==='JSS'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Pencil' ||
+        item.name === 'Eraser' ||
+        item.name === 'Sharpner'
+      ))
+    }
+    if(filter &&filter==='Primary'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Mathematics Textbook – Grade 1' ||
+        item.name === 'Mathematics Textbook - Grade 2' ||
+        item.name === 'Literacy Text Book - Grade 1'
+      ))
+    }
+    if(filter && filter==='Progressive'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Laptops' ||
+        item.name === 'ChalkBoard'
+      ))
+    }
+  }, [getItemsIsLoading, getSchoolsIsLoading,filter ])
 
   const {value: InvetoryDifference, trend: InvetoryTrend} = itemDataAnalysis
   const {value: SchoolDifference, trend: SchoolTrend} = schoolDataAnalysis
@@ -98,6 +159,7 @@ function AdminDashboard() {
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
       
+      setSchools(response.data.schools);
       
       setCount(response.data.count);
     } catch (error) {
@@ -497,11 +559,13 @@ function AdminDashboard() {
                   optionTitle={"School Type"}
                   options={filterOptionForType}
                   defult={"All"}
+                  onSelect={(value) => setFilter(value)}
                 />
                  <Filter
                   optionTitle={"LGA"}
                   options={filterOptionforLGA}
                   defult={"All"}
+                  onSelect={(value) => setFilter(value)}
                 />
               </div>
               <div className=" d-lg-none d-flex justify-content-end ">
@@ -509,11 +573,13 @@ function AdminDashboard() {
                   optionTitle={"School Type"}
                   options={filterOptionForType}
                   defult={"All"}
+                  onSelect={(value) => setFilter(value)}
                 />
                  <Filter
                   optionTitle={"LGA"}
                   options={filterOptionforLGA}
                   defult={"All"}
+                  onSelect={(value) => setFilter(value)}
                 />
               </div>
             </Col>

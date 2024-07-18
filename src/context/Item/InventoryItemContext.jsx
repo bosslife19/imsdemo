@@ -210,6 +210,7 @@ export const InventoryItemProvider = ({ children }) => {
     getItemsIsLoading: getItemsIsLoading,
     getItemsError: getItemsError,
     getItemsData: getItemsData,
+    setGetItemsData,
     addItemError: addItemError,
     addItemIsLoading: addItemIsLoading,
     addItemResponse: addItemResponse,

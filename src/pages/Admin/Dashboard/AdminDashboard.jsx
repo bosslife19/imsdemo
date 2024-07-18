@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useContext, useEffect, useState } from "react";
+=======
+import React, { useContext, useEffect, useState, useMemo} from "react";
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -51,10 +55,11 @@ function AdminDashboard() {
   const location = useLocation();
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
+  const [schools, setSchools] = useState([]);
   
 
   const {
-    getInventoryItems, getItemsData, getItemsIsLoading
+    getInventoryItems, getItemsData, getItemsIsLoading,setGetItemsData
   } = useContext(InventoryItemContext);
 
   
@@ -70,17 +75,77 @@ function AdminDashboard() {
   const [comfirmationAction, setComfirmationAction] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
-
-
+  const [filter, setFilter] = useState();
+  const [originalItems, setOriginalItems] = useState([])
   useEffect(() => {
     getInventoryItems();
     getSchools();
+    setOriginalItems(getItemsData);
   }, [ ])
 
   useEffect(() => {
     ProcessAnalysis(getSchoolsData);
     ProcessAnalysis(getItemsData);
-  }, [getItemsIsLoading, getSchoolsIsLoading ])
+    
+    if(filter && schools){
+      let schoolsMatch = schools.filter(item=>item.
+        LGA === filter
+        );
+        
+        if(schoolsMatch.length ===0){
+          
+          let schoolType = schools.filter(item=>item.SCHOOL_TYPE===filter);
+          setCount(schoolType.length);
+        }else{
+          setCount(schoolsMatch.length);
+        }
+        
+        
+        
+    }
+    
+    if(filter==='AKOKO EDO'){
+     
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Pencil' ||
+        item.name === 'Eraser' ||
+        item.name === 'Sharpner'
+      ));
+    
+    } if(filter ==='EGOR'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Mathematics Textbook – Grade 1' ||
+        item.name === 'Mathematics Textbook - Grade 2' ||
+        item.name === 'Literacy Text Book - Grade 1'
+      ))
+    }
+     if(filter ==='ESAN CENTRAL'){
+      
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Laptops' ||
+        item.name === 'ChalkBoard'
+      ));
+    } if(filter && filter==='JSS'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Pencil' ||
+        item.name === 'Eraser' ||
+        item.name === 'Sharpner'
+      ))
+    }
+    if(filter &&filter==='Primary'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Mathematics Textbook – Grade 1' ||
+        item.name === 'Mathematics Textbook - Grade 2' ||
+        item.name === 'Literacy Text Book - Grade 1'
+      ))
+    }
+    if(filter && filter==='Progressive'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Laptops' ||
+        item.name === 'ChalkBoard'
+      ))
+    }
+  }, [getItemsIsLoading, getSchoolsIsLoading,filter ])
 
   const {value: InvetoryDifference, trend: InvetoryTrend} = itemDataAnalysis
   const {value: SchoolDifference, trend: SchoolTrend} = schoolDataAnalysis
@@ -97,7 +162,8 @@ function AdminDashboard() {
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      console.log(response.data);
+      
+      setSchools(response.data.schools);
       
       setCount(response.data.count);
     } catch (error) {
@@ -112,6 +178,99 @@ function AdminDashboard() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const filterOptionforLGA = useMemo(() => [
+    
+    {
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
+  ], []);
+
+  const filterOptionForType = useMemo(()=>[
+   
+    {
+      pk: 2,
+      type: 'JSS'
+    },
+    {
+      pk: 3,
+      type: 'Primary'
+    },
+    {
+      pk: 4,
+      type: 'Progressive'
+    }
+  ])
 
   const handleComfirmationPopUps = (messageInfo, messageBgColor) => {
     setmessage(messageInfo);
@@ -400,18 +559,31 @@ function AdminDashboard() {
                   text={"Material Availability Overview"}
                   headerTextStyle={"headerTextStyle"}
                 />
-                <Filter
-                  optionTitle={"School"}
-                  options={filterData}
+                 <Filter
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
                   defult={"All"}
-                  Filterstyle={"d-none d-lg-block"}
+                  onSelect={(value) => setFilter(value)}
+                />
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
+                  defult={"All"}
+                  onSelect={(value) => setFilter(value)}
                 />
               </div>
               <div className=" d-lg-none d-flex justify-content-end ">
                 <Filter
-                  optionTitle={"School"}
-                  options={filterData}
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
                   defult={"All"}
+                  onSelect={(value) => setFilter(value)}
+                />
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
+                  defult={"All"}
+                  onSelect={(value) => setFilter(value)}
                 />
               </div>
             </Col>
@@ -629,5 +801,6 @@ function AdminDashboard() {
     </div>
   );
 }
+
 
 export default AdminDashboard;

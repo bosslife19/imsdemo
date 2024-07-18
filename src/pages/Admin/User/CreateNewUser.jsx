@@ -14,6 +14,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import UserContext from "../../../context/User/UserContext";
 import { scrollToTop } from "../../../utils/HelperFunc";
+<<<<<<< HEAD
 import axios from "axios";
 
 function CreateNewUser() {
@@ -21,6 +22,12 @@ function CreateNewUser() {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const [csvFile, setCsvFile] = useState(null);
+=======
+
+function CreateNewUser() {
+  const fileInputRef = useRef(null);
+  const navigate = useNavigate();
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
 
   const {
     handleAddUser,
@@ -88,6 +95,7 @@ function CreateNewUser() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+<<<<<<< HEAD
 
   const handleCsvSubmit = async(e)=>{
     e.preventDefault();
@@ -110,6 +118,8 @@ function CreateNewUser() {
   const handleCsvChange = (e)=>{
     setCsvFile(e.target.files[0])
   }
+=======
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
@@ -128,6 +138,7 @@ function CreateNewUser() {
                 />
               )
             : null}
+<<<<<<< HEAD
             <Form onSubmit={handleCsvSubmit}>
               <h2>Upload CSV</h2>
             <Row className="mb-3">
@@ -151,6 +162,8 @@ function CreateNewUser() {
                   )}
                 </Button>
             </Form>
+=======
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
           <Form onSubmit={handleAddSubmit}>
             <Row>
               <TitleHeader
@@ -169,6 +182,7 @@ function CreateNewUser() {
                     />
                   </Col>
                 </Row>
+<<<<<<< HEAD
                 <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
@@ -180,6 +194,9 @@ function CreateNewUser() {
                     />
                   </Col>
                 </Row>
+=======
+                
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
                 <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
@@ -218,9 +235,14 @@ function CreateNewUser() {
                     <Form.Select
                       className="UserCreateInput"
                       name="level"
+<<<<<<< HEAD
                       required
                     >
                       <option value="">School Level</option>
+=======
+                      required >
+                      <option value="">User Category</option>
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
                       <option value="Elementery">Elementery</option>
                     </Form.Select>
                   </Col>
@@ -245,7 +267,11 @@ function CreateNewUser() {
                 </Row>
               </Form.Group>
             </Row>
+<<<<<<< HEAD
             <Row>
+=======
+            {/* <Row>
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
               <TitleHeader
                 text={"Account Settings"}
                 headerTextStyle={"headerTextStyle"}
@@ -273,7 +299,11 @@ function CreateNewUser() {
                   </Form.Select>
                 </Col>
               </Row>
+<<<<<<< HEAD
             </Row>
+=======
+            </Row> */}
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
             <Row>
               <TitleHeader
                 text={"Addittional Information"}
@@ -307,7 +337,11 @@ function CreateNewUser() {
                   {buttonLoading ? (
                     <FontAwesomeIcon icon={faSpinner} spin size="2x" />
                   ) : (
+<<<<<<< HEAD
                     "Save User"
+=======
+                    "Save User Information"
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
                   )}
                 </Button>
               </Row>

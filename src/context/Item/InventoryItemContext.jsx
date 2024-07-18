@@ -2,7 +2,11 @@ import { React, createContext, useState, useContext } from "react";
 import axios from "axios";
 import * as XLSX from 'xlsx'
 import jsPDF from 'jspdf'
+<<<<<<< HEAD
 import autoTable from "jspdf-autotable"
+=======
+import autoTable from 'jspdf-autotable'
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
 
 
 import GeneralContext from "../General/GeneralContext";
@@ -210,6 +214,7 @@ export const InventoryItemProvider = ({ children }) => {
     getItemsIsLoading: getItemsIsLoading,
     getItemsError: getItemsError,
     getItemsData: getItemsData,
+    setGetItemsData,
     addItemError: addItemError,
     addItemIsLoading: addItemIsLoading,
     addItemResponse: addItemResponse,

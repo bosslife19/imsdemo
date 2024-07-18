@@ -302,4 +302,8 @@ function GenerateInventory() {
 
 
 
+<<<<<<< HEAD
 export default GenerateInventory;
+=======
+export default GenerateInventory;
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e

@@ -123,7 +123,7 @@ function Login() {
             </Form.Group>
             <Form.Group className="d-flex justify-content-between mb-3 inputField">
               <Form.Check type="checkbox" label="Remember me" />
-              <Link to={"/SignUp"} className="text-decoration-none linkText">
+              <Link to={"/forgot-password"} className="text-decoration-none linkText">
                 Forgot Password?
               </Link>
             </Form.Group>

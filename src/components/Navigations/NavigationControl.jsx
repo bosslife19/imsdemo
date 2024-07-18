@@ -21,6 +21,7 @@ import WareHouseDashboard from "../../pages/WareHouseStaff/Dashboard/WareHouseDa
 import WareHouseInventory from "../../pages/WareHouseStaff/Inventory/WareHouseInventory";
 import WareHouseTrack from "../../pages/WareHouseStaff/TrackMaterial/WareHouseTrack";
 import ReportDiscrepancy from "../../pages/WareHouseStaff/ReportDiscrepancy/ReportDiscrepancy";
+import ChangePassword from '../../pages/Admin/Authentication/ChangePassword';
 import ScanMaterial from "../../pages/WareHouseStaff/ScanMaterial/ScanMaterial";
 import WareHousePushNotification from "../../pages/WareHouseStaff/PushNotification/WareHousePushNotification";
 import WareHouseGenerateReport from "../../pages/WareHouseStaff/Inventory/WareHouseGenerateReport";
@@ -28,6 +29,7 @@ import WareHouseAddItem from "../../pages/WareHouseStaff/Inventory/WareHouseAddI
 import WareHouseViewItem from "../../pages/WareHouseStaff/Inventory/WareHouseViewItem";
 import WareHouseAddMovement from "../../pages/WareHouseStaff/TrackMaterial/WareHouseAddMovement";
 import HeadTeacherDashboard from "../../pages/HeadTeacher/Dashboard/HeadTeacherDashboard";
+import ForgotPassword from '../../pages/Admin/Authentication/Forgot-Password';
 import HeaderTeacherInventory from "../../pages/HeadTeacher/Inventory/HeaderTeacherInventory";
 import HeaderTeacherGenerateReport from "../../pages/HeadTeacher/Inventory/HeaderTeacherGenerateReport";
 import HeadTeacherRequestMaterial from "../../pages/HeadTeacher/RequestMaterial/HeadTeacherRequestMaterial";
@@ -78,14 +80,22 @@ function NavigationControl() {
           }
         />
          <Route
+<<<<<<< HEAD
           path="/Forgotemail"
           element={
             <PrivatteAuthentactionRoute>
               <ForgotPasswordPage />
+=======
+          path="/forgot-password"
+          element={
+            <PrivatteAuthentactionRoute>
+              <ForgotPassword/>
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
             </PrivatteAuthentactionRoute>
           }
         />
          <Route
+<<<<<<< HEAD
           path="/Forgotpasswords"
           element={
             <PrivatteAuthentactionRoute>
@@ -93,6 +103,16 @@ function NavigationControl() {
             </PrivatteAuthentactionRoute>
           }
         />
+=======
+          path="/change-password"
+          element={
+            <PrivatteAuthentactionRoute>
+              <ChangePassword/>
+            </PrivatteAuthentactionRoute>
+          }
+        />
+
+>>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
 
         <Route element={<PrivateRoute />}>
           <Route path="/Logout" element={<Logout />} />

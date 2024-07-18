@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import "./WareHousePushNotification.css";
+import "../../Admin/PushNotification/Notification.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
-import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
+import SideNavigation from "../../../components/Navigations/SideNavigation";
 import TitleHeader from "../../../components/Headers/TitleHeader";
 import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
@@ -11,6 +11,7 @@ import PushNotification from "../../../components/Notification/PushNotification"
 
 function WareHousePushNotification() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [audience, setAudience] = useState('')
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -18,14 +19,27 @@ function WareHousePushNotification() {
   const filterData = [
     {
       pk: 1,
-      type: "Date",
+      type: "QA",
     },
+    {
+      pk: 2,
+      type: "Warehouse Staff",
+    },
+    {
+      pk: 3,
+      type: "Head Teacher",
+    },
+    {
+      pk: 4,
+      type: "Admin",
+    },
+    
   ];
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
       <div className="d-flex justify-content-between">
-        <WareHouseSideNavigation isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <SideNavigation isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Container className="reportContainer">
           <TitleHeader text={"Push Notifications"} />
 
@@ -45,6 +59,8 @@ function WareHousePushNotification() {
                 optionTitle={"Select Target Audience:"}
                 options={filterData}
                 defult={"All"}
+                onSelect={(value)=>setAudience(value)}
+
               />
               <PrimaryButton
                 Primaryicon={faClockRotateLeft}
@@ -53,11 +69,11 @@ function WareHousePushNotification() {
               />
             </Col>
           </Row>
-          <PushNotification />
+          <PushNotification audience={audience}/>
         </Container>
       </div>
     </div>
   );
 }
 
-export default WareHousePushNotification;
+export default  WareHousePushNotification;

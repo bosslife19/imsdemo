@@ -8,23 +8,58 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { useNavigate } from "react-router-dom";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 function ScanMaterial() {
   const navigate = useNavigate();
+  const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [idNumber, setIdNumber] = useState("");
-  const [stockCount, setStockCount] = useState(5);
+  const [stockCount, setStockCount] = useState(0);
+  const [item, setItem] = useState(null);
+  const [numOfTimes, setNumberOftimes] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleScanClick = () => {
+  const handleScanClick = async() => {
     // Handle scan button click
+    setIsLoading(true);
+    setError('');
+    try {
+      const res = await axios.post(`${baseUrl}/api/item/scan`, {barcode_id:idNumber});
+    setIsLoading(false)
+    setItem(res.data.item);
+
+    setStockCount(res.data.item.quantity)
+    setNumberOftimes((prev)=>prev + 1);
+    } catch (error) {
+      setIsLoading(false);
+      if(error.response.data){
+        setError(error.response.data.message)
+      }else{
+        setError('There is a network connection issue. Check your network')
+      }
+      console.log(error)
+    }
+    
+    
   };
+
+  
 
   const handleEnterDatabaseClick = () => {
     // Handle enter item into database button click
   };
   const handleViewItem = () => {
-    navigate('/WareHouseViewItem')
+  console.log(item)
+  if(item){
+    navigate(`/ItemDetail/${item.id}`)
+  }else{
+    return;
+  }
+    
   }
 
   const toggleSidebar = () => {
@@ -60,6 +95,7 @@ function ScanMaterial() {
             </Col>
           </Row>
           <Row className="justify-content-center mb-4">
+            {error&& <p style={{color:'red', marginLeft:10}}>{error}</p>}
             <Col xs={12} lg={12}>
               <Form.Control
                 type="text"
@@ -77,7 +113,8 @@ function ScanMaterial() {
                 className="w-100 p-3"
                 onClick={handleScanClick}
               >
-                Scan
+                {isLoading? <FontAwesomeIcon icon={faSpinner} spin size="2x" />: 'Scan'}
+                
               </Button>
             </Col>
           </Row>
@@ -86,7 +123,7 @@ function ScanMaterial() {
             <Col xs={12} lg={5} sm={12} xl={4} className="text-center mb-2">
               <div className="border rounded rounded-4 p-2">
                 <span className=" text-muted">
-                  Number of Items Scanned: <b>1</b>
+                  Number of Items Scanned: <b>{numOfTimes}</b>
                 </span>
               </div>
             </Col>

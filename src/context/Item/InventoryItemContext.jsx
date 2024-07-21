@@ -99,6 +99,7 @@ export const InventoryItemProvider = ({ children }) => {
     const fileResponse = await handleAddFile(imageData);
   
     if (fileResponse && fileResponse.success) {
+      return console.log(e.target.file.value);
       const formData = {
         name: e.target.name.value,
         description: e.target.description.value,

@@ -41,15 +41,11 @@ export const SchoolProvider = ({ children }) => {
   const { handleAddFile, addFileError } = useContext(GeneralContext);
 
   const getSchools = async () => {
-    setGetSchoolsIsLoading(true);
+    setGetSchoolsIsLoading(true); 
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-<<<<<<< HEAD
-     
-=======
       
->>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
       setGetSchoolsData(response.data.schools);
     } catch (error) {
       setGetSchoolsError(error);

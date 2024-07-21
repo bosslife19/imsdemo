@@ -43,10 +43,11 @@ export const InventoryBox = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
+  const [schools, setSchools] = useState([]);
   
 
   const {
-    getInventoryItems, getItemsData, getItemsIsLoading
+    getInventoryItems, getItemsData, getItemsIsLoading,setGetItemsData
   } = useContext(InventoryItemContext);
 
   
@@ -62,17 +63,77 @@ export const InventoryBox = () => {
   const [comfirmationAction, setComfirmationAction] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
-
-
+  const [filter, setFilter] = useState();
+  const [originalItems, setOriginalItems] = useState([])
   useEffect(() => {
     getInventoryItems();
     getSchools();
+    setOriginalItems(getItemsData);
   }, [ ])
 
   useEffect(() => {
     ProcessAnalysis(getSchoolsData);
     ProcessAnalysis(getItemsData);
-  }, [getItemsIsLoading, getSchoolsIsLoading ])
+    
+    if(filter && schools){
+      let schoolsMatch = schools.filter(item=>item.
+        LGA === filter
+        );
+        
+        if(schoolsMatch.length ===0){
+          
+          let schoolType = schools.filter(item=>item.SCHOOL_TYPE===filter);
+          setCount(schoolType.length);
+        }else{
+          setCount(schoolsMatch.length);
+        }
+        
+        
+        
+    }
+    
+    if(filter==='AKOKO EDO'){
+     
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Pencil' ||
+        item.name === 'Eraser' ||
+        item.name === 'Sharpner'
+      ));
+    
+    } if(filter ==='EGOR'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Mathematics Textbook – Grade 1' ||
+        item.name === 'Mathematics Textbook - Grade 2' ||
+        item.name === 'Literacy Text Book - Grade 1'
+      ))
+    }
+     if(filter ==='ESAN CENTRAL'){
+      
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Laptops' ||
+        item.name === 'ChalkBoard'
+      ));
+    } if(filter && filter==='JSS'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Pencil' ||
+        item.name === 'Eraser' ||
+        item.name === 'Sharpner'
+      ))
+    }
+    if(filter &&filter==='Primary'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Mathematics Textbook – Grade 1' ||
+        item.name === 'Mathematics Textbook - Grade 2' ||
+        item.name === 'Literacy Text Book - Grade 1'
+      ))
+    }
+    if(filter && filter==='Progressive'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Laptops' ||
+        item.name === 'ChalkBoard'
+      ))
+    }
+  }, [getItemsIsLoading, getSchoolsIsLoading,filter ])
 
   const {value: InvetoryDifference, trend: InvetoryTrend} = itemDataAnalysis
   const {value: SchoolDifference, trend: SchoolTrend} = schoolDataAnalysis
@@ -84,12 +145,14 @@ export const InventoryBox = () => {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, []);
+
   const getSchoolsNew = async () => {
      
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      
+      console.log(response.data)
+      setSchools(response.data.schools);
       
       setCount(response.data.count);
     } catch (error) {
@@ -381,14 +444,48 @@ export const InventoryBox = () => {
     },
   };
 
- 
-
   return (
     <div>
-       
-        <Container>
-        <Row className="mb-3">
-            {/* <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2"> */}
+      <div className="d-flex gap-7 p-3" style={{position:"relative", top:"-70px",left:"80px"}}>
+      <Row className="mb-3 mt-3">
+            <Col lg={12} md={12} xl={12} sm={12} xs={12}>
+              <div className="d-flex justify-content-between ">
+                
+                 <Filter
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
+                  defult={"All"}
+                  onSelect={(value) => setFilter(value)}
+                />
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
+                  defult={"All"}
+                  onSelect={(value) => setFilter(value)}
+                />
+              </div>
+              {/* <div className=" d-lg-none d-flex justify-content-end ">
+                <Filter
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
+                  defult={"All"}
+                  onSelect={(value) => setFilter(value)}
+                />
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
+                  defult={"All"}
+                  onSelect={(value) => setFilter(value)}
+                />
+              </div> */}
+            </Col>
+          </Row>
+      </div>
+      <Container>
+        <div style={{position:"relative",top:"-40px"}}>
+        
+        {/* <Row className="mb-3"> */}
+            {/* <Row lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2"> */}
               <Row className="mb-3">
                 <PresentaionCard
                   title={"Total EdoSUBEB Schools"}
@@ -407,16 +504,17 @@ export const InventoryBox = () => {
                   marginColor={InvetoryTrend === 'up' ? 'text-success': InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}
                 />
               </Row>
-            {/* </Col> */}
-            {/* <Row lg={6} md={12} xl={8} sm={12} xs={12} className=""> */}
-              <Row>
-              <div>
-              <BarGraph data={Bardata} options={Baroptions}  className=""/>
-              </div>
-              </Row>
-             
             {/* </Row> */}
-          </Row>
+            {/* <Container> */}
+            {/* <Col lg={6} md={12} xl={8} sm={12} xs={12} className=""> */}
+           
+              <BarGraph data={Bardata} options={Baroptions} />
+             
+            {/* </Col> */}
+            {/* </Container> */}
+          {/* </Row> */}
+        
+        </div>
         </Container>
     </div>
   )

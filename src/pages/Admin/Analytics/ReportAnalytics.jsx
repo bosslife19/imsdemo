@@ -158,19 +158,13 @@ function ReportAnalytics() {
         <Container className="reportContainer">
           <TitleHeader text={"Reports & Analytics"} />
           <Row className="mb-3">
-<<<<<<< HEAD
-            <Col className="mb-3" lg={5} xl={7} md={12} sm={12} xs={12}>
-=======
-            <Col className="mb-3" lg={6} xl={8} md={12} sm={12} xs={12}>
->>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
+            <Col className="mb-3 pb-5" lg={6} xl={7} md={9} sm={12} xs={12}>
               <Search
                 Searchstyle={"seachContentBar"}
                 searchText={"Search Users..."}
               />
-<<<<<<< HEAD
-=======
             </Col>
-            <Col lg={3} md={3} xl={2} sm={6} xs={6}>
+            {/* <Col lg={3} md={3} xl={2} sm={6} xs={6}>
               <Filter
                 optionTitle={"Filter by"}
                 options={filterData}
@@ -183,13 +177,12 @@ function ReportAnalytics() {
                 options={filterData}
                 default={"Random"} // Corrected typo here from "Ramdom" to "Random"
               />
->>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
-            </Col>
+            </Col> */}
             {/* <Row className="mb-3 mt-3"> */}
            {/* <div className="d-flex"> */}
-           <Col lg={3} md={3} xl={2} sm={6} xs={6} style={{marginRight:"22px"}}>
+           {/* <Col lg={3} md={3} xl={2} sm={6} xs={6} style={{marginRight:"22px"}}> */}
               {/* <div className="d-flex justify-content-between"> */}
-                 <Filter
+                 {/* <Filter
                   optionTitle={"School Type"}
                   options={filterOptionForType}
                   defult={"All"}
@@ -201,7 +194,7 @@ function ReportAnalytics() {
                   options={filterOptionforLGA}
                   defult={"All"}
                 />
-                </Col>
+                </Col> */}
            {/* </div> */}
               {/* </div> */}
               {/* <div className=" d-lg-none d-flex justify-content-end ">

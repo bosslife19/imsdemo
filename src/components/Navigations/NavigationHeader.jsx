@@ -23,6 +23,7 @@ function NavigationHeader({ toggleSidebar }) {
       fixed="top"
     >
       <Container fluid>
+        
         <Navbar.Brand as={NavLink} to="/" >
           <Image
             src={smallLogo} // Replace with your logo path
@@ -76,19 +77,6 @@ function NavigationHeader({ toggleSidebar }) {
             <Nav.Link href="#search">
               <i className="fa-solid fa-magnifying-glass"></i>
             </Nav.Link>
-<<<<<<< HEAD
-            {/* <NavDropdown title="English" id="language-switcher">
-              <NavDropdown.Item href="#action/3.1">English</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">French</NavDropdown.Item>
-            </NavDropdown> */}
-            <Nav.Link as={NavLink} to="*">
-              <div style={{position:'relative'}}>
-              <i className="fa-regular fa-envelope"></i>
-              <p style={{color:'coral', position:'absolute', top:-5, right:-2,fontSize:11, fontWeight:"bold" }}>{messages}</p>
-              </div>
-              
-            </Nav.Link>
-=======
             <div style={{position:'relative'}}>
             <Nav.Link as={NavLink} to="*">
               <i className="fa-regular fa-envelope"></i>
@@ -97,7 +85,6 @@ function NavigationHeader({ toggleSidebar }) {
             <p style={{position:'absolute', color:'coral', fontSize:12, top:1.5, right:'12%'}}>{messages}</p>
             </div>
            
->>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
             {/* <Nav.Link as={NavLink} to="/Notifications">
               <i className="fa-regular fa-bell"></i>
             </Nav.Link> */}
@@ -107,7 +94,8 @@ function NavigationHeader({ toggleSidebar }) {
                 id="user-dropdown"
                 className="userDropdown"
               >
-                <i className="fa-regular fa-user mx-1"></i>{ userData.name }
+                <img src={ userData.image } style={{width:"30px", height:"30px", borderRadius:"30px",marginRight:"5px"}}/>
+                { userData.name }
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item as={NavLink} to="/Profile">

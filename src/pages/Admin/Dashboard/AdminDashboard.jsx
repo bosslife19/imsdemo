@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useContext, useEffect, useState } from "react";
-=======
 import React, { useContext, useEffect, useState, useMemo} from "react";
->>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -81,6 +77,7 @@ function AdminDashboard() {
     getInventoryItems();
     getSchools();
     setOriginalItems(getItemsData);
+    console.log(getItemsData)
   }, [ ])
 
   useEffect(() => {
@@ -157,12 +154,13 @@ function AdminDashboard() {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, []);
+
   const getSchoolsNew = async () => {
      
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      
+      console.log(response.data)
       setSchools(response.data.schools);
       
       setCount(response.data.count);

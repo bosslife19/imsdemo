@@ -58,6 +58,7 @@ import Forgotemail from "../../pages/Admin/Authentication/Forgotpassword/Forgote
 import ResetPassword from "../../pages/Admin/Authentication/Forgotpassword/Forgetpasswords";
 import ForgotPasswordPage from "../../pages/Admin/Authentication/Forgotpassword/Forgotemail";
 import SearchResults from "../Search/SearchResults";
+import MovementLog from "../../pages/WareHouseStaff/Inventory/MovementLog";
 
 function NavigationControl() {
   return (
@@ -80,30 +81,14 @@ function NavigationControl() {
           }
         />
          <Route
-<<<<<<< HEAD
-          path="/Forgotemail"
-          element={
-            <PrivatteAuthentactionRoute>
-              <ForgotPasswordPage />
-=======
           path="/forgot-password"
           element={
             <PrivatteAuthentactionRoute>
               <ForgotPassword/>
->>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
             </PrivatteAuthentactionRoute>
           }
         />
          <Route
-<<<<<<< HEAD
-          path="/Forgotpasswords"
-          element={
-            <PrivatteAuthentactionRoute>
-              <ResetPassword />
-            </PrivatteAuthentactionRoute>
-          }
-        />
-=======
           path="/change-password"
           element={
             <PrivatteAuthentactionRoute>
@@ -112,7 +97,6 @@ function NavigationControl() {
           }
         />
 
->>>>>>> 780830d8b64f267695da08aee11b2f60caeac71e
 
         <Route element={<PrivateRoute />}>
           <Route path="/Logout" element={<Logout />} />
@@ -159,6 +143,8 @@ function NavigationControl() {
           <Route path="/WareHouseDashboard" element={<WareHouseDashboard />} />
           <Route path="/WareHouseInventory" element={<WareHouseInventory />} />
           <Route path="/WareHouseTrack" element={<WareHouseTrack />} />
+          <Route path="/TrackMovementLog" element={<MovementLog />} />
+          <Route path="/WareHouseGenerateInventory" element={<GenerateInventory />} />
           <Route path="/ScanMaterial" element={<ScanMaterial />} />
            <Route path="/WareHouseGenerateInventory" element={<GenerateInventory />} />
           <Route
@@ -178,6 +164,7 @@ function NavigationControl() {
             path="/HeaderTeacherInventory"
             element={<HeaderTeacherInventory />}
           />
+           <Route path="/GenerateInventory" element={<GenerateInventory />} />
           <Route
             path="/HeadTeacherRequestMaterial"
             element={<HeadTeacherRequestMaterial />}

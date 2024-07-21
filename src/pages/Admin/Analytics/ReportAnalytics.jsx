@@ -158,7 +158,7 @@ function ReportAnalytics() {
         <Container className="reportContainer">
           <TitleHeader text={"Reports & Analytics"} />
           <Row className="mb-3">
-            <Col className="mb-3 pb-5" lg={6} xl={7} md={9} sm={12} xs={12}>
+            <Col className="mb-3" lg={6} xl={7} md={9} sm={12} xs={12}>
               <Search
                 Searchstyle={"seachContentBar"}
                 searchText={"Search Users..."}
@@ -213,7 +213,7 @@ function ReportAnalytics() {
           {/* </Row> */}
           </Row>
           <Row>
-            <Col md={6} className="p-3 grid-container">
+            <Col md={6} className="p-3 grid-container mb-5">
               <Row className="rowContainer">
                 <Col
                    style={{cursor:"pointer"}}
@@ -301,7 +301,7 @@ function ReportAnalytics() {
                     <Image src={ExpireIcon} className="boxImage" />
                   </div>
                   <div className="desktopBoxTextWarper">
-                    <h5 className="fs-6 pt-3 boxtext">Expiry Reports</h5>
+                    <h5 className="fs-6 pt-3 boxtext">Material Usage</h5>
                     <p className="fs-6 boxParagraph">
                       Monitor and manage expiration dates for various items or resources
                       within the organization.
@@ -318,7 +318,7 @@ function ReportAnalytics() {
                 <Col md={5} lg={5} className="boxCol emptyBox"></Col>
               </Row>
             </Col>
-            <Col md={6} className="reportContentAppear">
+            <Col md={6} className="reportContentAppear mt-5">
               {renderContent()}
             </Col>
           </Row>

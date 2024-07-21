@@ -53,7 +53,7 @@ function ScanMaterial() {
     // Handle enter item into database button click
   };
   const handleViewItem = () => {
-  console.log(item)
+  
   if(item){
     navigate(`/ItemDetail/${item.id}`)
   }else{

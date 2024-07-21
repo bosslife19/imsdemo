@@ -14,11 +14,14 @@ import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationP
 import { scrollToTop } from "../../../utils/HelperFunc";
 import ConditionalSideNavigation from "../../../components/Navigations/ConditionalSideNavigation";
 import MessageContext from "../../../context/Message/MessageContext";
+import axios from "axios";
 
 
 function AddNewItem() {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+  const [success, setSuccess] = useState('');
 
   const {
     handleAddItem,
@@ -36,6 +39,7 @@ function AddNewItem() {
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
+  const [csv, setCsv] = useState(null)
 
   useEffect(() => {
     if (!addItemIsLoading && addItemResponse) {
@@ -84,6 +88,35 @@ function AddNewItem() {
     document.getElementById("fileLabel").innerText = fileName;
   };
 
+  const handleCsvChange = (e)=>{
+    const file = e.target.files[0];
+    setCsv(file);
+  }
+
+  const handleCsvSubmit = async (e)=>{
+    e.preventDefault();
+    
+    try {
+      setButtonLoading(true);
+      setSuccess('');
+      setAddItemError(null);
+      const formData = new FormData();
+    formData.append('file', csv);
+    
+    const res = await axios.post(`${baseUrl}/api/item/upload`, formData);
+    if(res.status ==200){
+      setButtonLoading(false)
+      setSuccess(res.data.success);
+    }
+    
+    } catch (error) {
+      setButtonLoading(false)
+      console.log(error)
+      setAddItemError(error.response.data.message)
+    }
+    
+  }
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -109,6 +142,31 @@ function AddNewItem() {
               )
             : null}
           <Form onSubmit={handleSubmit}>
+            <h3 style={{fontWeight:'lighter', fontSize:17, marginBottom:2}}>Upload csv file (if available)</h3>
+            {success && <p style={{fontWeight:'lighter', fontSize:17, marginBottom:2, color:'green'}}>{success}</p>}
+          <Form.Control
+                      type="file"
+                      id="shoolfileInput"
+                     
+                      onChange={handleCsvChange}
+                      // style={{ display: "none" }}
+                      name="file"
+                      accept="csv"
+                    />
+                     <Button
+                  variant="success"
+                  className="w-20 p-2 mt-1"
+                  
+                  
+                  onClick={handleCsvSubmit}
+                >
+                  {buttonLoading ? (
+                    <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+                  ) : (
+                    "Upload"
+                  )}
+                </Button>
+           
             <Row>
               <TitleHeader
                 text={"Item Information "}

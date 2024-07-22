@@ -292,7 +292,8 @@ function WareHouseInventory() {
                                   ? "| Out of stock"
                                   : "| Low on stock"}
                               </span> | {''}
-                               {/* {Item.supplier} | {''} */}
+                               {Item.additional_info} | {''}
+                               {Item.item_code} | {''}
                               <span
                                 className={
                                   Item.status === "pending"
@@ -300,7 +301,7 @@ function WareHouseInventory() {
                                     : "text-success"
                                 }
                               >
-                                {/* {Item.school} */}
+                                {Item.subject_category}
                               </span> | {''}
                               {/* {convertDate(Item.created_at)} */}
                             </span>

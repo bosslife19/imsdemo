@@ -1,24 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./AdminAuthenticate.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, Link, useNavigate, } from "react-router-dom";
 import AuthencationHeader from "../../../components/Headers/AuthencationHeader";
-import AuthenticationContext from "../../../context/Authentication/AuthenticationContext";
-import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+// import AuthenticationContext from "../../../context/Authentication/AuthenticationContext";
+// import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
+  
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
   const [email, setEmail] = useState('');
   const handleSubmit = async (e)=>{
     e.preventDefault();
     const res = await axios.post(`${baseUrl}/api/auth/forgot-password`,{email});
    
-    if(res.status ==200){
+    if(res.status ===200){
         navigate('/change-password');
     }
 

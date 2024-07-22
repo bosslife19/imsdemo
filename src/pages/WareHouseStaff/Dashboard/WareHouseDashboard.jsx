@@ -70,7 +70,7 @@ function WareHouseDashboard() {
     },
   ];
   const Bardata = {
-    labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    labels: getItemsData.map(item=>item.name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     datasets: [
       {
         label: "Stock Level",

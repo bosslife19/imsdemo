@@ -11,7 +11,7 @@ import {
   faSignOutAlt,
   faDashboard,
   faStore,
-  faLanguage,
+
 } from "@fortawesome/free-solid-svg-icons";
 import {
   SideNavButton,

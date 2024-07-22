@@ -223,14 +223,14 @@ function InventoryManagement() {
                 Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
                 Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
+                optionTitle={"Filter by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"School Type"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
@@ -238,15 +238,15 @@ function InventoryManagement() {
           <Row className="d-none d-lg-flex">
             <Col className="d-flex justify-content-end ms-auto gap-3">
               <Filter
-                optionTitle={"Filter by"}
+                optionTitle={"Filters by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
-                optionTitle={"Sort by"}
+                optionTitle={"Filter by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"School Type"}
                 onSelect={(value) => setSortBy(value)}
               />
               <PrimaryButton

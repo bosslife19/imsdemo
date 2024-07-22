@@ -16,7 +16,7 @@ export const UserBox = () => {
           id: 1,
           name: "JOHN DIGGLE",
           action: "Viewed stock items",
-          description: "Books sent to ABC Academy",
+          description: "Books sent to EdoSUBEB",
           date: "10th Feb, 2022",
           time: "3:56pm",
         },
@@ -24,7 +24,7 @@ export const UserBox = () => {
           id: 2,
           name: "JOHN DIGGLE",
           action: "Viewed stock items",
-          description: "Books sent to ABC Academy",
+          description: "Books sent to EdoSUBEB",
           date: "10th Feb, 2022",
           time: "3:56pm",
         },
@@ -32,7 +32,7 @@ export const UserBox = () => {
           id: 3,
           name: "JOHN DIGGLE",
           action: "Viewed stock items",
-          description: "Books sent to ABC Academy",
+          description: "Books sent to EdoSUBEB",
           date: "10th Feb, 2022",
           time: "3:56pm",
         },
@@ -40,7 +40,7 @@ export const UserBox = () => {
           id: 4,
           name: "JOHN DIGGLE",
           action: "Viewed stock items",
-          description: "Books sent to ABC Academy",
+          description: "Books sent to EdoSUBEB",
           date: "10th Feb, 2022",
           time: "3:56pm",
         },
@@ -48,7 +48,7 @@ export const UserBox = () => {
           id: 5,
           name: "JOHN DIGGLE",
           action: "Viewed stock items",
-          description: "Books sent to ABC Academy",
+          description: "Books sent to EdoSUBEB",
           date: "10th Feb, 2022",
           time: "3:56pm",
         },
@@ -87,7 +87,7 @@ export const UserBox = () => {
                   <Card.Title className="CardTiTle fw-bold m-3">
                     Admin
                   </Card.Title>
-                  <Card.Body className="AdminRecentUser m-3 rounded">
+                  <Card.Body className="AdminRecentUser m-1 rounded">
                     {activities.map((activity) => (
                       <Row
                       style={{fontSize:"12px"}}
@@ -124,7 +124,7 @@ export const UserBox = () => {
                     Warehouse Staff
                   </Card.Title>
 
-                  <Card.Body className="AdminRecentUser m-4 rounded">
+                  <Card.Body className="AdminRecentUser m-1 rounded">
                     {activities.map((activity) => (
                       <Row
                       style={{fontSize:"12px"}}
@@ -162,7 +162,7 @@ export const UserBox = () => {
                     Head Teacher
                   </Card.Title>
 
-                  <Card.Body className="AdminRecentUser m-4 rounded">
+                  <Card.Body className="AdminRecentUser m-1 rounded">
                     {activities.map((activity) => (
                       <Row
                       style={{fontSize:"12px"}}

@@ -8,8 +8,8 @@
   background-color: rgba(242, 242, 242, 1);
 }
 .reportContentAppear {
-  height: 672px;
-  margin-top: 15px;
+  height: 699px;
+  /* margin-top: 10px; */
   background-color: rgba(224, 224, 224, 1);
   border: 2px solid rgba(160, 160, 160, 1);
   border-radius: 16px;

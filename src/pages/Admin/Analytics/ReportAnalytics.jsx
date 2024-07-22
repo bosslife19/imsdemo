@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import SideNavigation from "../../../components/Navigations/SideNavigation";
@@ -27,6 +27,98 @@ function ReportAnalytics() {
       setSelectedBox(boxName); // Select the box
     }
   };
+
+  const filterOptionforLGA = useMemo(() => [
+    
+    {
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
+  ], []);
+  const filterOptionForType = useMemo(()=>[
+   
+    {
+      pk: 2,
+      type: 'JSS'
+    },
+    {
+      pk: 3,
+      type: 'Primary'
+    },
+    {
+      pk: 4,
+      type: 'Progressive'
+    }
+  ])
 
   const renderContent = () => {
     switch (selectedBox) {
@@ -66,13 +158,13 @@ function ReportAnalytics() {
         <Container className="reportContainer">
           <TitleHeader text={"Reports & Analytics"} />
           <Row className="mb-3">
-            <Col className="mb-3" lg={6} xl={8} md={12} sm={12} xs={12}>
+            <Col className="mb-3" lg={6} xl={7} md={9} sm={12} xs={12}>
               <Search
                 Searchstyle={"seachContentBar"}
                 searchText={"Search Users..."}
               />
             </Col>
-            <Col lg={3} md={3} xl={2} sm={6} xs={6}>
+            {/* <Col lg={3} md={3} xl={2} sm={6} xs={6}>
               <Filter
                 optionTitle={"Filter by"}
                 options={filterData}
@@ -85,10 +177,43 @@ function ReportAnalytics() {
                 options={filterData}
                 default={"Random"} // Corrected typo here from "Ramdom" to "Random"
               />
-            </Col>
+            </Col> */}
+            {/* <Row className="mb-3 mt-3"> */}
+           {/* <div className="d-flex"> */}
+           {/* <Col lg={3} md={3} xl={2} sm={6} xs={6} style={{marginRight:"22px"}}> */}
+              {/* <div className="d-flex justify-content-between"> */}
+                 {/* <Filter
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
+                  defult={"All"}
+                />
+                 </Col>
+                  <Col lg={3} md={3} xl={2} sm={6} xs={6}>
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
+                  defult={"All"}
+                />
+                </Col> */}
+           {/* </div> */}
+              {/* </div> */}
+              {/* <div className=" d-lg-none d-flex justify-content-end ">
+                <Filter
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
+                  defult={"All"}
+                />
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
+                  defult={"All"}
+                />
+              </div> */}
+           
+          {/* </Row> */}
           </Row>
           <Row>
-            <Col md={6} className="p-3 grid-container">
+            <Col md={6} className="p-3 grid-container mb-5">
               <Row className="rowContainer">
                 <Col
                    style={{cursor:"pointer"}}
@@ -176,7 +301,7 @@ function ReportAnalytics() {
                     <Image src={ExpireIcon} className="boxImage" />
                   </div>
                   <div className="desktopBoxTextWarper">
-                    <h5 className="fs-6 pt-3 boxtext">Expiry Reports</h5>
+                    <h5 className="fs-6 pt-3 boxtext">Material Usage</h5>
                     <p className="fs-6 boxParagraph">
                       Monitor and manage expiration dates for various items or resources
                       within the organization.
@@ -193,7 +318,7 @@ function ReportAnalytics() {
                 <Col md={5} lg={5} className="boxCol emptyBox"></Col>
               </Row>
             </Col>
-            <Col md={6} className="reportContentAppear">
+            <Col md={6} className="reportContentAppear mt-5">
               {renderContent()}
             </Col>
           </Row>

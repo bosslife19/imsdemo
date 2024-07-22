@@ -213,7 +213,7 @@ function AddNewItem() {
                       placeholder="Barcode Id"
                       className="UserCreateInput"
                       name="barcode_id"
-                      required
+                      // required
                     />
                   </Col>
                 </Row>

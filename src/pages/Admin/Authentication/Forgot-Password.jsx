@@ -14,7 +14,7 @@ function Login() {
   
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
   const [email, setEmail] = useState('');
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e)=>{ 
     e.preventDefault();
     const res = await axios.post(`${baseUrl}/api/auth/forgot-password`,{email});
    

@@ -24,6 +24,7 @@ import BarGraph from "../../../components/Graph/BarGraph";
 import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+import { useNavigate } from "react-router-dom";
 
 // Register the components
 ChartJS.register(
@@ -39,6 +40,7 @@ ChartJS.register(
   Filler
 );
 
+
 function WareHouseDashboard() {
   const {
     getInventoryItems, getItemsData, getItemsIsLoading
@@ -47,7 +49,10 @@ function WareHouseDashboard() {
   const { ProcessAnalysis, itemDataAnalysis, schoolDataAnalysis} =
   useContext(AnalysisContext);
 
+  
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate= useNavigate();
 
   useEffect(() => {
     getInventoryItems();
@@ -70,7 +75,7 @@ function WareHouseDashboard() {
     },
   ];
   const Bardata = {
-    labels: getItemsData.map(item=>item.name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    labels: getItemsData.map(item=>item.item_name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     
     datasets: [
       {
@@ -80,7 +85,7 @@ function WareHouseDashboard() {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(146, 216, 200, 1)",
         hoverBorderColor: "rgba(75,192,192,1)",
-        data: [650, 590, 800, 810, 560, 550, 400, 700, 650, 520],
+        data:  getItemsData.map(item=>item.quantity),
       },
     ],
   };
@@ -147,24 +152,29 @@ function WareHouseDashboard() {
               <PrimaryButton
                 text={"Scan Item "}
                 Primarystyle={"InventoryReportButton"}
+                clickEvent={()=>navigate('/ScanMaterial')}
+                
               />
             </Col>
             <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
               <PrimaryButton
                 text={"View Inventory"}
                 Primarystyle={"InventoryReportButton"}
+                clickEvent={()=>navigate('/WareHouseInventory')}
               />
             </Col>
             <Col lg={3} md={3} xl={3} sm={6} xs={6}>
               <PrimaryButton
                 text={"Report Discrepancy"}
                 Primarystyle={"InventoryReportButton"}
+                clickEvent={()=>navigate('/ReportDiscrepancy')}
               />
             </Col>
             <Col lg={3} md={3} xl={3} sm={6} xs={6}>
               <PrimaryButton
                 text={"Push Notification"}
                 Primarystyle={"InventoryReportButton"}
+                clickEvent={()=>navigate('/WareHousePushNotification')}
               />
             </Col>
           </Row>

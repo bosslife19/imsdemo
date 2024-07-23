@@ -21,7 +21,8 @@ import PrimaryButton from "../../../components/Button/PrimaryButton";
 import PresentaionCard, {
   NoImagCard,
 } from "../../../components/Card/PresentaionCard";
-import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
+import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
+import schoolImage from "../../../assets/schools/shelves.jpg";
 import BarGraph from "../../../components/Graph/BarGraph";
 import LineGraph from "../../../components/Graph/LineGraph";
 import DoughnutGraph from "../../../components/Graph/DoughnutGraph";
@@ -260,7 +261,7 @@ function HeadTeacherDashboard() {
               <Row className="mb-3">
                 <PresentaionCard
                   title={"Total Inventory Items"}
-                  image={inventoryImage}
+                  image={schoolImage}
                   figure={"12,674"}
                   margin={"↓"}
                   marginColor={"red"}

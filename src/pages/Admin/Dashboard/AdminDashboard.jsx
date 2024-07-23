@@ -22,8 +22,8 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
 
-import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
-import schoolImage from "../../../assets/bigIcon/schoolIcon.png";
+import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
+import schoolImage from "../../../assets/schools/shelves.jpg";
 import LineGraph from "../../../components/Graph/LineGraph";
 import DoughnutGraph from "../../../components/Graph/DoughnutGraph";
 import BarGraph from "../../../components/Graph/BarGraph";

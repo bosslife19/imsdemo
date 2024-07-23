@@ -52,6 +52,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [schools, setSchools] = useState([]);
+  const [originalSchools, setOriginalSchools] = useState([]);
   
 
   const {
@@ -77,7 +78,7 @@ function AdminDashboard() {
     getInventoryItems();
     getSchools();
     setOriginalItems(getItemsData);
-    console.log(getItemsData)
+    
   }, [ ])
 
   useEffect(() => {
@@ -85,6 +86,15 @@ function AdminDashboard() {
     ProcessAnalysis(getItemsData);
     
     if(filter && schools){
+    if(filter ==='All'){
+      
+       setGetItemsData(originalItems);
+       return setSchools(originalSchools);
+
+       
+
+    }
+   
       let schoolsMatch = schools.filter(item=>item.
         LGA === filter
         );
@@ -160,10 +170,11 @@ function AdminDashboard() {
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      console.log(response.data)
+      
       setSchools(response.data.schools);
       
       setCount(response.data.count);
+      setOriginalSchools(schools);
     } catch (error) {
       console.log(error)
     } 
@@ -178,6 +189,10 @@ function AdminDashboard() {
   };
 
   const filterOptionforLGA = useMemo(() => [
+    {
+      pk:1,
+      type:'All'
+    },
     
     {
       pk: 2,
@@ -255,6 +270,10 @@ function AdminDashboard() {
   ], []);
 
   const filterOptionForType = useMemo(()=>[
+    {
+      pk:1,
+      type:'All'
+    },
    
     {
       pk: 2,
@@ -295,7 +314,7 @@ function AdminDashboard() {
   ];
   const Bardata = {
     // labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    labels: getItemsData.map(item=>item.name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    labels: getItemsData.map(item=>item.item_name),
     datasets: [
       {
         label: "Stock Level",

@@ -268,13 +268,15 @@ function WareHouseInventory() {
                         height="50"
                       />
                       <div>
-                        <h6>{Item.name}</h6>
+                        <h6>{Item.item_name}</h6>
                         <h6 className="fs-6">
                         INV-{Item.id}
                           <span className="text-muted">
-                            | {Item.category} | {''}
+                            | {Item.school} | {''}
                             <span className="d-none d-lg-inline me">
-                              {Item.brand} | {`$${Item.unit_cost}`} | {Item.quantity} {''}
+                              {/* {Item.brand} | {`$${Item.unit_cost}`} */}
+                              
+                               | {Item.quantity} {''}
                               <span
                                 className={
                                   Item.quantity > 35
@@ -290,7 +292,8 @@ function WareHouseInventory() {
                                   ? "| Out of stock"
                                   : "| Low on stock"}
                               </span> | {''}
-                               {Item.supplier} | {''}
+                               {Item.additional_info} | {''}
+                               {Item.item_code} | {''}
                               <span
                                 className={
                                   Item.status === "pending"
@@ -298,9 +301,9 @@ function WareHouseInventory() {
                                     : "text-success"
                                 }
                               >
-                                {Item.status}
+                                {Item.subject_category}
                               </span> | {''}
-                              {convertDate(Item.created_at)}
+                              {/* {convertDate(Item.created_at)} */}
                             </span>
                           </span>
                         </h6>

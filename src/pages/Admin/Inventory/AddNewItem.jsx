@@ -13,6 +13,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import { scrollToTop } from "../../../utils/HelperFunc";
 import ConditionalSideNavigation from "../../../components/Navigations/ConditionalSideNavigation";
+import Select from 'react-select';
 import MessageContext from "../../../context/Message/MessageContext";
 import axios from "axios";
 
@@ -22,7 +23,30 @@ function AddNewItem() {
   const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
   const [success, setSuccess] = useState('');
+  const [schools, setSchools] = useState([]);
 
+  const getSchoolsNew = async () => {
+     
+    const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+    try {
+      const response = await axios.get(`${baseUrl}/api/school`);
+      console.log(response.data)
+      setSchools(response.data.schools);
+      const schoolNames = response.data.schools.map(item=>({id:item.SCHOOL_NAME, name:item.SCHOOL_NAME}));
+      
+      setSchools(schoolNames);
+      
+      
+    
+      
+    } catch (error) {
+      console.log(error)
+    } 
+  };
+
+  useEffect(()=>{
+    getSchoolsNew();
+  }, [])
   const {
     handleAddItem,
     addItemIsLoading,
@@ -40,6 +64,7 @@ function AddNewItem() {
   const [messageColor, setmessageColor] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
   const [csv, setCsv] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!addItemIsLoading && addItemResponse) {
@@ -89,15 +114,15 @@ function AddNewItem() {
   };
 
   const handleCsvChange = (e)=>{
-    const file = e.target.files[0];
-    setCsv(file);
+    const csvFile = e.target.files[0];
+    setCsv(csvFile);
   }
 
   const handleCsvSubmit = async (e)=>{
     e.preventDefault();
     
     try {
-      setButtonLoading(true);
+      setLoading(true);
       setSuccess('');
       setAddItemError(null);
       const formData = new FormData();
@@ -105,12 +130,12 @@ function AddNewItem() {
     
     const res = await axios.post(`${baseUrl}/api/item/upload`, formData);
     if(res.status ==200){
-      setButtonLoading(false)
+      setLoading(false)
       setSuccess(res.data.success);
     }
     
     } catch (error) {
-      setButtonLoading(false)
+      setLoading(false)
       console.log(error)
       setAddItemError(error.response.data.message)
     }
@@ -141,16 +166,13 @@ function AddNewItem() {
                 />
               )
             : null}
-          <Form onSubmit={handleSubmit}>
-            <h3 style={{fontWeight:'lighter', fontSize:17, marginBottom:2}}>Upload csv file (if available)</h3>
-            {success && <p style={{fontWeight:'lighter', fontSize:17, marginBottom:2, color:'green'}}>{success}</p>}
-          <Form.Control
+            <Form.Control
                       type="file"
-                      id="shoolfileInput"
+                      
                      
                       onChange={handleCsvChange}
                       // style={{ display: "none" }}
-                      name="file"
+                      name="csvFile"
                       accept="csv"
                     />
                      <Button
@@ -160,12 +182,16 @@ function AddNewItem() {
                   
                   onClick={handleCsvSubmit}
                 >
-                  {buttonLoading ? (
+                  {loading ? (
                     <FontAwesomeIcon icon={faSpinner} spin size="2x" />
                   ) : (
                     "Upload"
                   )}
                 </Button>
+          <Form onSubmit={handleSubmit}>
+            <h3 style={{fontWeight:'lighter', fontSize:17, marginBottom:2}}>Upload csv file (if available)</h3>
+            {success && <p style={{fontWeight:'lighter', fontSize:17, marginBottom:2, color:'green'}}>{success}</p>}
+          
            
             <Row>
               <TitleHeader
@@ -179,12 +205,12 @@ function AddNewItem() {
                       type="text"
                       placeholder="Item Name"
                       className="UserCreateInput"
-                      name="name"
+                      name="item_name"
                       required
                     />
                   </Col>
                 </Row>
-                <Row className="mb-3">
+                {/* <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
                       type="text"
@@ -194,7 +220,7 @@ function AddNewItem() {
                       required
                     />
                   </Col>
-                </Row>
+                </Row> */}
                 <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
@@ -202,7 +228,7 @@ function AddNewItem() {
                       placeholder="Brand"
                       className="UserCreateInput"
                       name="brand"
-                      required
+                      
                     />
                   </Col>
                 </Row>
@@ -213,7 +239,7 @@ function AddNewItem() {
                       placeholder="Barcode Id"
                       className="UserCreateInput"
                       name="barcode_id"
-                      // required
+                       required
                     />
                   </Col>
                 </Row>
@@ -225,20 +251,27 @@ function AddNewItem() {
                       required
                     >
                       <option value="">Category</option>
-                      <option value="office_supplies">office_supplies</option>
+                      <option value="English">English</option>
+                      <option value="Mathematics">Mathematics</option>
+                      <option value="Science">Science</option>
+                      <option value="Home Work">Home Work</option>
                     </Form.Select>
                   </Col>
                 </Row>
                 <Row className="mb-3">
                   <Col lg={2} md={2} xl={2} sm={6} xs={6}>
-                    <Form.Select
-                      className="UserCreateInput"
-                      name="value"
-                      required
-                    >
-                      <option value="">Value</option>
-                      <option value="Mid">Mid</option>
-                    </Form.Select>
+                  <Select
+                  className="UserCreateInput"
+                  name="school"
+                  options={schools}
+                  isSearchable
+                  placeholder="Select a school"
+                  
+                  
+                  getOptionLabel={(options) => options['name']}
+                  getOptionValue={(options) => options['name']}
+                />
+                    
                   </Col>
                 </Row>
                 <Row className="mb-5">
@@ -266,7 +299,7 @@ function AddNewItem() {
                 headerTextStyle={"headerTextStyle"}
               />
               <Form.Group className="mb-3" controlId="notificationTitle">
-                <Row className="mb-3">
+                {/* <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
                       type="number"
@@ -276,7 +309,7 @@ function AddNewItem() {
                       required
                     />
                   </Col>
-                </Row>
+                </Row> */}
                 <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
@@ -288,7 +321,7 @@ function AddNewItem() {
                     />
                   </Col>
                 </Row>
-                <Row className="mb-3">
+                {/* <Row className="mb-3">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
                       type="number"
@@ -298,14 +331,14 @@ function AddNewItem() {
                       required
                     />
                   </Col>
-                </Row>
+                </Row> */}
                 <Row className="mb-5">
                   <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                     <Form.Control
                       type="text"
                       className="UserCreateInput"
-                      placeholder="Supplier"
-                      name="supplier"
+                      placeholder="distribution"
+                      name="distribution"
                       required
                     />
                   </Col>
@@ -323,8 +356,9 @@ function AddNewItem() {
                     <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                       <Form.Control
                         type="text"
-                        placeholder="Serial Number"
+                        placeholder="Item Code"
                         className="UserCreateInput"
+                        name='item_code'
                       />
                     </Col>
                   </Row>
@@ -342,8 +376,9 @@ function AddNewItem() {
                       <Form.Control
                         as="textarea"
                         rows={6}
-                        placeholder="Addittional Information"
+                        placeholder="Class Grade"
                         className="UserCreateTextArea"
+                        name='classGrade'
                       />
                     </Col>
                   </Row>

@@ -106,7 +106,7 @@ function Login() {
             <Form.Group controlId="formBasicEmail">
               <Form.Control
                 type="email"
-                placeholder="Email Address"
+                placeholder="Email Address / oracle id"
                 className="mb-3 inputField"
                 name="email"
                 required

@@ -275,13 +275,13 @@ function InventoryManagement() {
                         height="50"
                       />
                       <div>
-                        <h6>{Item.name}</h6>
+                        <h6>{Item.item_name}</h6>
                         <h6 className="fs-6">
                         INV-{Item.id}
                           <span className="text-muted InventoryCategoryText">
                             | {Item.category} | {''}
                             <span className="d-none d-lg-inline me">
-                              {Item.brand} | {`$${Item.unit_cost}`} | {Item.quantity} {''}
+                              {Item.item_code} | {`$${Item.school}`} | {Item.quantity} {''}
                               <span
                                 className={
                                   Item.quantity > 35

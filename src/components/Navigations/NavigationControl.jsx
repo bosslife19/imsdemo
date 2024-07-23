@@ -24,16 +24,14 @@ import ReportDiscrepancy from "../../pages/WareHouseStaff/ReportDiscrepancy/Repo
 import ChangePassword from '../../pages/Admin/Authentication/ChangePassword';
 import ScanMaterial from "../../pages/WareHouseStaff/ScanMaterial/ScanMaterial";
 import WareHousePushNotification from "../../pages/WareHouseStaff/PushNotification/WareHousePushNotification";
-import WareHouseGenerateReport from "../../pages/WareHouseStaff/Inventory/WareHouseGenerateReport";
-import WareHouseAddItem from "../../pages/WareHouseStaff/Inventory/WareHouseAddItem";
-import WareHouseViewItem from "../../pages/WareHouseStaff/Inventory/WareHouseViewItem";
+
 import WareHouseAddMovement from "../../pages/WareHouseStaff/TrackMaterial/WareHouseAddMovement";
 import HeadTeacherDashboard from "../../pages/HeadTeacher/Dashboard/HeadTeacherDashboard";
 import ForgotPassword from '../../pages/Admin/Authentication/Forgot-Password';
 import HeaderTeacherInventory from "../../pages/HeadTeacher/Inventory/HeaderTeacherInventory";
-import HeaderTeacherGenerateReport from "../../pages/HeadTeacher/Inventory/HeaderTeacherGenerateReport";
+
 import HeadTeacherRequestMaterial from "../../pages/HeadTeacher/RequestMaterial/HeadTeacherRequestMaterial";
-import HeadTeacherReportDiscrepancy from "../../pages/HeadTeacher/ReportDiscrepancy/HeadTeacherReportDiscrepancy";
+
 import HeadTeacherPushNotification from "../../pages/HeadTeacher/PushNotification/HeadTeacherPushNotification";
 import HeadTeacherTrackMaterial from "../../pages/HeadTeacher/TrackMaterial/HeadTeacherTrackMaterial";
 import PrivateRoute, {

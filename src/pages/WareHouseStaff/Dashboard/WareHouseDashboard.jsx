@@ -19,7 +19,8 @@ import TitleHeader from "../../../components/Headers/TitleHeader";
 import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import PresentaionCard, { NoImagCard } from "../../../components/Card/PresentaionCard";
-import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
+import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
+import schoolImage from "../../../assets/schools/shelves.jpg";
 import BarGraph from "../../../components/Graph/BarGraph";
 import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
@@ -188,7 +189,7 @@ function WareHouseDashboard() {
               <Row className="mb-3">
                 <PresentaionCard
                   title={"Total Inventory Items"}
-                  image={inventoryImage}
+                  image={schoolImage}
                   figure={getItemsData? getItemsData.length :0}
                   margin={`${InvetoryTrend === 'up' ? '↑' : InvetoryTrend === 'down' ? '↓' : '~'} ${InvetoryDifference}`}
                   marginColor={InvetoryTrend === 'up' ? 'text-success': InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}

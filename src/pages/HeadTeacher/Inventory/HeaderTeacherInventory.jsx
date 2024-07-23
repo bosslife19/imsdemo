@@ -7,7 +7,8 @@ import Search from "../../../components/Search/Search";
 import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
-import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
+import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
+import schoolImage from "../../../assets/schools/shelves.jpg";
 import { useNavigate } from "react-router-dom";
 import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
@@ -134,7 +135,7 @@ function HeaderTeacherInventory() {
             <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
               <PresentaionCard
                 title={"Total Items"}
-                image={inventoryImage}
+                image={schoolImage}
                 figure={getItemsData ? getItemsData.length : 0}
                 margin={`${trend === 'up' ? '↑' : trend === 'down' ? '↓' : '~'} ${value}`}
                 marginColor={trend === 'up' ? 'text-success': trend === 'down' ? 'text-danger' : 'text-primary'}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -56,7 +56,7 @@ function AdminDashboard() {
   
 
   const {
-    getInventoryItems, getItemsData, getItemsIsLoading,setGetItemsData
+    getInventoryItems, getItemsData, getItemsIsLoading
   } = useContext(InventoryItemContext);
 
   
@@ -72,8 +72,8 @@ function AdminDashboard() {
   const [comfirmationAction, setComfirmationAction] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
-  const [filter, setFilter] = useState();
-  const [originalItems, setOriginalItems] = useState([])
+
+
   useEffect(() => {
     getInventoryItems();
     getSchools();
@@ -164,7 +164,6 @@ function AdminDashboard() {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, []);
-
   const getSchoolsNew = async () => {
      
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
@@ -576,31 +575,18 @@ function AdminDashboard() {
                   text={"Material Availability Overview"}
                   headerTextStyle={"headerTextStyle"}
                 />
-                 <Filter
-                  optionTitle={"School Type"}
-                  options={filterOptionForType}
+                <Filter
+                  optionTitle={"School"}
+                  options={filterData}
                   defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-                 <Filter
-                  optionTitle={"LGA"}
-                  options={filterOptionforLGA}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
+                  Filterstyle={"d-none d-lg-block"}
                 />
               </div>
               <div className=" d-lg-none d-flex justify-content-end ">
                 <Filter
-                  optionTitle={"School Type"}
-                  options={filterOptionForType}
+                  optionTitle={"School"}
+                  options={filterData}
                   defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-                 <Filter
-                  optionTitle={"LGA"}
-                  options={filterOptionforLGA}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
                 />
               </div>
             </Col>
@@ -818,6 +804,5 @@ function AdminDashboard() {
     </div>
   );
 }
-
 
 export default AdminDashboard;

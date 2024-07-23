@@ -405,6 +405,3 @@ function SchoolsManagement() {
 }
 
 export default SchoolsManagement;
-
-
-

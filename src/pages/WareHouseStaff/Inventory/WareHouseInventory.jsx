@@ -129,15 +129,18 @@ function WareHouseInventory() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
+ 
   const handleGenerateReport = () => {
-    navigate('/GenerateInventory')
+    navigate('/WareHouseGenerateInventory')
   }
-  const handleAdditem = () => {
+  const handleAdditem = () => { 
     navigate("/AddNewItem");
   }
   const handleItemDetail = (pk) => {
     navigate(`/ItemDetail/${pk}`);
+  };
+  const handleTrackMovementLog = () => {
+    navigate("/TrackMovementLog"); // Assuming pk is the identifier for the item
   };
 
   return (
@@ -196,14 +199,14 @@ function WareHouseInventory() {
               Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
               Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
+                optionTitle={"Filter by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"School type"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
@@ -225,14 +228,22 @@ function WareHouseInventory() {
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
-            <Col xl={6}>
+            <Col xl={3}> 
             <PrimaryButton
                 text={"Generate Inventory Report"}
                 Primarystyle={"WareHouseGenerateInventoryButton w-100"}
                 clickEvent={() => handleGenerateReport()}
               />
             </Col>
-            <Col xl={2}>
+            <Col xl={3}>
+                     <PrimaryButton
+  clickEvent={() => handleTrackMovementLog()} // Assuming Item.id is passed to identify the specific item
+  text={"Track MovementLog"}
+  Primarystyle={"UserManagementCreateButton"}
+/>
+                    </Col>
+            
+            <Col xl={1}>
             <PrimaryButton
                 Primaryicon={faAdd}
                 text={"Add Item"}
@@ -257,13 +268,15 @@ function WareHouseInventory() {
                         height="50"
                       />
                       <div>
-                        <h6>{Item.name}</h6>
+                        <h6>{Item.item_name}</h6>
                         <h6 className="fs-6">
                         INV-{Item.id}
                           <span className="text-muted">
-                            | {Item.category} | {''}
+                            | {Item.school} | {''}
                             <span className="d-none d-lg-inline me">
-                              {Item.brand} | {`$${Item.unit_cost}`} | {Item.quantity} {''}
+                              {/* {Item.brand} | {`$${Item.unit_cost}`} */}
+                              
+                               | {Item.quantity} {''}
                               <span
                                 className={
                                   Item.quantity > 35
@@ -279,7 +292,8 @@ function WareHouseInventory() {
                                   ? "| Out of stock"
                                   : "| Low on stock"}
                               </span> | {''}
-                               {Item.supplier} | {''}
+                               {Item.additional_info} | {''}
+                               {Item.item_code} | {''}
                               <span
                                 className={
                                   Item.status === "pending"
@@ -287,9 +301,9 @@ function WareHouseInventory() {
                                     : "text-success"
                                 }
                               >
-                                {Item.status}
+                                {Item.subject_category}
                               </span> | {''}
-                              {convertDate(Item.created_at)}
+                              {/* {convertDate(Item.created_at)} */}
                             </span>
                           </span>
                         </h6>

@@ -77,6 +77,7 @@ function AdminDashboard() {
     getInventoryItems();
     getSchools();
     setOriginalItems(getItemsData);
+    console.log(getItemsData)
   }, [ ])
 
   useEffect(() => {
@@ -99,8 +100,12 @@ function AdminDashboard() {
         
         
     }
-    
-    if(filter==='AKOKO EDO'){
+    if(filter && filter === 'All'){
+      setGetItemsData(originalItems); // Show all items
+      setCount(schools.length); // Update count based on all schools
+  
+    }
+   else if(filter==='AKOKO EDO'){
      
       setGetItemsData(originalItems.filter(item =>
         item.name === 'Pencil' ||
@@ -108,34 +113,34 @@ function AdminDashboard() {
         item.name === 'Sharpner'
       ));
     
-    } if(filter ==='EGOR'){
+    } else if(filter ==='EGOR'){
       setGetItemsData(originalItems.filter(item =>
         item.name === 'Mathematics Textbook – Grade 1' ||
         item.name === 'Mathematics Textbook - Grade 2' ||
         item.name === 'Literacy Text Book - Grade 1'
       ))
     }
-     if(filter ==='ESAN CENTRAL'){
+    else if(filter ==='ESAN CENTRAL'){
       
       setGetItemsData(originalItems.filter(item =>
         item.name === 'Laptops' ||
         item.name === 'ChalkBoard'
       ));
-    } if(filter && filter==='JSS'){
+    } else if(filter && filter==='JSS'){
       setGetItemsData(originalItems.filter(item =>
         item.name === 'Pencil' ||
         item.name === 'Eraser' ||
         item.name === 'Sharpner'
       ))
     }
-    if(filter &&filter==='Primary'){
+    else if(filter &&filter==='Primary'){
       setGetItemsData(originalItems.filter(item =>
         item.name === 'Mathematics Textbook – Grade 1' ||
         item.name === 'Mathematics Textbook - Grade 2' ||
         item.name === 'Literacy Text Book - Grade 1'
       ))
     }
-    if(filter && filter==='Progressive'){
+    else if(filter && filter==='Progressive'){
       setGetItemsData(originalItems.filter(item =>
         item.name === 'Laptops' ||
         item.name === 'ChalkBoard'
@@ -153,12 +158,13 @@ function AdminDashboard() {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, []);
+
   const getSchoolsNew = async () => {
      
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      
+      console.log(response.data)
       setSchools(response.data.schools);
       
       setCount(response.data.count);
@@ -176,7 +182,10 @@ function AdminDashboard() {
   };
 
   const filterOptionforLGA = useMemo(() => [
-    
+    {
+      pk: 1,
+      type: "All",
+    },
     {
       pk: 2,
       type: "AKOKO EDO",
@@ -253,7 +262,10 @@ function AdminDashboard() {
   ], []);
 
   const filterOptionForType = useMemo(()=>[
-   
+    {
+      pk: 1,
+      type: 'All'
+    },
     {
       pk: 2,
       type: 'JSS'

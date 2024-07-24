@@ -270,7 +270,7 @@ function HeadTeacherDashboard() {
               <Row className="mb-3">
                 <PresentaionCard
                   title={"Low Stock Alerts"}
-                  image={inventoryImage}
+                  image={schoolImage}
                   figure={"46"}
                   margin={"↓"}
                   marginColor={"red"}

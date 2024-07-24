@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo} from "react";
+import React, { useContext, useEffect, useState, useMemo, useRef} from "react";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -34,7 +34,8 @@ import SchoolContext from "../../../context/School/SchoolContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-
+import { UserBox } from "../ViewLowstock/UserBox";
+ 
 // Register the components
 ChartJS.register(
   CategoryScale,
@@ -553,6 +554,29 @@ function AdminDashboard() {
     },
   ];
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        closeMenu();
+      }
+    };
+
+    // document.addEventListener('mousedown', handleClickOutside);
+    // return () => {
+    //   document.removeEventListener('mousedown', handleClickOutside);
+    // };
+  }, []);
   
   return (
     <div>
@@ -578,13 +602,17 @@ function AdminDashboard() {
             />
           </div>
           <Row className="mb-3">
-            <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
-              <PrimaryButton
-                text={"View Low Stock Items "}
-                Primarystyle={"InventoryReportButton"}
-                clickEvent={() => null}
-              />
-            </Col>
+          <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
+        <PrimaryButton
+          text="View Low Stock Items"
+          Primarystyle="InventoryReportButton"
+          clickEvent={toggleMenu}
+          className="relatives"
+        />
+      </Col>
+      <div ref={menuRef} className={`view ${menuOpen ? 'open' : ''}`}>
+        <UserBox />
+      </div>
             <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
               <PrimaryButton
                 text={"Add New Item"}

@@ -2,7 +2,7 @@ import { React, createContext, useState, useContext } from "react";
 import axios from "axios";
 import * as XLSX from 'xlsx'
 import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
+import autoTable from "jspdf-autotable"
 
 
 import GeneralContext from "../General/GeneralContext";
@@ -50,8 +50,10 @@ export const InventoryItemProvider = ({ children }) => {
   const getInventoryItems = async () => {
     setGetItemsIsLoading(true);
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+    console.log(baseUrl)
     try {
       const response = await axios.get(`${baseUrl}/api/item`);
+      console.log(response.data)
       setGetItemsData(response.data.items);
     } catch (error) {
       setGetItemsError(error);
@@ -65,6 +67,7 @@ export const InventoryItemProvider = ({ children }) => {
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/item/${pk}`);
+      console.log(response)
       setGetSingleItemData(response.data.item);
       seteditedFormData({
         barcode_id: response.data.item.barcode_id || "",
@@ -95,24 +98,26 @@ export const InventoryItemProvider = ({ children }) => {
   
     const fileResponse = await handleAddFile(imageData);
   
+  
     if (fileResponse && fileResponse.success) {
-      return console.log(e.target.file.value);
+
       const formData = {
-        name: e.target.name.value,
-        description: e.target.description.value,
+        item_name: e.target.item_name.value,
+        class_grade: e.target.classGrade.value,
         brand: e.target.brand.value,
         category: e.target.category.value,
         barcode_id: e.target.barcode_id.value,
-        value: e.target.value.value,
+        school: e.target.school.value,
         image: fileResponse.url,
-        unit_cost: e.target.unit_cost.value,
+        // unit_cost: e.target.unit_cost.value,
         quantity: e.target.quantity.value,
-        reorder_point: e.target.reorder_point.value,
-        supplier: e.target.supplier.value,
+        item_code: e.target.item_code.value,
+        distribution: e.target.distribution.value,
       };
-  
+  console.log(formData.image)
       try {
         const result = await axios.post(`${baseUrl}/api/item`, formData);
+        console.log(result.data)
         setAddItemResponse(result.data);
       } catch (error) {
         setAddItemError(error.response.data.message);
@@ -158,6 +163,7 @@ export const InventoryItemProvider = ({ children }) => {
         `${baseUrl}/api/item/${pk}`,
         updatedData
       );
+      console.log(result.data)
       seteditItemResponse(result.data);
     } catch (error) {
       seteditItemError(error.response.data.message);
@@ -177,7 +183,7 @@ export const InventoryItemProvider = ({ children }) => {
     try {
       const response = await axios.get(`${baseUrl}/api/item/inventory-report?format=${formatQuery}&lga=${lga}&schoolType=${schoolType}`, );
       
-     
+      console.log(response.data)
       if(formatQuery ==='pdf'){
         let doc = new jsPDF();
         autoTable(doc,{

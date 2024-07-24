@@ -22,8 +22,8 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
 
-import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
-import schoolImage from "../../../assets/bigIcon/schoolIcon.png";
+import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
+import schoolImage from "../../../assets/schools/shelves.jpg";
 import LineGraph from "../../../components/Graph/LineGraph";
 import DoughnutGraph from "../../../components/Graph/DoughnutGraph";
 import BarGraph from "../../../components/Graph/BarGraph";
@@ -90,6 +90,7 @@ function AdminDashboard() {
     getInventoryItems();
     getSchools();
     setOriginalItems(getItemsData);
+    console.log(getItemsData)
   }, [ ])
 
   useEffect(() => {
@@ -120,8 +121,12 @@ function AdminDashboard() {
         
         
     }
-    
-    if(filter==='AKOKO EDO'){
+    if(filter && filter === 'All'){
+      setGetItemsData(originalItems); // Show all items
+      setCount(schools.length); // Update count based on all schools
+  
+    }
+   else if(filter==='AKOKO EDO'){
      
       setGetItemsData(originalItems.filter(item =>
         item.item_name === 'New Concept Mathematics' ||
@@ -129,33 +134,33 @@ function AdminDashboard() {
         item.item_name === 'Wabp Social Studies Book 1'
       ));
     
-    } if(filter ==='EGOR'){
+    } else if(filter ==='EGOR'){
       setGetItemsData(originalItems.filter(item =>
         item.item_name === 'Basic Science: An Integrated Science Course' ||
         item.item_name === 'Junior Secondary Business Studies Textbook' 
       ))
     }
-     if(filter ==='ESAN CENTRAL'){
+    else if(filter ==='ESAN CENTRAL'){
       
       setGetItemsData(originalItems.filter(item =>
         item.item_name === 'New Concept Mathematics' ||
         item.item_name === 'New English Concept' ||
         item.item_name === 'Wabp Social Studies Book 1'
       ));
-    } if(filter && filter==='JSS'){
+    } else if(filter && filter==='JSS'){
       setGetItemsData(originalItems.filter(item =>
        item.item_name === 'Basic Science: An Integrated Science Course' ||
         item.item_name === 'Junior Secondary Business Studies Textbook' 
       ))
     }
-    if(filter &&filter==='Primary'){
+    else if(filter &&filter==='Primary'){
       setGetItemsData(originalItems.filter(item =>
        item.item_name === 'New Concept Mathematics' ||
         item.item_name === 'New English Concept' ||
         item.item_name === 'Wabp Social Studies Book 1'
       ))
     }
-    if(filter && filter==='Progressive'){
+    else if(filter && filter==='Progressive'){
       setGetItemsData(originalItems.filter(item =>
        item.item_name === 'New Concept Mathematics' ||
         item.item_name === 'New English Concept' ||
@@ -174,12 +179,13 @@ function AdminDashboard() {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, []);
+
   const getSchoolsNew = async () => {
      
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      
+      console.log(response.data)
       setSchools(response.data.schools);
       
       setCount(response.data.count);
@@ -199,10 +205,12 @@ function AdminDashboard() {
 
   const filterOptionforLGA = useMemo(() => [
     {
-      pk:1,
-      type:'All'
+
+      pk: 1,
+      type: "All",
     },
-    
+
+   
     {
       pk: 2,
       type: "AKOKO EDO",
@@ -279,10 +287,13 @@ function AdminDashboard() {
   ], []);
 
   const filterOptionForType = useMemo(()=>[
+
+ 
    {
     pk:1,
     type:'All'
    },
+
     {
       pk: 2,
       type: 'JSS'

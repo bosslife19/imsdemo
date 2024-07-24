@@ -9,7 +9,9 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
-import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
+// import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
+import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
+import schoolImage from "../../../assets/schools/shelves.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
@@ -193,7 +195,7 @@ function InventoryManagement() {
             <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
               <PresentaionCard
                 title={"Total Items"}
-                image={inventoryImage}
+                image={schoolImage}
                 figure={getItemsData ? getItemsData.length : 0}
                 margin={`${trend === 'up' ? '↑' : trend === 'down' ? '↓' : '~'} ${value}`}
                 marginColor={trend === 'up' ? 'text-success': trend === 'down' ? 'text-danger' : 'text-primary'}
@@ -225,14 +227,14 @@ function InventoryManagement() {
                 Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
                 Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
+                optionTitle={"Filter by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"School Type"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
@@ -240,15 +242,15 @@ function InventoryManagement() {
           <Row className="d-none d-lg-flex">
             <Col className="d-flex justify-content-end ms-auto gap-3">
               <Filter
-                optionTitle={"Filter by"}
+                optionTitle={"Filters by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
-                optionTitle={"Sort by"}
+                optionTitle={"Filter by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"School Type"}
                 onSelect={(value) => setSortBy(value)}
               />
               <PrimaryButton
@@ -275,13 +277,13 @@ function InventoryManagement() {
                         height="50"
                       />
                       <div>
-                        <h6>{Item.name}</h6>
+                        <h6>{Item.item_name}</h6>
                         <h6 className="fs-6">
                         INV-{Item.id}
                           <span className="text-muted InventoryCategoryText">
                             | {Item.category} | {''}
                             <span className="d-none d-lg-inline me">
-                              {Item.brand} | {`$${Item.unit_cost}`} | {Item.quantity} {''}
+                              {Item.item_code} | {`$${Item.school}`} | {Item.quantity} {''}
                               <span
                                 className={
                                   Item.quantity > 35

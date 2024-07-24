@@ -4,8 +4,7 @@ const AnalysisContext = createContext();
 export default AnalysisContext;
 
 export const AnalysisProvider = ({ children }) => {
-  const [trend, setTrend] = useState(null);
-  const [value, setValue] = useState(null);
+ 
 
   const [schoolDataAnalysis, setSchoolDataAnalysis] = useState({ value: 0, trend: '' });
   const [itemDataAnalysis, setItemDataAnalysis] = useState({ value: 0, trend: '' });
@@ -71,8 +70,8 @@ export const AnalysisProvider = ({ children }) => {
     userDataAnalysis: userDataAnalysis,
     itemDataAnalysis: itemDataAnalysis,
     schoolDataAnalysis: schoolDataAnalysis,
-    value: value,
-    trend: trend,
+    // value: value,
+    // trend: trend,
   };
 
   return (

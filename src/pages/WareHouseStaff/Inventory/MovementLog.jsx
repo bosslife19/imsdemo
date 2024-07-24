@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState, useMemo } from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
-import "./WareHouseTrack.css";
+import { Container, Row, Col, Image, Table,  } from "react-bootstrap";
+import "../TrackMaterial/WareHouseTrack.css";
+import TrackingContext from "../../../context/Tracking/TrackingContext";
+import { useLocation, useNavigate } from "react-router-dom";
+import { convertDate, convertDated, convertTime, scrollToTop } from "../../../utils/HelperFunc";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
+import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
+import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import TitleHeader from "../../../components/Headers/TitleHeader";
 import Search from "../../../components/Search/Search";
-import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
-import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
+import { faClockRotateLeft, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import Filter from "../../../components/Filter/Filter";
 import inventoryListImage from "../../../assets/bigIcon/inventoryList.png";
-import { useNavigate, useLocation } from "react-router-dom";
-import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
-import TrackingContext from "../../../context/Tracking/TrackingContext";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
-import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import Loading from "../../../components/Loading/Loading";
-import { convertDate, scrollToTop } from "../../../utils/HelperFunc";
 
-function WareHouseTrack() {
+function MovementLog() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -85,6 +85,19 @@ function WareHouseTrack() {
     ],
     []
   );
+  const sortOptionUP = useMemo(
+    () => [
+      {
+        pk: 1,
+        type: "This week",
+      },
+      {
+        pk: 2,
+        type: "Last week",
+      },
+    ],
+    []
+  );
 
   const filterData = [
     {
@@ -132,14 +145,20 @@ function WareHouseTrack() {
     }, 4000);
   };
 
-  const handleAddMovement = () => {
-    navigate("/WareHouseAddMovement");
-  };
-
-  const handleTrackMovementLog = (itemId) => {
-    navigate("/TrackMovementLog");
-  };
-
+ 
+  
+  const tableHeaders = [
+    'Date Taken',
+    'Date Returned',
+    'Time',
+    'Item ID',
+    'Item Name',
+    'From Location',
+    'to Location',
+    'Quantity',
+    'Action',
+    'User'
+  ];
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
@@ -149,45 +168,47 @@ function WareHouseTrack() {
           toggleSidebar={toggleSidebar}
         />
         <Container className="reportContainer">
-          {message ? (
-            comfirmationAction && (
-              <ComfirmationPop
-                message={message}
-                ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
+          {message
+            ? comfirmationAction && (
+                <ComfirmationPop
+                  message={message}
+                  ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
+                />
+              )
+            : null}
+         <div className="d-flex justify-content-between">  
+           <TitleHeader text={"Track Materials"} />
+          <Filter
+                optionTitle={"Time"}
+                options={sortOptionUP}
+                defult={"This week"}
+                onSelect={(value) => setSortBy(value)}
               />
-            )
-          ) : null}
-          <TitleHeader text={"Track Materials"} />
-          <Row className="mb-4">
+          </div>
+          <TitleHeader
+            text={"Movement Log"}
+            headerTextStyle={"headerTextStyle"}
+          />
+          <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
               <Search
                 Searchstyle={"seachContentBar"}
-                searchText={"Search Materials..."}
-                onSearchChange={handleSearchChange}
+                searchText={"Search Log..."}
               />
             </Col>
           </Row>
-          <Row className="d-lg-none mobileCreateButton my-3">
-            <Col className="d-flex justify-content-end">
-              <PrimaryButton
-                Primaryicon={faAdd}
-                text={"Add Item"}
-                Primarystyle={"UserManagementCreateButton"}
-                clickEvent={() => handleAddMovement()}
-              />
-            </Col>
-          </Row>
+           
           <Row className="d-lg-none ">
             <Col className="d-flex justify-content-between ms-auto gap-3">
               <Filter
-                Filterstyle={"responsive"}
+              Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
                 defult={"Ramdom"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
-                Filterstyle={"responsive"}
+              Filterstyle={"responsive"}
                 optionTitle={"Sort by"}
                 options={sortOption}
                 defult={"Ramdom"}
@@ -202,6 +223,7 @@ function WareHouseTrack() {
                 options={filterOption}
                 defult={"Ramdom"}
                 onSelect={(value) => setFilterBy(value)}
+
               />
               <Filter
                 optionTitle={"Sort by"}
@@ -209,80 +231,59 @@ function WareHouseTrack() {
                 defult={"Ramdom"}
                 onSelect={(value) => setSortBy(value)}
               />
-              <PrimaryButton
-                Primaryicon={faAdd}
-                text={"Add Item"}
-                Primarystyle={"UserManagementCreateButton"}
-                clickEvent={() => handleAddMovement()}
+                <PrimaryButton
+                Primaryicon={faClockRotateLeft}
+                text={"Log History"}
+                Primarystyle={"pushNotificationTimer d-none d-lg-flex"}
               />
             </Col>
           </Row>
-          <Container className=" ListContainer">
+          
+          <Container className=" ListContainer pt-2">
+          <Table className="tablesSize" bordered  responsive>
+          <thead >
+        <tr>
+          {tableHeaders.map((header, keys) => (
+            <th style={{ backgroundColor: '#92D8C8' }}  key={keys}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
             {!getTrackingsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 filteredData.map((Item) => (
-                  <Row
-                    key={Item.id}
-                    className="UserListRow my-2 py-2 align-items-center"
-                  >
-                    <Col xs={9} md={9} sm={9} lg={9} className="d-flex gap-3">
-                      <Image
-                        src={inventoryListImage}
-                        rounded
-                        width="50"
-                        height="50"
-                      />
-                      <div>
-                        <h6>{Item.item_name}</h6>
-                        <h6 className="fs-6">
-                          {" "}
-                          {Item.id}
-                          <span className="text-muted wareHouserCategoryText">
-                            {" "}
-                            | {Item.category}{" "}
-                            <span className="d-none d-lg-inline me">
-                              | {Item.item_description} | {Item.action} |{" "}
-                              {Item.brand} |{" "}
-                              <span
-                                className={
-                                  Item.priority === "low"
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {Item.priority}
-                              </span>{" "}
-                              &nbsp;| &nbsp; {Item.address} | &nbsp;
-                              <span
-                                className={
-                                  Item.status === "pending"
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {" "}
-                                {Item.status}
-                              </span>{" "}
-                              | {convertDate(Item.created_at)}
-                            </span>{" "}
-                          </span>
-                        </h6>
-                      </div>
-                    </Col>
-                    <Col
-                      xs={3}
-                      md={3}
-                      sm={3}
-                      lg={3}
-                      className="d-flex justify-content-end gap-2"
-                    >
-                      <PrimaryButton
-                        clickEvent={() => handleTrackMovementLog()}
-                        text={"Track"}
-                        Primarystyle={"schoolViewButton"}
-                      />
-                    </Col>
-                  </Row>
+                 
+                  <tr key={Item.id}  className="UserListRow ">
+                   
+                   <td>
+                   {convertDated(Item.created_at)}
+                   </td>
+                   <td>
+                   {convertDated(Item.created_at)}
+                   </td>
+                   <td className="d-flex">{convertTime(Item.created_at)}</td>
+                      
+                        <td> <h6 > {" "}{Item.id}</h6></td>
+                        <td>
+                        <h6>{Item.item_name}</h6></td>
+                        <td className=""> 
+                             {" "} {Item.category}{" "} 
+                            </td>
+                            <td className="">
+                              {Item.item_description} {" "}
+                            
+                            </td>
+                            <td>    {Item.action} </td>
+                            <td>  {Item.brand}  </td>
+                            
+                             
+                             <td> {" "}
+                               {Item.address} 
+                             
+                          </td>
+                              
+                  </tr>
+                 
                 ))
               ) : (
                 <NonAvaliable
@@ -297,11 +298,14 @@ function WareHouseTrack() {
                 <Loading loading={getTrackingsIsLoading} />
               </Container>
             )}
+             </tbody>
+            </Table>
           </Container>
+         
         </Container>
       </div>
     </div>
   );
 }
 
-export default WareHouseTrack;
+export default MovementLog;

@@ -18,6 +18,7 @@ import Loading from "../../../components/Loading/Loading";
 import { convertDate, scrollToTop } from "../../../utils/HelperFunc";
 import MessageContext from "../../../context/Message/MessageContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function InventoryManagement() {
   const navigate = useNavigate();
@@ -161,6 +162,7 @@ function InventoryManagement() {
                 />
               )
             : null}
+            <BackButtonIcon/>
           <TitleHeader text={"Inventory Management"} />
           <Row className="mb-3">
             <Col lg={6} md={6} xl={6} sm={6} xs={6}>

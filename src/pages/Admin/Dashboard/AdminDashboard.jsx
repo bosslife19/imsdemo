@@ -32,6 +32,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import SchoolContext from "../../../context/School/SchoolContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 // Register the components
 ChartJS.register(
@@ -52,6 +54,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [schools, setSchools] = useState([]);
+  const [originalSchools, setOriginalSchools] = useState([])
   
 
   const {
@@ -66,6 +69,16 @@ function AdminDashboard() {
   
   const { ProcessAnalysis, itemDataAnalysis, schoolDataAnalysis} =
   useContext(AnalysisContext);
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
+
+  // Calculate the number of pages
+  const totalPages = Math.ceil(getItemsData.length / itemsPerPage);
+  const paginatedData = getItemsData.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [comfirmationAction, setComfirmationAction] = useState(false);
@@ -82,6 +95,14 @@ function AdminDashboard() {
   useEffect(() => {
     ProcessAnalysis(getSchoolsData);
     ProcessAnalysis(getItemsData);
+
+    if(filter ==='All'){
+      console.log('here')
+       setGetItemsData(originalItems);
+
+       return setSchools(originalSchools);
+    
+    }
     
     if(filter && schools){
       let schoolsMatch = schools.filter(item=>item.
@@ -162,6 +183,7 @@ function AdminDashboard() {
       setSchools(response.data.schools);
       
       setCount(response.data.count);
+      setOriginalSchools(response.data.schools);
     } catch (error) {
       console.log(error)
     } 
@@ -176,6 +198,10 @@ function AdminDashboard() {
   };
 
   const filterOptionforLGA = useMemo(() => [
+    {
+      pk:1,
+      type:'All'
+    },
     
     {
       pk: 2,
@@ -253,7 +279,10 @@ function AdminDashboard() {
   ], []);
 
   const filterOptionForType = useMemo(()=>[
-   
+   {
+    pk:1,
+    type:'All'
+   },
     {
       pk: 2,
       type: 'JSS'
@@ -288,12 +317,28 @@ function AdminDashboard() {
   const filterData = [
     {
       pk: 1,
-      type: "Date",
+      type: "Last 24hrs",
+    },
+    {
+      pk: 2,
+      type: "Last 3 Days",
+    },
+    {
+      pk: 3,
+      type: "Last 7 Days",
     },
   ];
+  const handlePreviousPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 0));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages - 1));
+  };
   const Bardata = {
     // labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    labels: getItemsData.map(item=>item.name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    labels: paginatedData.map(item => item.item_name),
+    // labels: getItemsData.map(item=>item.item_name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     datasets: [
       {
         label: "Stock Level",
@@ -302,7 +347,7 @@ function AdminDashboard() {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(146, 216, 200, 1)",
         hoverBorderColor: "rgba(75,192,192,1)",
-        data:  getItemsData.map(item=>item.quantity),
+        data: paginatedData.map(item => item.quantity),
       },
     ],
   };
@@ -349,7 +394,9 @@ function AdminDashboard() {
   };
 
   const Piedata = {
-    labels: getItemsData.map(item=>item.name)||["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+
+
+    labels: getItemsData.map(item=>item.item_name)||["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [
       {
         data: getItemsData.map(item=>item.quantity) ||[300, 50, 100, 40, 120, 75],
@@ -608,6 +655,21 @@ function AdminDashboard() {
             </Col>
             <Col lg={6} md={12} xl={8} sm={12} xs={12} className="">
               <BarGraph data={Bardata} options={Baroptions} />
+              <div style={{width:150, margin:'auto'}}>
+              <FontAwesomeIcon
+    icon={faArrowLeft}
+    className="mt-3 mx-3 fa-2x backButtonIcon"
+    onClick={handlePreviousPage}
+  />
+              
+              <FontAwesomeIcon
+    icon={faArrowRight}
+    className="mt-3 mx-3 fa-2x backButtonIcon"
+    onClick={handleNextPage}
+  />
+              </div>
+              
+
             </Col>
           </Row>
 

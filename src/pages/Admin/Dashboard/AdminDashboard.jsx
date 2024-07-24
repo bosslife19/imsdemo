@@ -124,42 +124,42 @@ function AdminDashboard() {
     if(filter==='AKOKO EDO'){
      
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Pencil' ||
-        item.name === 'Eraser' ||
-        item.name === 'Sharpner'
+        item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ));
     
     } if(filter ==='EGOR'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Mathematics Textbook – Grade 1' ||
-        item.name === 'Mathematics Textbook - Grade 2' ||
-        item.name === 'Literacy Text Book - Grade 1'
+        item.item_name === 'Basic Science: An Integrated Science Course' ||
+        item.item_name === 'Junior Secondary Business Studies Textbook' 
       ))
     }
      if(filter ==='ESAN CENTRAL'){
       
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Laptops' ||
-        item.name === 'ChalkBoard'
+        item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ));
     } if(filter && filter==='JSS'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Pencil' ||
-        item.name === 'Eraser' ||
-        item.name === 'Sharpner'
+       item.item_name === 'Basic Science: An Integrated Science Course' ||
+        item.item_name === 'Junior Secondary Business Studies Textbook' 
       ))
     }
     if(filter &&filter==='Primary'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Mathematics Textbook – Grade 1' ||
-        item.name === 'Mathematics Textbook - Grade 2' ||
-        item.name === 'Literacy Text Book - Grade 1'
+       item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ))
     }
     if(filter && filter==='Progressive'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Laptops' ||
-        item.name === 'ChalkBoard'
+       item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ))
     }
   }, [getItemsIsLoading, getSchoolsIsLoading,filter ])

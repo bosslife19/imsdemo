@@ -1,16 +1,10 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
-import Filter from '../../components/Filter/Filter'
-import TitleHeader from '../../components/Headers/TitleHeader'
+
 import { Row, Col, Card } from "react-bootstrap";
 
 export const UserBox = () => {
-    const filterData = [
-        {
-          pk: 1,
-          type: "Date",
-        },
-      ];
+    
       const activities = [
         {
           id: 1,

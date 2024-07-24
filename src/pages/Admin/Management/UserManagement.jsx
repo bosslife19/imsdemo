@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { scrollToTop, convertDate } from "../../../utils/HelperFunc";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function UserManagement() {
   const navigate = useNavigate();
@@ -198,6 +199,7 @@ function UserManagement() {
                 />
               )
             : null}
+          <BackButtonIcon/>
           <TitleHeader text={"User Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>

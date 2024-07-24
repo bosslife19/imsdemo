@@ -121,7 +121,9 @@ function NavigationControl() {
               path="/InventoryManagement"
               element={<InventoryManagement />}
             />
+
             <Route path="/search/:query" element={<SearchResults />} />
+             <Route path="/WareHouseTrack" element={<WareHouseTrack />} />
             <Route path="/ReportAnalytics" element={<ReportAnalytics />} />
             <Route
               path="/DiscrepancyDetail/:pk"

@@ -8,6 +8,7 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons/faClockRotateLeft";
 import PushNotification from "../../../components/Notification/PushNotification";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function AdminPushNotification() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -41,6 +42,7 @@ function AdminPushNotification() {
       <div className="d-flex justify-content-between">
         <SideNavigation isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Container className="reportContainer">
+          <BackButtonIcon/>
           <TitleHeader text={"Push Notifications"} />
 
           <Row>

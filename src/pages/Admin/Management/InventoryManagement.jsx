@@ -202,7 +202,7 @@ function InventoryManagement() {
             <Col lg={6} md={12} xl={4} sm={12} xs={12}>
               <PresentaionCard
                 title={"Low Stock Alerts"}
-                image={inventoryImage}
+                image={schoolImage}
                 figure={"46"}
                 margin={"↓"}
                 marginColor={"red"}

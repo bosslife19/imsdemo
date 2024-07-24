@@ -18,6 +18,7 @@ import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import { scrollToTop, convertDate } from "../../../utils/HelperFunc";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function SchoolsManagement() {
   const navigate = useNavigate();
@@ -246,6 +247,7 @@ function SchoolsManagement() {
                 />
               )
             : null}
+          <BackButtonIcon/>
           <TitleHeader text={"Schools Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>

@@ -54,6 +54,17 @@ function SideNavigation({ isOpen, toggleSidebar }) {
         </Nav.Link>
         <Nav.Link
           as={NavLink}
+          to="/WareHouseTrack"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          <SideNavButton
+            text={"Track Materials"}
+            icon={faUsers}
+            hoverStyle={"sideNavPrimaryHoverButton"}
+          />
+        </Nav.Link>
+        <Nav.Link
+          as={NavLink}
           to="/SchoolsManagement"
           className={({ isActive }) => (isActive ? "active" : "")}
         >

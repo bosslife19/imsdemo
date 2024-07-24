@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -43,10 +43,14 @@ ChartJS.register(
 
 
 function WareHouseDashboard() {
+  
   const {
-    getInventoryItems, getItemsData, getItemsIsLoading
+    getInventoryItems, getItemsData, getItemsIsLoading,setGetItemsData
   } = useContext(InventoryItemContext);
 
+  const [filter, setFilter] = useState('')
+  const [originalItems, setOriginalItems] = useState([])
+  const [count, setCount] = useState(0)
   const { ProcessAnalysis, itemDataAnalysis, schoolDataAnalysis} =
   useContext(AnalysisContext);
 
@@ -61,6 +65,57 @@ function WareHouseDashboard() {
 
   useEffect(() => {
     ProcessAnalysis(getItemsData);
+    if(filter ==='All'){
+      
+       setGetItemsData(originalItems);
+
+      
+    
+    }
+    
+   
+    
+    if(filter==='AKOKO EDO'){
+     
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Pencil' ||
+        item.name === 'Eraser' ||
+        item.name === 'Sharpner'
+      ));
+    
+    } if(filter ==='EGOR'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Mathematics Textbook – Grade 1' ||
+        item.name === 'Mathematics Textbook - Grade 2' ||
+        item.name === 'Literacy Text Book - Grade 1'
+      ))
+    }
+     if(filter ==='ESAN CENTRAL'){
+      
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Laptops' ||
+        item.name === 'ChalkBoard'
+      ));
+    } if(filter && filter==='JSS'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Pencil' ||
+        item.name === 'Eraser' ||
+        item.name === 'Sharpner'
+      ))
+    }
+    if(filter &&filter==='Primary'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Mathematics Textbook – Grade 1' ||
+        item.name === 'Mathematics Textbook - Grade 2' ||
+        item.name === 'Literacy Text Book - Grade 1'
+      ))
+    }
+    if(filter && filter==='Progressive'){
+      setGetItemsData(originalItems.filter(item =>
+        item.name === 'Laptops' ||
+        item.name === 'ChalkBoard'
+      ))
+    }
   }, [getItemsIsLoading ])
 
   const {value: InvetoryDifference, trend: InvetoryTrend} = itemDataAnalysis
@@ -72,9 +127,116 @@ function WareHouseDashboard() {
   const filterData = [
     {
       pk: 1,
-      type: "Date",
+      type: "Last 24hrs",
+    },
+    {
+      pk: 2,
+      type: "Last 3 Days",
+    },
+    {
+      pk: 3,
+      type: "Last 7 Days",
     },
   ];
+  const filterOptionforLGA = useMemo(() => [
+    {
+      pk:1,
+      type:'All'
+    },
+    
+    {
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
+  ], []);
+
+  const filterOptionForType = useMemo(()=>[
+   {
+    pk:1,
+    type:'All'
+   },
+    {
+      pk: 2,
+      type: 'JSS'
+    },
+    {
+      pk: 3,
+      type: 'Primary'
+    },
+    {
+      pk: 4,
+      type: 'Progressive'
+    }
+  ])
   const Bardata = {
     labels: getItemsData.map(item=>item.item_name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     
@@ -182,6 +344,18 @@ function WareHouseDashboard() {
           <Row className="mb-3 mt-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
               <TitleHeader text={"Inventory Overview"} headerTextStyle={'headerTextStyle'}/>
+              <Filter
+                  optionTitle={"School Type"}
+                  options={filterOptionForType}
+                  defult={"All"}
+                  onSelect={(value) => setFilter(value)}
+                />
+                 <Filter
+                  optionTitle={"LGA"}
+                  options={filterOptionforLGA}
+                  defult={"All"}
+                  onSelect={(value) => setFilter(value)}
+                />
             </Col>
           </Row>
           <Row className="mb-3">

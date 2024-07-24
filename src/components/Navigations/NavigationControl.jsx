@@ -131,6 +131,18 @@ function NavigationControl() {
             <Route path="/EditSchool/:pk" element={<EditSchool />} />
             <Route path="/UserDetail/:pk" element={<UserDetail />} />
             <Route path="/EditUser/:pk" element={<EditUser />} />
+            <Route path="/WareHouseDashboard" element={<WareHouseDashboard />} />
+          <Route path="/WareHouseInventory" element={<WareHouseInventory />} />
+          <Route path="/WareHouseTrack" element={<WareHouseTrack />} />
+          <Route path="/ScanMaterial" element={<ScanMaterial />} />
+          <Route
+            path="/WareHousePushNotification"
+            element={<WareHousePushNotification />}
+          />
+          <Route
+            path="/WareHouseAddMovement"
+            element={<WareHouseAddMovement />}
+          />
           </Route>
 
 

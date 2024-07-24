@@ -1,9 +1,6 @@
 import { React, createContext, useState, useContext } from "react";
 import axios from "axios";
 import * as XLSX from 'xlsx'
-import jsPDF from 'jspdf'
-import autoTable from "jspdf-autotable"
-
 
 import GeneralContext from "../General/GeneralContext";
 
@@ -50,10 +47,8 @@ export const InventoryItemProvider = ({ children }) => {
   const getInventoryItems = async () => {
     setGetItemsIsLoading(true);
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
-    console.log(baseUrl)
     try {
       const response = await axios.get(`${baseUrl}/api/item`);
-      console.log(response.data)
       setGetItemsData(response.data.items);
     } catch (error) {
       setGetItemsError(error);
@@ -67,7 +62,6 @@ export const InventoryItemProvider = ({ children }) => {
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/item/${pk}`);
-      console.log(response)
       setGetSingleItemData(response.data.item);
       seteditedFormData({
         barcode_id: response.data.item.barcode_id || "",
@@ -98,12 +92,11 @@ export const InventoryItemProvider = ({ children }) => {
   
     const fileResponse = await handleAddFile(imageData);
   
-  
     if (fileResponse && fileResponse.success) {
-
+      
       const formData = {
         item_name: e.target.item_name.value,
-        class_grade: e.target.classGrade.value,
+        item_code:e.target.item_code.value,
         brand: e.target.brand.value,
         category: e.target.category.value,
         barcode_id: e.target.barcode_id.value,
@@ -111,13 +104,13 @@ export const InventoryItemProvider = ({ children }) => {
         image: fileResponse.url,
         // unit_cost: e.target.unit_cost.value,
         quantity: e.target.quantity.value,
-        item_code: e.target.item_code.value,
+        // reorder_point: e.target.reorder_point.value,
         distribution: e.target.distribution.value,
       };
-  console.log(formData.image)
+  
       try {
         const result = await axios.post(`${baseUrl}/api/item`, formData);
-        console.log(result.data)
+       
         setAddItemResponse(result.data);
       } catch (error) {
         setAddItemError(error.response.data.message);
@@ -163,7 +156,6 @@ export const InventoryItemProvider = ({ children }) => {
         `${baseUrl}/api/item/${pk}`,
         updatedData
       );
-      console.log(result.data)
       seteditItemResponse(result.data);
     } catch (error) {
       seteditItemError(error.response.data.message);
@@ -177,33 +169,33 @@ export const InventoryItemProvider = ({ children }) => {
     }
   };
 
-  const generateReport = async (formatQuery, lga, schoolType) => {
+  const generateReport = async (formatQuery) => {
     setCreateReportIsLoading(true);
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
-      const response = await axios.get(`${baseUrl}/api/item/inventory-report?format=${formatQuery}&lga=${lga}&schoolType=${schoolType}`, );
-      
-      console.log(response.data)
-      if(formatQuery ==='pdf'){
-        let doc = new jsPDF();
-        autoTable(doc,{
-          head: [['Id','Name', 'Brand', 'Category','Quantity','Supplier' ]],
-          body: response.data.map(item=>[item.id, item.name, item.brand, item.category, item.quantity, item.supplier]),
-        })
-        doc.save('edo-inventory.pdf');
-        setCreateReportResponse(response);
+      const response = await axios.get(`${baseUrl}/api/item/inventory-report?format=${formatQuery}`, );
+      console.log(response.data);
      
+      if(formatQuery ==='pdf'){
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'edo_inventory_report.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      setCreateReportResponse(response);
       }
-      else{
-        var wb = XLSX.utils.book_new()
+      var wb = XLSX.utils.book_new()
       var ws = XLSX.utils.json_to_sheet(response.data);
 
       XLSX.utils.book_append_sheet(wb, ws, 'edo_iventory_report');
       XLSX.writeFile(wb, 'edo_inventory_report.xlsx');
       setCreateReportResponse(response);
-      }
-      
-     
+      // const xls = json2xls(response.data);
+      //       const blob = new Blob([xls], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' });
+      //       saveAs(blob, 'data.xlsx');
       
       
     } catch (error) {
@@ -217,7 +209,6 @@ export const InventoryItemProvider = ({ children }) => {
     getItemsIsLoading: getItemsIsLoading,
     getItemsError: getItemsError,
     getItemsData: getItemsData,
-    setGetItemsData,
     addItemError: addItemError,
     addItemIsLoading: addItemIsLoading,
     addItemResponse: addItemResponse,

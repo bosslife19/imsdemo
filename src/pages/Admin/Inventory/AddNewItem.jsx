@@ -13,8 +13,8 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import { scrollToTop } from "../../../utils/HelperFunc";
 import ConditionalSideNavigation from "../../../components/Navigations/ConditionalSideNavigation";
-import Select from 'react-select';
 import MessageContext from "../../../context/Message/MessageContext";
+import Select from 'react-select';
 import axios from "axios";
 
 
@@ -23,30 +23,9 @@ function AddNewItem() {
   const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
   const [success, setSuccess] = useState('');
-  const [schools, setSchools] = useState([]);
+  const [schools, setSchools] = useState([])
+  const [csv, setCsv] = useState(null)
 
-  const getSchoolsNew = async () => {
-     
-    const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
-    try {
-      const response = await axios.get(`${baseUrl}/api/school`);
-      console.log(response.data)
-      setSchools(response.data.schools);
-      const schoolNames = response.data.schools.map(item=>({id:item.SCHOOL_NAME, name:item.SCHOOL_NAME}));
-      
-      setSchools(schoolNames);
-      
-      
-    
-      
-    } catch (error) {
-      console.log(error)
-    } 
-  };
-
-  useEffect(()=>{
-    getSchoolsNew();
-  }, [])
   const {
     handleAddItem,
     addItemIsLoading,
@@ -55,16 +34,31 @@ function AddNewItem() {
     setAddItemError,
     setAddItemResponse,
   } = useContext(InventoryItemContext);
-
+  const [loading, setLoading] = useState(false)
   const { setnavigationMessages } = useContext(MessageContext);
+  const getSchoolsNew = async () => {
+     
+    const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+    try {
+      const response = await axios.get(`${baseUrl}/api/school`);
+      console.log(response.data);
+      setSchools(response.data.schools.map(item=>( {id: item.SCHOOL_NAME, name: item.SCHOOL_NAME })));
+      
+      
+    } catch (error) {
+      console.log(error)
+    } 
+  };
+
+  useEffect(()=>{
+    getSchoolsNew()
+  },[])
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [comfirmationAction, setComfirmationAction] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [csv, setCsv] = useState(null)
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!addItemIsLoading && addItemResponse) {
@@ -114,8 +108,8 @@ function AddNewItem() {
   };
 
   const handleCsvChange = (e)=>{
-    const csvFile = e.target.files[0];
-    setCsv(csvFile);
+    const file = e.target.files[0];
+    setCsv(file);
   }
 
   const handleCsvSubmit = async (e)=>{
@@ -135,7 +129,7 @@ function AddNewItem() {
     }
     
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.log(error)
       setAddItemError(error.response.data.message)
     }
@@ -168,11 +162,11 @@ function AddNewItem() {
             : null}
             <Form.Control
                       type="file"
-                      
+                      // id="shoolfileInput"
                      
                       onChange={handleCsvChange}
                       // style={{ display: "none" }}
-                      name="csvFile"
+                      name="file"
                       accept="csv"
                     />
                      <Button
@@ -215,7 +209,7 @@ function AddNewItem() {
                     <Form.Control
                       type="text"
                       className="UserCreateInput"
-                      placeholder="Item Description"
+                      placeholder="Item Code"
                       name="description"
                       required
                     />
@@ -239,7 +233,7 @@ function AddNewItem() {
                       placeholder="Barcode Id"
                       className="UserCreateInput"
                       name="barcode_id"
-                       required
+                      required
                     />
                   </Col>
                 </Row>
@@ -255,23 +249,20 @@ function AddNewItem() {
                       <option value="Mathematics">Mathematics</option>
                       <option value="Science">Science</option>
                       <option value="Home Work">Home Work</option>
+                      <option value="Stationery">Stationery</option>
                     </Form.Select>
                   </Col>
                 </Row>
                 <Row className="mb-3">
                   <Col lg={2} md={2} xl={2} sm={6} xs={6}>
                   <Select
-                  className="UserCreateInput"
-                  name="school"
-                  options={schools}
-                  isSearchable
-                  placeholder="Select a school"
-                  
-                  
-                  getOptionLabel={(options) => options['name']}
-                  getOptionValue={(options) => options['name']}
-                />
-                    
+      className="UserCreateInput"
+      name="school"
+      options={schools}
+        getOptionLabel={(options) => options['name']}
+        getOptionValue={(options) => options['name']}
+        isSearchable
+    />
                   </Col>
                 </Row>
                 <Row className="mb-5">
@@ -337,7 +328,7 @@ function AddNewItem() {
                     <Form.Control
                       type="text"
                       className="UserCreateInput"
-                      placeholder="distribution"
+                      placeholder="Distribution"
                       name="distribution"
                       required
                     />
@@ -359,6 +350,7 @@ function AddNewItem() {
                         placeholder="Item Code"
                         className="UserCreateInput"
                         name='item_code'
+                        required
                       />
                     </Col>
                   </Row>

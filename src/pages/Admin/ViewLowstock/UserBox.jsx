@@ -3,50 +3,9 @@ import { Container } from 'react-bootstrap'
 
 import { Row, Col, Card } from "react-bootstrap";
 
-export const UserBox = () => {
+export const UserBox = ({items}) => {
     
-      const activities = [
-        {
-          id: 1,
-          name: "JOHN DIGGLE",
-          action: "Viewed stock items",
-          description: "Books sent to EdoSUBEB",
-          date: "10th Feb, 2022",
-          time: "3:56pm",
-        },
-        {
-          id: 2,
-          name: "JOHN DIGGLE",
-          action: "Viewed stock items",
-          description: "Books sent to EdoSUBEB",
-          date: "10th Feb, 2022",
-          time: "3:56pm",
-        },
-        {
-          id: 3,
-          name: "JOHN DIGGLE",
-          action: "Viewed stock items",
-          description: "Books sent to EdoSUBEB",
-          date: "10th Feb, 2022",
-          time: "3:56pm",
-        },
-        {
-          id: 4,
-          name: "JOHN DIGGLE",
-          action: "Viewed stock items",
-          description: "Books sent to EdoSUBEB",
-          date: "10th Feb, 2022",
-          time: "3:56pm",
-        },
-        {
-          id: 5,
-          name: "JOHN DIGGLE",
-          action: "Viewed stock items",
-          description: "Books sent to EdoSUBEB",
-          date: "10th Feb, 2022",
-          time: "3:56pm",
-        },
-      ];
+      
   return (
     <div>
         <Container>
@@ -56,37 +15,37 @@ export const UserBox = () => {
               <Card className="AdminRecentUserCardBodys">
                 <div className="AdminRecentUserActivtyScrolls">
                   <Card.Title className="CardTiTle fw-bold m-3">
-                    Admin
+                    Low Stock Items
                   </Card.Title>
                   <Card.Body className="AdminRecentUser m-1 rounded">
-                    {activities.map((activity) => (
+                    {items.map((item, index) => (
                       <Row
                       style={{fontSize:"12px"}}
-                        key={activity.id}
+                        key={index}
                         className="align-items-center mb-2 py-1 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="" >{activity.name}</span>
+                          <span className="" >{item.item_name}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <div
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {item.item_code}
                           </div>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {item.barcode_id}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {item.subject_category}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {item.quantity}
                         </Col>
                       </Row>
                     ))}
@@ -96,35 +55,35 @@ export const UserBox = () => {
                   </Card.Title>
 
                   <Card.Body className="AdminRecentUser m-1 rounded">
-                    {activities.map((activity) => (
+                    {items.map((item, index) => (
                       <Row
                       style={{fontSize:"12px"}}
-                        key={activity.id}
+                        key={index}
                         className="align-items-center mb-2 py-2 " 
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
+                          <span className="">{item.item_name}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {item.item_code}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {item.subject_category}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {item.quantity}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {item.quantity}
                         </Col>
                       </Row>
                     ))}
@@ -134,35 +93,35 @@ export const UserBox = () => {
                   </Card.Title>
 
                   <Card.Body className="AdminRecentUser m-1 rounded">
-                    {activities.map((activity) => (
+                    {items.map((item,index) => (
                       <Row
                       style={{fontSize:"12px"}}
-                        key={activity.id}
+                        key={index}
                         className="align-items-center mb-2 py-2 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="" >{activity.name}</span>
+                          <span className="" >{item.item_name}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {item.item_code}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {item.subject_category}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {item.quantity}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {item.quantity}
                         </Col>
                       </Row>
                     ))}

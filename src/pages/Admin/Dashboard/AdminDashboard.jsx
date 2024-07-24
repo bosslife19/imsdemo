@@ -35,6 +35,7 @@ import AnalysisContext from "../../../context/Analysis/AnalysisContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { UserBox } from "../ViewLowstock/UserBox";
+import { getLCP } from "web-vitals";
  
 // Register the components
 ChartJS.register(
@@ -87,16 +88,27 @@ function AdminDashboard() {
   const [messageColor, setmessageColor] = useState("");
   const [filter, setFilter] = useState();
   const [originalItems, setOriginalItems] = useState([])
+  const [lowItems, setLowItems] = useState([])
   useEffect(() => {
     getInventoryItems();
     getSchools();
     setOriginalItems(getItemsData);
-    console.log(getItemsData)
+    
+   
   }, [ ])
+
+  const getLowStockItems = ()=>{
+    const low = originalItems.filter(item=>item.quantity < 20);
+    setLowItems(low);
+    
+  }
+  
+
 
   useEffect(() => {
     ProcessAnalysis(getSchoolsData);
     ProcessAnalysis(getItemsData);
+    getLowStockItems();
 
     if(filter ==='All'){
       console.log('here')
@@ -186,7 +198,7 @@ function AdminDashboard() {
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      console.log(response.data)
+      
       setSchools(response.data.schools);
       
       setCount(response.data.count);
@@ -611,7 +623,8 @@ function AdminDashboard() {
         />
       </Col>
       <div ref={menuRef} className={`view ${menuOpen ? 'open' : ''}`}>
-        <UserBox />
+        
+        <UserBox items={lowItems}/>
       </div>
             <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
               <PrimaryButton

@@ -337,8 +337,9 @@ function AdminDashboard() {
   };
   const Bardata = {
     // labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+
     labels: paginatedData.map(item => item.item_name),
-    // labels: getItemsData.map(item=>item.item_name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+   
     datasets: [
       {
         label: "Stock Level",

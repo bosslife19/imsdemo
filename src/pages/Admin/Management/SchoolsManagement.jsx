@@ -208,7 +208,7 @@ function SchoolsManagement() {
 
     if (searchTerm) {
       filtered = filtered.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        item.SCHOOL_NAME.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 

@@ -173,6 +173,7 @@ function SchoolsManagement() {
   ], []);
 
   const handleSearchChange = (event) => {
+    
     setSearchTerm(event.target.value);
   };
 
@@ -207,6 +208,7 @@ function SchoolsManagement() {
     }
 
     if (searchTerm) {
+      
       filtered = filtered.filter((item) =>
         item.SCHOOL_NAME.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -251,11 +253,14 @@ function SchoolsManagement() {
           <TitleHeader text={"Schools Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search
-                Searchstyle={"seachContentBar"}
-                searchText={"Search Schools..."}
-                onSearchChange={handleSearchChange}
-              />
+            <input
+                type="text"
+                placeholder='Search Schools'
+                className="sideNavSearchBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                
+            />
             </Col>
           </Row>
           <Row className="mb-3">

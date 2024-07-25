@@ -802,11 +802,11 @@ function AdminDashboard() {
                 options={""}
                 defult={""}
               />
-              <Filter
+              {/* <Filter
                 optionTitle={"Sort by"}
                 // options={filterData}
                 defult={"Ramdom"}
-              />
+              /> */}
             </Col>
           </Row>
           <Row className="mb-3">

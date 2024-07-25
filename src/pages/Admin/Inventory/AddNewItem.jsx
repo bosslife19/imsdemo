@@ -24,6 +24,7 @@ function AddNewItem() {
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
   const [success, setSuccess] = useState('');
   const [schools, setSchools] = useState([])
+  const [csv, setCsv] = useState(null)
 
   const {
     handleAddItem,

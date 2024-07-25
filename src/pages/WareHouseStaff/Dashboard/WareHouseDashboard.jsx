@@ -26,6 +26,8 @@ import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 // Register the components
 ChartJS.register(
@@ -53,7 +55,23 @@ function WareHouseDashboard() {
   const [count, setCount] = useState(0)
   const { ProcessAnalysis, itemDataAnalysis, schoolDataAnalysis} =
   useContext(AnalysisContext);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
 
+  // Calculate the number of pages
+  const totalPages = Math.ceil(getItemsData.length / itemsPerPage);
+  const paginatedData = getItemsData.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
+  const handlePreviousPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 0));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages - 1));
+  };
   
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -238,7 +256,7 @@ function WareHouseDashboard() {
     }
   ])
   const Bardata = {
-    labels: getItemsData.map(item=>item.item_name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    labels: paginatedData.map(item => item.item_name),
     
     datasets: [
       {
@@ -344,11 +362,13 @@ function WareHouseDashboard() {
           <Row className="mb-3 mt-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
               <TitleHeader text={"Inventory Overview"} headerTextStyle={'headerTextStyle'}/>
-              <Filter
+              <div className="d-flex justify-content-end " style={{gap:5}}>
+                <Filter
                   optionTitle={"School Type"}
                   options={filterOptionForType}
                   defult={"All"}
                   onSelect={(value) => setFilter(value)}
+                  
                 />
                  <Filter
                   optionTitle={"LGA"}
@@ -356,6 +376,7 @@ function WareHouseDashboard() {
                   defult={"All"}
                   onSelect={(value) => setFilter(value)}
                 />
+              </div>
             </Col>
           </Row>
           <Row className="mb-3">
@@ -381,6 +402,19 @@ function WareHouseDashboard() {
             </Col>
             <Col lg={6} md={12} xl={8} sm={12} xs={12} className="">
               <BarGraph data={Bardata} options={Baroptions} />
+              <div style={{width:150, margin:'auto'}}>
+              <FontAwesomeIcon
+    icon={faArrowLeft}
+    className="mt-3 mx-3 fa-2x backButtonIcon"
+    onClick={handlePreviousPage}
+  />
+              
+              <FontAwesomeIcon
+    icon={faArrowRight}
+    className="mt-3 mx-3 fa-2x backButtonIcon"
+    onClick={handleNextPage}
+  />
+              </div>
             </Col>
           </Row>
           <Row className="d-none d-lg-flex mobileCreateButton my-3">

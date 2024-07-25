@@ -690,7 +690,7 @@ function AdminDashboard() {
               <Row className="mb-3">
                 <PresentaionCard
                   title={"Total EdoSUBEB Schools"}
-                  image={schoolImage}
+                  image={inventoryImage}
                   figure={count? count :0}
                   margin={`${SchoolTrend === 'up' ? '↑' : SchoolTrend === 'down' ? '↓' : '~'} ${SchoolDifference}`}
                   marginColor={SchoolTrend === 'up' ? 'text-success': SchoolTrend === 'down' ? 'text-danger' : 'text-primary'}
@@ -699,7 +699,7 @@ function AdminDashboard() {
               <Row className="mb-3">
                 <PresentaionCard
                   title={"Total Items"}
-                  image={inventoryImage}
+                  image={schoolImage}
                   figure={getItemsData? getItemsData.length :0}
                   margin={`${InvetoryTrend === 'up' ? '↑' : InvetoryTrend === 'down' ? '↓' : '~'} ${InvetoryDifference}`}
                   marginColor={InvetoryTrend === 'up' ? 'text-success': InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}

@@ -9,7 +9,7 @@
 }
 .AdminRecentUserActivtyScroll {
     height: 350px;
-    -ms-overflow-style: none;
+    -ms-overflow-style: none; 
     scrollbar-width: none;
     overflow-y: scroll ;
 }
@@ -52,6 +52,7 @@
   }
   
  
+
 
   @media(max-width:550px) {
     .view {

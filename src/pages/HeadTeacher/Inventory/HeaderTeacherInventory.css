@@ -1,0 +1,13 @@
+
+.Scrollingss {
+    height: 140px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: scroll ;
+}
+
+.Bodied {
+    height: 200px;
+    border-radius: 16px;
+     border: none;
+   }

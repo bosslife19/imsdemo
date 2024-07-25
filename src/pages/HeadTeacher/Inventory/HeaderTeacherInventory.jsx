@@ -112,6 +112,9 @@ function HeaderTeacherInventory() {
   const handleGenerateReport = () => {
     navigate("/GenerateInventory");
   };
+  const PeriodicReport = () => {
+    navigate("/PeriodicReport");
+  };
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
@@ -144,7 +147,7 @@ function HeaderTeacherInventory() {
             <Col lg={6} md={12} xl={4} sm={12} xs={12}>
               <PresentaionCard
                 title={"Low Stock Alerts"}
-                image={inventoryImage}
+                image={schoolImage}
                 figure={"46"}
                 margin={"↓"}
                 marginColor={"red"}
@@ -157,6 +160,13 @@ function HeaderTeacherInventory() {
                 text={"Generate Inventory Report"}
                 Primarystyle={"WareHouseGenerateInventoryButton w-100"}
                 clickEvent={() => handleGenerateReport()}
+              />
+            </Col>
+            <Col className="d-lg-none ">
+              <PrimaryButton
+                text={"Periodic Report"}
+                Primarystyle={"InventoryReportButton w-100"}
+                clickEvent={() => PeriodicReport()}
               />
             </Col>
           </Row>
@@ -193,11 +203,18 @@ function HeaderTeacherInventory() {
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
-            <Col xl={4}>
+            <Col xl={3}>
               <PrimaryButton
                 text={"Generate Inventory Report"}
                 Primarystyle={"WareHouseGenerateInventoryButton w-100"}
                 clickEvent={() => handleGenerateReport()}
+              />
+            </Col>
+            <Col xl={2}>
+              <PrimaryButton
+                text={"Periodic Report"}
+                Primarystyle={"InventoryReportButton w-100"}
+                clickEvent={() => PeriodicReport()}
               />
             </Col>
           </Row>
@@ -224,7 +241,7 @@ function HeaderTeacherInventory() {
                         height="50"
                       />
                       <div>
-                        <h6>{Item.item_name}</h6>
+                        <h6>{Item.name}</h6>
                         <h6 className="fs-6">
                         INV-{Item.id}
                           <span className="text-muted ">

@@ -109,7 +109,7 @@ function SideNavigation({ isOpen, toggleSidebar }) {
         </Nav.Link>
         <Nav.Link
           as={NavLink}
-          to="/AdminPushNotification"
+          to="/Notifications"
           className={`sideNavButtonAchorTag ${({ isActive }) =>
             isActive ? "active" : ""}`}
         >

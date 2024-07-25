@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import "./Setting.css";
 import NavigationHeader from "../../components/Navigations/NavigationHeader";
@@ -6,13 +6,19 @@ import TitleHeader from "../../components/Headers/TitleHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLanguage,
-  faGlobe,
   faCalendarAlt,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import SettingContext from "../../context/Setting/SettingContext";
 import Loading from "../../components/Loading/Loading";
 import ConditionalSideNavigation from "../../components/Navigations/ConditionalSideNavigation";
+
+// Custom option component to render flag emoji
+const FlagOption = ({ value, label }) => (
+  <option value={value}>
+    {label} {value === "en" && "🇺🇸"} {/* Render flag emoji only for English */}
+  </option>
+);
 
 function Setting() {
   const {
@@ -24,7 +30,6 @@ function Setting() {
   } = useContext(SettingContext);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isOn, setIsOn] = useState(null);
 
   useEffect(() => {
     getSetting();
@@ -40,7 +45,6 @@ function Setting() {
   };
 
   const handleToggle = (e) => {
-    setIsOn((prevState) => !prevState);
     const { name, checked } = e.target;
     seteditedFormData((prevSettings) => {
       const newSettings = {
@@ -56,11 +60,50 @@ function Setting() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const [editedFormDatas, setEditedFormDatas] = useState({
+    date_format: '',
+  });
+
+  const handleChanges = (e) => {
+    const { name, value } = e.target;
+    setEditedFormDatas({
+      ...editedFormDatas,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    // Function to get current date and time in YYYY-MM-DD format
+    const getCurrentDate = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      let month = now.getMonth() + 1;
+      let day = now.getDate();
+
+      // Ensure month and day are two digits
+      if (month < 10) month = '0' + month;
+      if (day < 10) day = '0' + day;
+
+      return `${year}-${month}-${day}`;
+    };
+
+    // Set current date initially and update every second
+    const intervalId = setInterval(() => {
+      const currentDate = getCurrentDate();
+      setEditedFormDatas({
+        ...editedFormDatas,
+        date_format: currentDate,
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId); // Cleanup interval on unmount
+  }, []);
+
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
       <div className="d-flex justify-content-between">
-      <ConditionalSideNavigation isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <ConditionalSideNavigation isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Container className="reportContainer">
           <TitleHeader text={"Settings"} />
           {getSettingIsLoading ? (
@@ -84,38 +127,19 @@ function Setting() {
                       <Form.Select
                         className="DiscrepancyInput border-0 p-0"
                         value={editedFormData.language}
+                        style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
                         onChange={handleChange}
                         name="language"
                       >
                         <option value="" hidden>
-                          Language
+                          Select Language
                         </option>
-                        <option value="en">English</option>
+                        <FlagOption value="en" label="English" />
                       </Form.Select>
                     </div>
                   </Col>
                 </Row>
-                <Row className="mb-3">
-                  <Col>
-                    <div className={"formBarContainer"}>
-                      <FontAwesomeIcon
-                        icon={faGlobe}
-                        className="sideNavSearchIcon "
-                      />
-                      <Form.Select
-                        className="DiscrepancyInput border-0 p-0"
-                        value={editedFormData.timezone}
-                        onChange={handleChange}
-                        name="timezone"
-                      >
-                        <option value="" hidden>
-                          Time Zone
-                        </option>
-                        <option value="Africa/Lagos">Africa/Lagos</option>
-                      </Form.Select>
-                    </div>
-                  </Col>
-                </Row>
+                {/* Other settings options */}
                 <Row className="mb-3">
                   <Col>
                     <div className={"formBarContainer"}>
@@ -125,14 +149,16 @@ function Setting() {
                       />
                       <Form.Select
                         className="DiscrepancyInput border-0 p-0"
-                        value={editedFormData.date_format}
-                        onChange={handleChange}
+                        onChange={handleChanges}
+                        style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
                         name="date_format"
                       >
                         <option value="" hidden>
-                          Date Format
+                          Select Date Format
                         </option>
-                        <option value="Y-m-d h:i:s">YYYY-MM-DD</option>
+                        <option value={editedFormDatas.date_format}>
+        <FontAwesomeIcon icon={faCalendarAlt} style={{ marginRight: '5px' }} /> {editedFormDatas.date_format}
+      </option>
                       </Form.Select>
                     </div>
                   </Col>
@@ -160,7 +186,7 @@ function Setting() {
                             name="email_notification"
                             checked={editedFormData.email_notification === 1}
                             onChange={handleToggle}
-                            className="sideNavButtonToggle "
+                            className="sideNavButtonToggle"
                           />
                         </Form>
                       </div>

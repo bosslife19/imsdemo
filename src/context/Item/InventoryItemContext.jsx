@@ -1,9 +1,6 @@
 import { React, createContext, useState, useContext } from "react";
 import axios from "axios";
 import * as XLSX from 'xlsx'
-import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
-
 
 import GeneralContext from "../General/GeneralContext";
 
@@ -172,33 +169,33 @@ export const InventoryItemProvider = ({ children }) => {
     }
   };
 
-  const generateReport = async (formatQuery, lga, schoolType) => {
+  const generateReport = async (formatQuery) => {
     setCreateReportIsLoading(true);
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
-      const response = await axios.get(`${baseUrl}/api/item/inventory-report?format=${formatQuery}&lga=${lga}&schoolType=${schoolType}`, );
-      
+      const response = await axios.get(`${baseUrl}/api/item/inventory-report?format=${formatQuery}`, );
+      console.log(response.data);
      
       if(formatQuery ==='pdf'){
-        let doc = new jsPDF();
-        autoTable(doc,{
-          head: [['Id','Name', 'Brand', 'Category','Quantity','Supplier' ]],
-          body: response.data.map(item=>[item.id, item.name, item.brand, item.category, item.quantity, item.supplier]),
-        })
-        doc.save('edo-inventory.pdf');
-        setCreateReportResponse(response);
-     
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'edo_inventory_report.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      setCreateReportResponse(response);
       }
-      else{
-        var wb = XLSX.utils.book_new()
+      var wb = XLSX.utils.book_new()
       var ws = XLSX.utils.json_to_sheet(response.data);
 
       XLSX.utils.book_append_sheet(wb, ws, 'edo_iventory_report');
       XLSX.writeFile(wb, 'edo_inventory_report.xlsx');
       setCreateReportResponse(response);
-      }
-      
-     
+      // const xls = json2xls(response.data);
+      //       const blob = new Blob([xls], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' });
+      //       saveAs(blob, 'data.xlsx');
       
       
     } catch (error) {
@@ -212,7 +209,6 @@ export const InventoryItemProvider = ({ children }) => {
     getItemsIsLoading: getItemsIsLoading,
     getItemsError: getItemsError,
     getItemsData: getItemsData,
-    setGetItemsData,
     addItemError: addItemError,
     addItemIsLoading: addItemIsLoading,
     addItemResponse: addItemResponse,

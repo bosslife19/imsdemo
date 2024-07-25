@@ -9,7 +9,7 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
-import schoolImage from "../../../assets/bigIcon/schoolIcon.png";
+import schoolImage from "../../../assets/schools/schoolchildrens.jpg";
 import userListImage from "../../../assets/bigIcon/userList.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "../../../components/Loading/Loading";
@@ -407,6 +407,3 @@ function SchoolsManagement() {
 }
 
 export default SchoolsManagement;
-
-
-

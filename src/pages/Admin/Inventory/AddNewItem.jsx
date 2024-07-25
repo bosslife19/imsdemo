@@ -58,7 +58,6 @@ function AddNewItem() {
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [csv, setCsv] = useState(null)
 
   useEffect(() => {
     if (!addItemIsLoading && addItemResponse) {

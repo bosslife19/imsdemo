@@ -5,7 +5,7 @@ import {
   Nav,
   Dropdown,
   Container,
-  NavDropdown,
+
   Image,
 } from "react-bootstrap";
 import "./Navigation.css";
@@ -23,6 +23,7 @@ function NavigationHeader({ toggleSidebar }) {
       fixed="top"
     >
       <Container fluid>
+        
         <Navbar.Brand as={NavLink} to="/" >
           <Image
             src={smallLogo} // Replace with your logo path
@@ -49,7 +50,8 @@ function NavigationHeader({ toggleSidebar }) {
               id="user-dropdown"
               className="userDropdown m-0 p-1 bg-transparent"
             >
-              <i className="fa-regular fa-user mx-0"></i>
+              <img src={ userData.image } style={{width:"10px", height:"10px", borderRadius:"30px",marginRight:"5px"}}/>
+              {/* <i className="fa-regular fa-user mx-0"></i> */}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item as={NavLink} to="/Profile">
@@ -93,7 +95,8 @@ function NavigationHeader({ toggleSidebar }) {
                 id="user-dropdown"
                 className="userDropdown"
               >
-                <i className="fa-regular fa-user mx-1"></i>{ userData.name }
+                <img src={ userData.image } style={{width:"30px", height:"30px", borderRadius:"30px",marginRight:"5px"}}/>
+                { userData.name }
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item as={NavLink} to="/Profile">

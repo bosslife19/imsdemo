@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo} from "react";
+import React, { useContext, useEffect, useState, useMemo, useRef} from "react";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -22,8 +22,8 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
 
-import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
-import schoolImage from "../../../assets/bigIcon/schoolIcon.png";
+import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
+import schoolImage from "../../../assets/schools/shelves.jpg";
 import LineGraph from "../../../components/Graph/LineGraph";
 import DoughnutGraph from "../../../components/Graph/DoughnutGraph";
 import BarGraph from "../../../components/Graph/BarGraph";
@@ -34,7 +34,8 @@ import SchoolContext from "../../../context/School/SchoolContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-
+import { UserBox } from "../ViewLowstock/UserBox";
+ 
 // Register the components
 ChartJS.register(
   CategoryScale,
@@ -90,6 +91,7 @@ function AdminDashboard() {
     getInventoryItems();
     getSchools();
     setOriginalItems(getItemsData);
+    console.log(getItemsData)
   }, [ ])
 
   useEffect(() => {
@@ -120,46 +122,50 @@ function AdminDashboard() {
         
         
     }
-    
-    if(filter==='AKOKO EDO'){
+    if(filter && filter === 'All'){
+      setGetItemsData(originalItems); // Show all items
+      setCount(schools.length); // Update count based on all schools
+  
+    }
+   else if(filter==='AKOKO EDO'){
      
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Pencil' ||
-        item.name === 'Eraser' ||
-        item.name === 'Sharpner'
+        item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ));
     
-    } if(filter ==='EGOR'){
+    } else if(filter ==='EGOR'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Mathematics Textbook – Grade 1' ||
-        item.name === 'Mathematics Textbook - Grade 2' ||
-        item.name === 'Literacy Text Book - Grade 1'
+        item.item_name === 'Basic Science: An Integrated Science Course' ||
+        item.item_name === 'Junior Secondary Business Studies Textbook' 
       ))
     }
-     if(filter ==='ESAN CENTRAL'){
+    else if(filter ==='ESAN CENTRAL'){
       
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Laptops' ||
-        item.name === 'ChalkBoard'
+        item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ));
-    } if(filter && filter==='JSS'){
+    } else if(filter && filter==='JSS'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Pencil' ||
-        item.name === 'Eraser' ||
-        item.name === 'Sharpner'
+       item.item_name === 'Basic Science: An Integrated Science Course' ||
+        item.item_name === 'Junior Secondary Business Studies Textbook' 
       ))
     }
-    if(filter &&filter==='Primary'){
+    else if(filter &&filter==='Primary'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Mathematics Textbook – Grade 1' ||
-        item.name === 'Mathematics Textbook - Grade 2' ||
-        item.name === 'Literacy Text Book - Grade 1'
+       item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ))
     }
-    if(filter && filter==='Progressive'){
+    else if(filter && filter==='Progressive'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Laptops' ||
-        item.name === 'ChalkBoard'
+       item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ))
     }
   }, [getItemsIsLoading, getSchoolsIsLoading,filter ])
@@ -174,12 +180,13 @@ function AdminDashboard() {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, []);
+
   const getSchoolsNew = async () => {
      
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      
+      console.log(response.data)
       setSchools(response.data.schools);
       
       setCount(response.data.count);
@@ -199,10 +206,12 @@ function AdminDashboard() {
 
   const filterOptionforLGA = useMemo(() => [
     {
-      pk:1,
-      type:'All'
+
+      pk: 1,
+      type: "All",
     },
-    
+
+   
     {
       pk: 2,
       type: "AKOKO EDO",
@@ -279,10 +288,13 @@ function AdminDashboard() {
   ], []);
 
   const filterOptionForType = useMemo(()=>[
+
+ 
    {
     pk:1,
     type:'All'
    },
+
     {
       pk: 2,
       type: 'JSS'
@@ -337,8 +349,9 @@ function AdminDashboard() {
   };
   const Bardata = {
     // labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+
     labels: paginatedData.map(item => item.item_name),
-    // labels: getItemsData.map(item=>item.item_name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+   
     datasets: [
       {
         label: "Stock Level",
@@ -541,6 +554,29 @@ function AdminDashboard() {
     },
   ];
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        closeMenu();
+      }
+    };
+
+    // document.addEventListener('mousedown', handleClickOutside);
+    // return () => {
+    //   document.removeEventListener('mousedown', handleClickOutside);
+    // };
+  }, []);
   
   return (
     <div>
@@ -566,13 +602,17 @@ function AdminDashboard() {
             />
           </div>
           <Row className="mb-3">
-            <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
-              <PrimaryButton
-                text={"View Low Stock Items "}
-                Primarystyle={"InventoryReportButton"}
-                clickEvent={() => null}
-              />
-            </Col>
+          <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
+        <PrimaryButton
+          text="View Low Stock Items"
+          Primarystyle="InventoryReportButton"
+          clickEvent={toggleMenu}
+          className="relatives"
+        />
+      </Col>
+      <div ref={menuRef} className={`view ${menuOpen ? 'open' : ''}`}>
+        <UserBox />
+      </div>
             <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
               <PrimaryButton
                 text={"Add New Item"}

@@ -17,8 +17,7 @@ import ConditionalSideNavigation from "../../components/Navigations/ConditionalS
 function Profile() {
   const fileInputRef = useRef(null);
 
-  const {userData, setUserData } =
-  useContext(AuthenticationContext);
+  const { userData, setUserData } = useContext(AuthenticationContext);
 
   const {
     handleEditUser,
@@ -42,14 +41,14 @@ function Profile() {
   const [buttonLoading, setButtonLoading] = useState(false);
 
   useEffect(() => {
-      getSingleUser();
+    getSingleUser();
   }, [userData]);
 
   useEffect(() => {
     if (!editUserIsLoading && editUserResponse) {
       scrollToTop();
-      handleComfirmationPopUps('Profile Updated', "bg-success");
-      setUserData(editUserData);
+      handleComfirmationPopUps("Profile Updated", "bg-success");
+      setUserData(editUserData); // Update userData with edited user data
       sessionStorage.setItem("edoUserData", JSON.stringify(editUserData));
       setButtonLoading(false);
       seteditUserResponse(null);
@@ -87,6 +86,7 @@ function Profile() {
   };
 
   const handleEditSubmit = (e) => {
+    e.preventDefault();
     handleEditUser(e);
     handleLoadingClick();
   };
@@ -117,19 +117,22 @@ function Profile() {
 
   return (
     <div>
-      <NavigationHeader toggleSidebar={toggleSidebar} />
+      <NavigationHeader toggleSidebar={toggleSidebar} userData={userData} />
       <div className="d-flex justify-content-between">
-        <ConditionalSideNavigation isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <ConditionalSideNavigation
+          isSidebarOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
         <Container className="reportContainer">
           <TitleHeader text={"Profile"} />
-          {message
-            ? comfirmationAction && (
-                <ComfirmationPop
-                  message={message}
-                  ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
-                />
-              )
-            : null}
+          {message ? (
+            comfirmationAction && (
+              <ComfirmationPop
+                message={message}
+                ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
+              />
+            )
+          ) : null}
           {getSingleUserIsLoading ? (
             <Container className="d-flex justify-content-center align-items-center vh-100">
               <Loading loading={getSingleUserIsLoading} />
@@ -150,7 +153,7 @@ function Profile() {
                       src={getSingleUserData.image}
                       width={300}
                       height={300}
-                      className="justify-content-center rounded rounded-4 border border-3 border-success"                      
+                      className="justify-content-center rounded rounded-4 border border-3 border-success"
                     />
                   </Col>
                   <Col className="" sm={12} xm={12} xl={3} md={12} lg={12}>
@@ -161,7 +164,6 @@ function Profile() {
                       onChange={handleFileChange}
                       style={{ display: "none" }}
                       name="image"
-                      
                     />
                     <CustomFileInput
                       fieldName={"profilefileInput"}
@@ -233,7 +235,7 @@ function Profile() {
                       {buttonLoading ? (
                         <FontAwesomeIcon icon={faSpinner} spin size="2x" />
                       ) : (
-                        "Save Cahanges"
+                        "Save Changes"
                       )}
                     </Button>
                   </Col>

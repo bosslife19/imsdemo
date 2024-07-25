@@ -96,23 +96,24 @@ export const InventoryItemProvider = ({ children }) => {
     const fileResponse = await handleAddFile(imageData);
   
     if (fileResponse && fileResponse.success) {
-      return console.log(e.target.file.value);
+      
       const formData = {
-        name: e.target.name.value,
-        description: e.target.description.value,
+        item_name: e.target.item_name.value,
+        item_code:e.target.item_code.value,
         brand: e.target.brand.value,
         category: e.target.category.value,
         barcode_id: e.target.barcode_id.value,
-        value: e.target.value.value,
+        school: e.target.school.value,
         image: fileResponse.url,
-        unit_cost: e.target.unit_cost.value,
+        // unit_cost: e.target.unit_cost.value,
         quantity: e.target.quantity.value,
-        reorder_point: e.target.reorder_point.value,
-        supplier: e.target.supplier.value,
+        // reorder_point: e.target.reorder_point.value,
+        distribution: e.target.distribution.value,
       };
   
       try {
         const result = await axios.post(`${baseUrl}/api/item`, formData);
+       
         setAddItemResponse(result.data);
       } catch (error) {
         setAddItemError(error.response.data.message);

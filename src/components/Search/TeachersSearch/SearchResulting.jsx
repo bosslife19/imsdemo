@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import LogoutIcon from '../../../assets/bigIcon/logoutIcon.png';
 import { Col, Container, Image, Row, Button } from 'react-bootstrap';
-import { FaArrowLeft } from 'react-icons/fa'; // FontAwesome icon import
+import { faArrowLeft,  } from "@fortawesome/free-solid-svg-icons";// FontAwesome icon import
 import AuthencationHeader from '../../Headers/AuthencationHeader';
 
 const Searchresulting = () => {
@@ -41,7 +41,7 @@ const Searchresulting = () => {
             <Row className='pt-4 pb-4'>
                 <Col>
                 <Button variant="link" onClick={goBack} style={{ marginRight: "10px", fontSize: "24px", textDecoration: "none",color:"#000" }}>
-                            <FaArrowLeft />
+                            <faArrowLeft />
                         </Button>
                     <div style={{ display: "flex", alignItems: "center", textAlign: "center", marginBottom: "20px" }}>
                         

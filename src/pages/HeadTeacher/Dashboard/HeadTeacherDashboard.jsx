@@ -27,6 +27,7 @@ import BarGraph from "../../../components/Graph/BarGraph";
 import LineGraph from "../../../components/Graph/LineGraph";
 import DoughnutGraph from "../../../components/Graph/DoughnutGraph";
 import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
+import { useNavigate } from "react-router-dom";
 
 // Register the components
 ChartJS.register(
@@ -43,8 +44,9 @@ ChartJS.register(
 );
 
 function HeadTeacherDashboard() {
+  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const [selectedDate, setSelectedDate] = useState(null);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -211,6 +213,22 @@ function HeadTeacherDashboard() {
       },
     },
   };
+
+  const handleRequestMaterial = () => { 
+    navigate("/HeadTeacherRequestMaterial");
+  };
+
+ const handleHeaderTeacherInventory =()=>{
+    navigate("/HeaderTeacherInventory")
+  }
+  const handleReports =()=>{
+    navigate("/ReportDiscrepancy")
+  }
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    // Add your date filtering logic here
+  };
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
@@ -222,29 +240,33 @@ function HeadTeacherDashboard() {
         <Container className="reportContainer">
           <div className="d-flex justify-content-between">
             <TitleHeader text={"Dashboard"} />
-            <Filter
+            {/* <Filter
               optionTitle={"Time"}
               options={filterData}
               defult={"This week"}
-            />
+              onDateChange={handleDateChange}
+            /> */}
           </div>
           <Row className="mb-3">
             <Col lg={4} md={4} xl={4} sm={6} xs={6} className="mb-2">
               <PrimaryButton
                 text={"View Inventory"}
                 Primarystyle={"InventoryReportButton"}
+                clickEvent={() => handleHeaderTeacherInventory()}
               />
             </Col>
             <Col lg={4} md={4} xl={4} sm={6} xs={6} className="mb-2">
               <PrimaryButton
                 text={"Request Materials"}
                 Primarystyle={"InventoryReportButton"}
+                clickEvent={() => handleRequestMaterial()}
               />
             </Col>
             <Col lg={4} md={4} xl={4} sm={12} xs={12}>
               <PrimaryButton
                 text={"Report Discrepancy"}
                 Primarystyle={"InventoryReportButton"}
+                clickEvent={() => handleReports()}
               />
             </Col>
           </Row>

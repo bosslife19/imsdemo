@@ -55,6 +55,7 @@ import MovementLog from "../../pages/WareHouseStaff/Inventory/MovementLog";
 import SearchResults from "../Search/SearchResults";
 import HeaderTeacherGenerateReports from "../../pages/HeadTeacher/Inventory/HeaderTeacherGenerateReport";
 import Searchresulting from "../Search/TeachersSearch/SearchResulting";
+import SearchResulted from "../Search/WarehouseSearch/SearchResulted";
 
 function NavigationControl() {
   return (
@@ -132,7 +133,7 @@ function NavigationControl() {
             <Route path="/EditSchool/:pk" element={<EditSchool />} />
             <Route path="/UserDetail/:pk" element={<UserDetail />} />
             <Route path="/EditUser/:pk" element={<EditUser />} />
-            <Route path="/WareHouseDashboard" element={<WareHouseDashboard />} />
+            {/* <Route path="/WareHouseDashboard" element={<WareHouseDashboard />} />
           <Route path="/WareHouseInventory" element={<WareHouseInventory />} />
           <Route path="/WareHouseTrack" element={<WareHouseTrack />} />
           <Route path="/ScanMaterial" element={<ScanMaterial />} />
@@ -147,7 +148,7 @@ function NavigationControl() {
             path="/WareHouseAddMovement"
             element={<WareHouseAddMovement />}
           />
-             
+              */}
          
           </Route>
 
@@ -167,7 +168,14 @@ function NavigationControl() {
             path="/WareHouseAddMovement"
             element={<WareHouseAddMovement />}
           />
+             
+           <Route path="/warehouseSearch/:query" element={<SearchResulted />} />
+           <Route
+            path="/WareHouseScheduler"
+            element={<WareHouseAddMovement />}
+          />
           </Route>
+
 
 
           <Route element={<PrivatteHeadTeacherRoute />}>

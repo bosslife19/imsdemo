@@ -75,9 +75,9 @@ function NavigationHeader({ toggleSidebar }) {
           </Nav>
 
           <Nav className="gap-3 d-none d-lg-flex align-items-center">
-            <Nav.Link href="#search">
+            {/* <Nav.Link href="#search">
               <i className="fa-solid fa-magnifying-glass"></i>
-            </Nav.Link>
+            </Nav.Link> */}
             <div style={{position:'relative'}}>
             <Nav.Link as={NavLink} to="*">
               <i className="fa-regular fa-envelope"></i>

@@ -3,8 +3,7 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import "./WareHouseInventory.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import TitleHeader from "../../../components/Headers/TitleHeader";
-import Search from "../../../components/Search/Search";
-import Filter from "../../../components/Filter/Filter";
+ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
@@ -19,6 +18,7 @@ import Loading from "../../../components/Loading/Loading";
 import { convertDate, scrollToTop } from "../../../utils/HelperFunc"
 import MessageContext from "../../../context/Message/MessageContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+import Search from "../../../components/Search/Normalsearch/Search";
 
 function WareHouseInventory() {
   const navigate = useNavigate();

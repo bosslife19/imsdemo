@@ -1,36 +1,36 @@
 import React, { useContext, useEffect, useState, useMemo } from "react";
-import { Container, Row, Col, Image, Table,  } from "react-bootstrap";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import "../TrackMaterial/WareHouseTrack.css";
 import TrackingContext from "../../../context/Tracking/TrackingContext";
 import { useLocation, useNavigate } from "react-router-dom";
-import { convertDate, convertDated, convertTime, scrollToTop } from "../../../utils/HelperFunc";
+import { convertDated, convertTime, scrollToTop } from "../../../utils/HelperFunc";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import TitleHeader from "../../../components/Headers/TitleHeader";
 import Search from "../../../components/Search/Search";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
-import { faClockRotateLeft, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import { faClockRotateLeft, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Filter from "../../../components/Filter/Filter";
-import inventoryListImage from "../../../assets/bigIcon/inventoryList.png";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import Loading from "../../../components/Loading/Loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function MovementLog() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { getTrackings, getTrackingsData, getTrackingsIsLoading } =
-    useContext(TrackingContext);
+  const { getTrackings, getTrackingsData, getTrackingsIsLoading } = useContext(TrackingContext);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [comfirmationAction, setComfirmationAction] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
-  const [filteredData, setFilteredData] = useState();
+  const [filteredData, setFilteredData] = useState([]);
   const [filterBy, setFilterBy] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     getTrackings();
@@ -48,7 +48,7 @@ function MovementLog() {
       handleComfirmationPopUps(redirectMessage, "bg-success");
       navigate(location.pathname, { replace: true, state: {} });
     }
-  }, []);
+  }, [location, navigate]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -56,55 +56,30 @@ function MovementLog() {
 
   const filterOption = useMemo(
     () => [
-      {
-        pk: 1,
-        type: "All",
-      },
-      {
-        pk: 2,
-        type: "pending",
-      },
-      {
-        pk: 3,
-        type: "active",
-      },
+      { pk: 1, type: "All" },
+      { pk: 2, type: "pending" },
+      { pk: 3, type: "active" },
     ],
     []
   );
 
   const sortOption = useMemo(
     () => [
-      {
-        pk: 1,
-        type: "ascending",
-      },
-      {
-        pk: 2,
-        type: "descending",
-      },
-    ],
-    []
-  );
-  const sortOptionUP = useMemo(
-    () => [
-      {
-        pk: 1,
-        type: "This week",
-      },
-      {
-        pk: 2,
-        type: "Last week",
-      },
+      { pk: 1, type: "ascending" },
+      { pk: 2, type: "descending" },
     ],
     []
   );
 
-  const filterData = [
-    {
-      pk: 1,
-      type: "Date",
-    },
-  ];
+  const sortOptionUP = useMemo(
+    () => [
+      { pk: 1, type: "This week" },
+      { pk: 2, type: "Last week" },
+    ],
+    []
+  );
+
+  const filterData = [{ pk: 1, type: "Date" }];
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -145,152 +120,81 @@ function MovementLog() {
     }, 4000);
   };
 
- 
-  
   const tableHeaders = [
-    'Date Taken',
-    'Date Returned',
-    'Time',
-    'Item ID',
-    'Item Name',
-    'From Location',
-    'to Location',
-    'Quantity',
-    'Action',
-    'User'
-  ];
+    "Date Taken",
+     "Time",
+    "Item ID",
+    "Item Name",
+    "Item Desc",
+    "Brand",
+    "Category",
+    "Priority",
+    "Location",
+    "Action",
+     "Status"
+   ];
+  const handleaddmovement =()=>{
+     navigate("/WareHouseAddMovement");
+  }
   return (
     <div>
-      <NavigationHeader toggleSidebar={toggleSidebar} />
-      <div className="d-flex justify-content-between">
-        <WareHouseSideNavigation
-          isOpen={isSidebarOpen}
-          toggleSidebar={toggleSidebar}
-        />
-        <Container className="reportContainer">
-          {message
-            ? comfirmationAction && (
-                <ComfirmationPop
-                  message={message}
-                  ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
-                />
-              )
-            : null}
-         <div className="d-flex justify-content-between">  
-           <TitleHeader text={"Track Materials"} />
-          <Filter
-                optionTitle={"Time"}
-                options={sortOptionUP}
-                defult={"This week"}
-                onSelect={(value) => setSortBy(value)}
-              />
-          </div>
-          <TitleHeader
-            text={"Movement Log"}
-            headerTextStyle={"headerTextStyle"}
-          />
-          <Row className="mb-3">
-            <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search
-                Searchstyle={"seachContentBar"}
-                searchText={"Search Log..."}
-              />
-            </Col>
-          </Row>
-           
-          <Row className="d-lg-none ">
-            <Col className="d-flex justify-content-between ms-auto gap-3">
-              <Filter
-              Filterstyle={"responsive"}
-                optionTitle={"Filter by"}
-                options={filterOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setFilterBy(value)}
-              />
-              <Filter
-              Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setSortBy(value)}
-              />
-            </Col>
-          </Row>
-          <Row className="d-none d-lg-flex">
-            <Col className="d-flex justify-content-end ms-auto gap-3">
-              <Filter
-                optionTitle={"Filter by"}
-                options={filterOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setFilterBy(value)}
-
-              />
-              <Filter
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setSortBy(value)}
-              />
-                <PrimaryButton
-                Primaryicon={faClockRotateLeft}
-                text={"Log History"}
-                Primarystyle={"pushNotificationTimer d-none d-lg-flex"}
-              />
-            </Col>
-          </Row>
-          
-          <Container className=" ListContainer pt-2">
-          <Table className="tablesSize" bordered  responsive>
-          <thead >
-        <tr>
-          {tableHeaders.map((header, keys) => (
-            <th style={{ backgroundColor: '#92D8C8' }}  key={keys}>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
+          <Container className="ListContainer pt-2" >
             {!getTrackingsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
-                filteredData.map((Item) => (
-                 
-                  <tr key={Item.id}  className="UserListRow ">
-                   
-                   <td>
-                   {convertDated(Item.created_at)}
-                   </td>
-                   <td>
-                   {convertDated(Item.created_at)}
-                   </td>
-                   <td className="d-flex">{convertTime(Item.created_at)}</td>
-                      
-                        <td> <h6 > {" "}{Item.id}</h6></td>
-                        <td>
-                        <h6>{Item.item_name}</h6></td>
-                        <td className=""> 
-                             {" "} {Item.category}{" "} 
-                            </td>
-                            <td className="">
-                              {Item.item_description} {" "}
-                            
-                            </td>
-                            <td>    {Item.action} </td>
-                            <td>  {Item.brand}  </td>
-                            
-                             
-                             <td> {" "}
-                               {Item.address} 
-                             
-                          </td>
-                              
-                  </tr>
-                 
-                ))
+                <Table className="tablesSize" bordered responsive>
+                  <thead>
+                    <tr>
+                      {tableHeaders.map((header, keys) => (
+                        <th style={{ backgroundColor: '#92D8C8' }} key={keys}>
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.map((Item) => (
+                      <tr key={Item.id} className="listgrow">
+                      <td style={{height:"100%"}}>{convertDated(Item.created_at)}</td>
+                        <td style={{height:"100%"}}>{convertTime(Item.created_at)}</td>
+                        <td style={{height:"100%"}}>
+                          <h6> {Item.id}</h6>
+                        </td>
+                        <td style={{height:"100%",padding:"10px"}}>
+                          <h6>{Item.item_name}</h6>
+                        </td>
+                        <td style={{height:"100%",padding:"10px"}}> {Item.item_description} </td>
+                        <td style={{height:"100%",padding:"10px"}}> {Item.brand} </td>
+                        <td style={{height:"100%",padding:"10px"}}> {Item.category} </td>
+                        <td className={
+                                  Item.priority === "low"
+                                    ? "text-success"
+                                    : Item.priority === "high"
+                                    ? "text-danger"
+                                    : "text-warning"
+                                }
+                              >
+                                {Item.priority}
+                              </td>
+                              <td style={{height:"100%",padding:"10px"}}> {Item.address} </td>
+                         <td style={{height:"100%",padding:"10px"}}> {Item.action} </td>
+                         <td className={
+                                  Item.status === "pending"
+                                    ? "text-danger"
+                                    : "text-success"
+                                }
+                              >
+                                {" "}
+                                {Item.status}
+                              </td>
+                       </tr>
+                    ))}
+                  </tbody>
+                </Table>
               ) : (
                 <NonAvaliable
-                  textMessage={
-                    "Sorry, there is currently no available item! 😥"
-                  }
+                  textMessage={"Sorry, there is currently no available item! 😥"}
                   imageWidth={"300px"}
+                  className="nonAvailableContainer"
                 />
               )
             ) : (
@@ -298,12 +202,20 @@ function MovementLog() {
                 <Loading loading={getTrackingsIsLoading} />
               </Container>
             )}
-             </tbody>
-            </Table>
+             <Row className="justify-content-center mb-4">
+            <Col xs={12} lg={12}>
+              <Button
+                variant="success"
+                className="w-100 p-3"
+                // clickEvent={() => handleaddmovement()}
+                onClick={handleaddmovement}
+              >
+                 Add Movement 
+                
+              </Button>
+            </Col>
+          </Row>
           </Container>
-         
-        </Container>
-      </div>
     </div>
   );
 }

@@ -319,18 +319,7 @@ function HeadTeacherDashboard() {
                 headerTextStyle={"headerTextStyle"}
               />
             </Col>
-            <Col className="d-flex justify-content-end ms-auto gap-3 mb-2">
-              <Filter
-                optionTitle={"Filter by"}
-                options={filterData}
-                defult={"Ramdom"}
-              />
-              <Filter
-                optionTitle={"Sort by"}
-                options={filterData}
-                defult={"Ramdom"}
-              />
-            </Col>
+            
           </Row>
           <Row className="mb-3">
             <Col lg={6} md={6} xl={4} sm={12} xs={12} className="mb-3">

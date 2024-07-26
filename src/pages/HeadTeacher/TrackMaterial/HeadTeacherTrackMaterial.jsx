@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./HeadTeacherTrackMaterial.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
@@ -11,63 +11,127 @@ import DataTable from "react-data-table-component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
-
+import TrackingContext from "../../../context/Tracking/TrackingContext";
+import jsPDF from 'jspdf'
+import autoTable from "jspdf-autotable"
+import * as XLSX from 'xlsx'
 function HeadTeacherTrackMaterial() {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const [filteredData, setFilteredData] = useState();
+  const [searchTerm, setSearchTerm] = useState();
+  const [filterBy, setFilterBy] = useState('')
+  const [sortBy, setSortBy] = useState('')
+  const [exportType, setExportType] = useState("");
+  const [originalData, setOriginalData] = useState([])
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const { getTrackings, getTrackingsData, getTrackingsIsLoading } =
+  useContext(TrackingContext);
+
+  const exportAccordingToType = ()=>{
+    if(exportType ===''){
+      return;
+    }
+    if(exportType ==='pdf'){
+      let doc = new jsPDF();
+      autoTable(doc,{
+        head: [['Id','Name', 'Brand', 'Category','Quantity','Supplier' ]],
+        body: getTrackingsData.map(item=>[item.id, item.item_name, item.brand, item.subject_category, item.quantity, item.distribution]),
+      })
+      doc.save('edo-inventory.pdf');
+     
+   
+    }
+    else{
+      var wb = XLSX.utils.book_new()
+    var ws = XLSX.utils.json_to_sheet(getTrackingsData);
+
+    XLSX.utils.book_append_sheet(wb, ws, 'edo_iventory_report');
+    XLSX.writeFile(wb, 'edo_inventory_report.xlsx');
+   
+    }
+  }
+  useEffect(()=>{
+    exportAccordingToType();
+  }, [exportType])
+  
+
+  useEffect(() => {
+    getTrackings();
+    setFilteredData(getTrackingsData);
+    setOriginalData(getTrackingsData)
+    
+  }, []);
+  useEffect(() => {
+    handleFilterSortSearch();
+  }, [ sortBy, searchTerm, getTrackingsData, filterBy]);
   const filterData = [
     {
       pk: 1,
-      type: "Date",
+      type: "Excel",
     },
+    {
+      pk: 2,
+      type:'pdf'
+    }
+   
   ];
+  const handleSearchChange = (e)=>{
+    setSearchTerm(e.target.value)
+  }
+  const handleFilterSortSearch = () => {
+    let filtered = [...getTrackingsData];
 
-  const data = [
-    {
-      date: "2024/05/24",
-      time: "10:15 AM",
-      itemId: "ITEM-001",
-      itemName: "Gadget X",
-      fromLocation: "Aisle 3, Bin 12",
-      toLocation: "Picking Area",
-      quantity: 5,
-      action: "Picked for Order #123",
-      user: "John Doe",
-    },
-    {
-      date: "2024/05/24",
-      time: "10:15 AM",
-      itemId: "ITEM-001",
-      itemName: "Gadget X",
-      fromLocation: "Aisle 3, Bin 12",
-      toLocation: "Picking Area",
-      quantity: 5,
-      action: "Picked for Order #123",
-      user: "John Doe",
-    },
-    // Add more data as needed
-  ];
+    if (filterBy && filterBy !== "All") {
+      filtered = filtered.filter((item) => item.status === filterBy);
+    }
+
+    if (sortBy) {
+      filtered.sort((a, b) => {
+        if (sortBy === "ascending") {
+          return a.item_name.localeCompare(b.item_name);
+        } else {
+          return b.item_name.localeCompare(a.item_name);
+        }
+      });
+    }
+
+    if (searchTerm) {
+      
+      filtered = filtered.filter((item) =>
+        item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredData(filtered);
+  };
+
+  const data = filteredData;
+ 
 
   const columns = [
     {
       name: "Date",
-      selector: (row) => row.date,
+      selector: (row) => row.
+      date_moved
+      
+      ,
       sortable: true,
       wrap: true,
     },
     {
       name: "Time",
-      selector: (row) => row.time,
+      selector: (row) => row.
+      time_moved
+      ,
       sortable: true,
       wrap: true,
     },
     {
       name: "Item ID",
-      selector: (row) => row.itemId,
+      selector: (row) => row.id,
       sortable: true,
       wrap: true,
     },
@@ -75,8 +139,8 @@ function HeadTeacherTrackMaterial() {
       name: "Item Name",
       selector: (row) => (
         <div>
-          {row.itemName}{" "}
-          <FontAwesomeIcon icon={faExclamationCircle} className="text-danger" />
+          {row.item_name}{" "}
+          {/* <FontAwesomeIcon icon={faExclamationCircle} className="text-danger" /> */}
         </div>
       ),
       sortable: true,
@@ -84,34 +148,36 @@ function HeadTeacherTrackMaterial() {
     },
     {
       name: "From Location",
-      selector: (row) => row.fromLocation,
+      selector: (row) => row.address,
       sortable: true,
       wrap: true,
     },
     {
       name: "To Location",
-      selector: (row) => row.toLocation,
+      selector: (row) => row.
+      picking_area
+      ,
       sortable: true,
       wrap: true,
     },
+    // {
+    //   name: "Quantity",
+    //   selector: (row) => row.quantity,
+    //   sortable: true,
+    //   wrap: true,
+    // },
     {
-      name: "Quantity",
-      selector: (row) => row.quantity,
-      sortable: true,
-      wrap: true,
-    },
-    {
-      name: "Action",
+      name: "Status",
       selector: (row) => row.action,
       sortable: true,
       wrap: true,
     },
-    {
-      name: "User",
-      selector: (row) => row.user,
-      sortable: true,
-      wrap: true,
-    },
+    // {
+    //   name: "User",
+    //   selector: (row) => row.user,
+    //   sortable: true,
+    //   wrap: true,
+    // },
   ];
 
   return (
@@ -136,19 +202,29 @@ function HeadTeacherTrackMaterial() {
               text={"Movement Log"}
               headerTextStyle={"headerTextStyle"}
             />
-            <PrimaryButton
-              Primaryicon={faClockRotateLeft}
-              text={"Log History"}
-              Primarystyle={"pushNotificationTimer d-lg-none mb-2"}
-            />
+            {/* <Filter
+                optionTitle={"Export Data"}
+                options={filterData}
+                dropdrowStyle={"DashboardExportData"}
+                onSelect={(value) => setExportType(value)}
+                
+              /> */}
           </div>
           <Row className="mb-4">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search Searchstyle={"seachContentBar"} searchText={'Search Log...'}/>
+            <input
+                type="text"
+                placeholder='Search Log'
+                className="sideNavSearchBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{borderWidth:1, borderRadius:3, borderColor:'gray'}}
+                
+            />
             </Col>
           </Row>
           <Row className="d-lg-none mb-3">
-            <Col className="d-flex justify-content-between ms-auto gap-3">
+            {/* <Col className="d-flex justify-content-between ms-auto gap-3">
               <Filter
                 optionTitle={"Filter by"}
                 options={filterData}
@@ -159,11 +235,11 @@ function HeadTeacherTrackMaterial() {
                 options={filterData}
                 defult={"Ramdom"}
               />
-            </Col>
+            </Col> */}
           </Row>
           <Row className="d-none d-lg-flex mb-3">
             <Col className="d-flex justify-content-end ms-auto gap-3">
-              <Filter
+              {/* <Filter
                 optionTitle={"Filter by"}
                 options={filterData}
                 defult={"Ramdom"}
@@ -172,11 +248,13 @@ function HeadTeacherTrackMaterial() {
                 optionTitle={"Sort by"}
                 options={filterData}
                 defult={"Ramdom"}
-              />
-              <PrimaryButton
-                Primaryicon={faClockRotateLeft}
-                text={"Log History"}
-                Primarystyle={"pushNotificationTimer "}
+              /> */}
+              <Filter
+                optionTitle={"Export Data"}
+                options={filterData}
+                dropdrowStyle={"DashboardExportData"}
+                onSelect={(value) => setExportType(value)}
+                
               />
             </Col>
           </Row>

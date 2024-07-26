@@ -15,6 +15,9 @@ import Filter from "../../../components/Filter/Filter";
 import inventoryListImage from "../../../assets/bigIcon/inventoryList.png";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import Loading from "../../../components/Loading/Loading";
+import jsPDF from 'jspdf'
+import autoTable from "jspdf-autotable"
+import * as XLSX from 'xlsx'
 
 function MovementLog() {
   const navigate = useNavigate();
@@ -22,6 +25,39 @@ function MovementLog() {
 
   const { getTrackings, getTrackingsData, getTrackingsIsLoading } =
     useContext(TrackingContext);
+
+    const [exportType, setExportType] = useState("");
+  
+
+  
+
+  const exportAccordingToType = ()=>{
+    if(exportType ===''){
+      return;
+    }
+    if(exportType ==='pdf'){
+      let doc = new jsPDF();
+      autoTable(doc,{
+        head: [['Id','Name', 'Brand', 'Category','Quantity','Supplier' ]],
+        body: getTrackingsData.map(item=>[item.id, item.item_name, item.brand, item.subject_category, item.quantity, item.distribution]),
+      })
+      doc.save('edo-inventory.pdf');
+     
+   
+    }
+    else{
+      var wb = XLSX.utils.book_new()
+    var ws = XLSX.utils.json_to_sheet(getTrackingsData);
+
+    XLSX.utils.book_append_sheet(wb, ws, 'edo_iventory_report');
+    XLSX.writeFile(wb, 'edo_inventory_report.xlsx');
+   
+    }
+  }
+  useEffect(()=>{
+    exportAccordingToType();
+  }, [exportType])
+  
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [comfirmationAction, setComfirmationAction] = useState(false);
@@ -102,8 +138,13 @@ function MovementLog() {
   const filterData = [
     {
       pk: 1,
-      type: "Date",
+      type: "Excel",
     },
+    {
+      pk: 2,
+      type:'pdf'
+    }
+   
   ];
 
   const handleSearchChange = (event) => {
@@ -231,10 +272,12 @@ function MovementLog() {
                 defult={"Ramdom"}
                 onSelect={(value) => setSortBy(value)}
               />
-                <PrimaryButton
-                Primaryicon={faClockRotateLeft}
-                text={"Log History"}
-                Primarystyle={"pushNotificationTimer d-none d-lg-flex"}
+                 <Filter
+                optionTitle={"Export Data"}
+                options={filterData}
+                dropdrowStyle={"DashboardExportData"}
+                onSelect={(value) => setExportType(value)}
+                
               />
             </Col>
           </Row>

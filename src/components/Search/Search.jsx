@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 
-function Search({ Searchstyle, searchText }) {
+function Search({ Searchstyle, searchText, }) {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
 

@@ -637,6 +637,7 @@ function HeadTeacherDashboard() {
               margin={"↑"}
               marginColor={"green"}
             />
+            </Row>
 
           <Row className="mb-3 mt-5 gap-3">
             <TitleHeader text={"Recent User Activity"} headerTextStyle={'headerTextStyle'}/>

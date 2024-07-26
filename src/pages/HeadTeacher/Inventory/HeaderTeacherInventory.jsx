@@ -7,8 +7,7 @@ import Search from "../../../components/Search/Search";
 import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
-import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
-import schoolImage from "../../../assets/schools/shelves.jpg";
+ import schoolImage from "../../../assets/schools/shelves.jpg";
 import { useNavigate } from "react-router-dom";
 import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
@@ -109,8 +108,8 @@ function HeaderTeacherInventory() {
     setFilteredData(filtered);
   };
 
-  const handleGenerateReport = () => {
-    navigate("/GenerateInventory");
+  const handleGenerateReport = () => { 
+    navigate("/HeadTeacherGenerateInventory");
   };
   const PeriodicReport = () => {
     navigate("/PeriodicReport");

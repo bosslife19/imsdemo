@@ -24,16 +24,12 @@ import ReportDiscrepancy from "../../pages/WareHouseStaff/ReportDiscrepancy/Repo
 import ChangePassword from '../../pages/Admin/Authentication/ChangePassword';
 import ScanMaterial from "../../pages/WareHouseStaff/ScanMaterial/ScanMaterial";
 import WareHousePushNotification from "../../pages/WareHouseStaff/PushNotification/WareHousePushNotification";
- import WareHouseAddItem from "../../pages/WareHouseStaff/Inventory/WareHouseAddItem";
-import WareHouseViewItem from "../../pages/WareHouseStaff/Inventory/WareHouseViewItem";
 import WareHouseAddMovement from "../../pages/WareHouseStaff/TrackMaterial/WareHouseAddMovement";
 import HeadTeacherDashboard from "../../pages/HeadTeacher/Dashboard/HeadTeacherDashboard";
 import ForgotPassword from '../../pages/Admin/Authentication/Forgot-Password';
 import HeaderTeacherInventory from "../../pages/HeadTeacher/Inventory/HeaderTeacherInventory";
-import HeaderTeacherGenerateReport from "../../pages/HeadTeacher/Inventory/HeaderTeacherGenerateReport";
-import HeadTeacherRequestMaterial from "../../pages/HeadTeacher/RequestMaterial/HeadTeacherRequestMaterial";
-import HeadTeacherReportDiscrepancy from "../../pages/HeadTeacher/ReportDiscrepancy/HeadTeacherReportDiscrepancy";
-import HeadTeacherPushNotification from "../../pages/HeadTeacher/PushNotification/HeadTeacherPushNotification";
+ import HeadTeacherRequestMaterial from "../../pages/HeadTeacher/RequestMaterial/HeadTeacherRequestMaterial";
+ import HeadTeacherPushNotification from "../../pages/HeadTeacher/PushNotification/HeadTeacherPushNotification";
 import HeadTeacherTrackMaterial from "../../pages/HeadTeacher/TrackMaterial/HeadTeacherTrackMaterial";
 import PrivateRoute, {
   PrivatteWareHouseRoute,
@@ -57,6 +53,8 @@ import PeriodicInventory from "../../pages/HeadTeacher/Inventory/HeadTeacherPeri
 import WareHouseGenerateReports from "../../pages/WareHouseStaff/Inventory/WareHouseGenerateReport";
 import MovementLog from "../../pages/WareHouseStaff/Inventory/MovementLog";
 import SearchResults from "../Search/SearchResults";
+import HeaderTeacherGenerateReports from "../../pages/HeadTeacher/Inventory/HeaderTeacherGenerateReport";
+import Searchresulting from "../Search/TeachersSearch/SearchResulting";
 
 function NavigationControl() {
   return (
@@ -110,7 +108,7 @@ function NavigationControl() {
 
           <Route element={<PrivatteAdminRoute />}>
             <Route path="/AdminDashboard" element={<AdminDashboard />} />
-            <Route
+            <Route 
               path="/AdminPushNotification"
               element={<AdminPushNotification />}
             />
@@ -165,8 +163,7 @@ function NavigationControl() {
             path="/WareHousePushNotification"
             element={<WareHousePushNotification />}
           />
-          
-          <Route
+           <Route
             path="/WareHouseAddMovement"
             element={<WareHouseAddMovement />}
           />
@@ -179,6 +176,7 @@ function NavigationControl() {
             path="/HeaderTeacherInventory"
             element={<HeaderTeacherInventory />}
           />
+          <Route path="/searchs/:query" element={<Searchresulting />} />
           <Route
             path="/PeriodicReport"
             element={<PeriodicInventory />}
@@ -187,8 +185,12 @@ function NavigationControl() {
             path="/HeadTeacherRequestMaterial"
             element={<HeadTeacherRequestMaterial />}
           />
-
           <Route
+            path="/HeadTeacherGenerateInventory"
+            element={<HeaderTeacherGenerateReports />}
+          />
+            
+           <Route
             path="/HeadTeacherPushNotification"
             element={<HeadTeacherPushNotification />}
           />

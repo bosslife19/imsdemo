@@ -15,15 +15,15 @@ import {
   SideNavButton,
   SideNavAppStore,
 } from "../../../components/Navigations/SideNavComponent";
-import Search from "../../../components/Search/Search";
-
+import Searchs from '../../../components/Search/TeachersSearch/Search';
+  
 function HeadTeacherNavigation({toggleSidebar, isOpen}) {
-  return (
+  return ( 
     <div
     className={`d-flex flex-column sidebar ${isOpen ? "open" : ""} fixed-top`}
   >
     {" "}
-    <Search Searchstyle={"seachSideBar"} searchText={'Search'}/>
+    <Searchs Searchstyle={"seachSideBar"} searchText={'Search'}/>
     <Nav className="flex-column">
       <Nav.Link
         as={NavLink}

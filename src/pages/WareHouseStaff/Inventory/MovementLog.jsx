@@ -191,101 +191,8 @@ function MovementLog() {
   }
   return (
     <div>
-
-          <Container className="ListContainer pt-2" >
-      <NavigationHeader toggleSidebar={toggleSidebar} />
-      <div className="d-flex justify-content-between">
-        <WareHouseSideNavigation
-          isOpen={isSidebarOpen}
-          toggleSidebar={toggleSidebar}
-        />
-        <Container className="reportContainer">
-          {message
-            ? comfirmationAction && (
-                <ComfirmationPop
-                  message={message}
-                  ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
-                />
-              )
-            : null}
-         <div className="d-flex justify-content-between">  
-          <BackButtonIcon/>
-           <TitleHeader text={"Track Materials"} />
-          <Filter
-                optionTitle={"Time"}
-                options={sortOptionUP}
-                defult={"This week"}
-                onSelect={(value) => setSortBy(value)}
-              />
-          </div>
-          <TitleHeader
-            text={"Movement Log"}
-            headerTextStyle={"headerTextStyle"}
-          />
-          <Row className="mb-3">
-            <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search
-                Searchstyle={"seachContentBar"}
-                searchText={"Search Log..."}
-              />
-            </Col>
-          </Row>
-           
-          <Row className="d-lg-none ">
-            <Col className="d-flex justify-content-between ms-auto gap-3">
-              <Filter
-              Filterstyle={"responsive"}
-                optionTitle={"Filter by"}
-                options={filterOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setFilterBy(value)}
-              />
-              <Filter
-              Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setSortBy(value)}
-              />
-            </Col>
-          </Row>
-          <Row className="d-none d-lg-flex">
-            <Col className="d-flex justify-content-end ms-auto gap-3">
-              <Filter
-                optionTitle={"Filter by"}
-                options={filterOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setFilterBy(value)}
-
-              />
-              <Filter
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"Ramdom"}
-                onSelect={(value) => setSortBy(value)}
-              />
-                 <Filter
-                optionTitle={"Export Data"}
-                options={filterData}
-                dropdrowStyle={"DashboardExportData"}
-                onSelect={(value) => setExportType(value)}
-                
-              />
-            </Col>
-          </Row>
-          
-          <Container className=" ListContainer pt-2">
-          <Table className="tablesSize" bordered  responsive>
-          <thead >
-        <tr>
-          {tableHeaders.map((header, keys) => (
-            <th style={{ backgroundColor: '#92D8C8' }}  key={keys}>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
->>>>>>> master
-            {!getTrackingsIsLoading ? (
+            
+              {!getTrackingsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 <Table className="tablesSize" bordered responsive>
                   <thead>
@@ -299,7 +206,7 @@ function MovementLog() {
                   </thead>
                   <tbody>
                     {filteredData.map((Item) => (
-                      <tr key={Item.id} className="listgrow">
+                      <tr key={Item.id} className="">
                       <td style={{height:"100%"}}>{convertDated(Item.created_at)}</td>
                         <td style={{height:"100%"}}>{convertTime(Item.created_at)}</td>
                         <td style={{height:"100%"}}>
@@ -361,8 +268,7 @@ function MovementLog() {
               </Button>
             </Col>
           </Row>
-          </Container>
-    </div>
+      </div>
   );
 }
 

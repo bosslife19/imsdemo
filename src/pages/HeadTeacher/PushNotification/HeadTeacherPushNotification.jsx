@@ -11,17 +11,31 @@ import PushNotification from "../../../components/Notification/PushNotification"
 
 
 function HeadTeacherPushNotification() {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [audience, setAudience] = useState('')
 
-    const toggleSidebar = () => {
-      setIsSidebarOpen(!isSidebarOpen);
-    };
-    const filterData = [
-      {
-        pk: 1,
-        type: "Date",
-      },
-    ];
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+  const filterData = [
+    {
+      pk: 1,
+      type: "QA",
+    },
+    {
+      pk: 2,
+      type: "Warehouse Staff",
+    },
+    {
+      pk: 3,
+      type: "Head Teacher",
+    },
+    {
+      pk: 4,
+      type: "Admin",
+    },
+    
+  ];
   return (
     <div>
     <NavigationHeader toggleSidebar={toggleSidebar} />

@@ -15,6 +15,7 @@ import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import Loading from "../../../components/Loading/Loading";
 import { convertDate } from "../../../utils/HelperFunc";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function HeaderTeacherInventory() {
   const navigate = useNavigate();
@@ -101,7 +102,7 @@ function HeaderTeacherInventory() {
 
     if (searchTerm) {
       filtered = filtered.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -123,14 +124,20 @@ function HeaderTeacherInventory() {
           toggleSidebar={toggleSidebar}
         />
         <Container className="reportContainer">
+          <BackButtonIcon/>
           <TitleHeader text={"Inventory Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search
-                Searchstyle={"seachContentBar"}
-                searchText={"Search Inventory..."}
-                onSearchChange={handleSearchChange}
-              />
+            <input
+                type="text"
+                placeholder='Search Inventory'
+                className="sideNavSearchBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{borderWidth:1, borderColor:'gray', borderRadius:4}}
+               
+            />
+             
             </Col>
           </Row>
           <Row className="mb-3">
@@ -161,13 +168,13 @@ function HeaderTeacherInventory() {
                 clickEvent={() => handleGenerateReport()}
               />
             </Col>
-            <Col className="d-lg-none ">
+            {/* <Col className="d-lg-none ">
               <PrimaryButton
                 text={"Periodic Report"}
                 Primarystyle={"InventoryReportButton w-100"}
                 clickEvent={() => PeriodicReport()}
               />
-            </Col>
+            </Col> */}
           </Row>
           <Row className="d-lg-none ">
             <Col className="d-flex justify-content-between ms-auto gap-3">
@@ -209,20 +216,20 @@ function HeaderTeacherInventory() {
                 clickEvent={() => handleGenerateReport()}
               />
             </Col>
-            <Col xl={2}>
+            {/* <Col xl={2}>
               <PrimaryButton
                 text={"Periodic Report"}
                 Primarystyle={"InventoryReportButton w-100"}
                 clickEvent={() => PeriodicReport()}
               />
-            </Col>
+            </Col> */}
           </Row>
           <Container className="ListContainer">
             {!getItemsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
-                filteredData.map((Item) => (
+                filteredData.map((Item, index) => (
                   <Row
-                    key={Item.id}
+                    key={index}
                     className="UserListRow my-2 py-2 align-items-center"
                   >
                     <Col
@@ -242,11 +249,11 @@ function HeaderTeacherInventory() {
                       <div>
                         <h6>{Item.name}</h6>
                         <h6 className="fs-6">
-                        INV-{Item.id}
+                        INV-{index + 1}
                           <span className="text-muted ">
-                            | {Item.category} | {''}
+                            | {Item.item_name} | {''}
                             <span className="d-none d-lg-inline me">
-                              {Item.item_code} | {`$${Item.school}`} | {Item.quantity} {''}
+                              {Item.item_code} | {`${Item.school}`} | {Item.quantity} {''}
                               <span
                                 className={
                                   Item.quantity > 35
@@ -272,7 +279,7 @@ function HeaderTeacherInventory() {
                               >
                                 {Item.status} 
                               </span> | {''}
-                              {convertDate(Item.created_at)}
+                              {convertDate(Date.now())}
                             </span>
                           </span>
                         </h6>

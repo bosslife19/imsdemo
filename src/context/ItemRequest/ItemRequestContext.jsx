@@ -32,8 +32,10 @@ export const ItemRequestProvider = ({ children }) => {
         };
         try {
           const result = await axios.post(`${baseUrl}/api/item-request`, RequestData);
+          
           setAddItemRequestResponse(result.data);
         } catch (error) {
+          console.log(error)
             setAddItemRequestError(error.response.data.message);
         } finally {
             setAddItemRequestIsLoading(false);

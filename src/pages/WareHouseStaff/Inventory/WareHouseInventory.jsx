@@ -18,7 +18,10 @@ import Loading from "../../../components/Loading/Loading";
 import { convertDate, scrollToTop } from "../../../utils/HelperFunc"
 import MessageContext from "../../../context/Message/MessageContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+
 import Search from "../../../components/Search/Normalsearch/Search";
+
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function WareHouseInventory() {
   const navigate = useNavigate();
@@ -158,6 +161,7 @@ function WareHouseInventory() {
                 />
               )
             : null}
+            <BackButtonIcon/>
           <TitleHeader text={"Inventory Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>

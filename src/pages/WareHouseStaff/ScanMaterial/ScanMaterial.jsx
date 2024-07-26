@@ -10,6 +10,7 @@ import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function ScanMaterial() {
   const navigate = useNavigate();
@@ -74,6 +75,7 @@ function ScanMaterial() {
           toggleSidebar={toggleSidebar}
         />
         <Container className="reportContainer">
+          <BackButtonIcon/>
           <TitleHeader text={"Scan Materials"} />
           <Row className="justify-content-center">
             <Col xs={12} lg={12} className="text-center mb-3">
@@ -154,13 +156,13 @@ function ScanMaterial() {
           </Row>
           <Row className="justify-content-center mb-3">
             <Col xs={12} lg={12}>
-              <Button
+              {/* <Button
                 variant="outline-success"
                 className="w-100 p-3"
                 onClick={handleEnterDatabaseClick}
               >
                 Enter Item Into Database
-              </Button>
+              </Button> */}
             </Col>
           </Row>
         </Container>

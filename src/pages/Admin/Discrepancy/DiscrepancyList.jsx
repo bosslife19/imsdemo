@@ -14,6 +14,7 @@ import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationP
 import Loading from "../../../components/Loading/Loading";
 import { convertDate } from "../../../utils/HelperFunc";
 import DiscrepancyContext from "../../../context/Discrepancy/DiscrepancyContext";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function DiscrepancyList() {
   const navigate = useNavigate();
@@ -152,6 +153,7 @@ function DiscrepancyList() {
                 />
               )
             : null}
+            <BackButtonIcon/>
           <TitleHeader text={"Discrepancy"} />
           <Row className="mb-3 ">
             <Col className="mb-3 " lg={6} xl={8} md={12} sm={12} xs={12}>

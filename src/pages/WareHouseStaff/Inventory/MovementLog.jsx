@@ -14,13 +14,53 @@ import { faClockRotateLeft, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Filter from "../../../components/Filter/Filter";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import Loading from "../../../components/Loading/Loading";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import jsPDF from 'jspdf'
+import autoTable from "jspdf-autotable"
+import * as XLSX from 'xlsx'
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
+
 
 function MovementLog() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const { getTrackings, getTrackingsData, getTrackingsIsLoading } = useContext(TrackingContext);
+
+    const [exportType, setExportType] = useState("");
+  
+
+  
+
+  const exportAccordingToType = ()=>{
+    if(exportType ===''){
+      return;
+    }
+    if(exportType ==='pdf'){
+      let doc = new jsPDF();
+      autoTable(doc,{
+        head: [['Id','Name', 'Brand', 'Category','Quantity','Supplier' ]],
+        body: getTrackingsData.map(item=>[item.id, item.item_name, item.brand, item.subject_category, item.quantity, item.distribution]),
+      })
+      doc.save('edo-inventory.pdf');
+     
+   
+    }
+    else{
+      var wb = XLSX.utils.book_new()
+    var ws = XLSX.utils.json_to_sheet(getTrackingsData);
+
+    XLSX.utils.book_append_sheet(wb, ws, 'edo_iventory_report');
+    XLSX.writeFile(wb, 'edo_inventory_report.xlsx');
+   
+    }
+  }
+  useEffect(()=>{
+    exportAccordingToType();
+  }, [exportType])
+  
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [comfirmationAction, setComfirmationAction] = useState(false);
@@ -79,7 +119,20 @@ function MovementLog() {
     []
   );
 
-  const filterData = [{ pk: 1, type: "Date" }];
+
+
+  const filterData = [
+    {
+      pk: 1,
+      type: "Excel",
+    },
+    {
+      pk: 2,
+      type:'pdf'
+    }
+   
+  ];
+
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -138,7 +191,100 @@ function MovementLog() {
   }
   return (
     <div>
+
           <Container className="ListContainer pt-2" >
+      <NavigationHeader toggleSidebar={toggleSidebar} />
+      <div className="d-flex justify-content-between">
+        <WareHouseSideNavigation
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
+        <Container className="reportContainer">
+          {message
+            ? comfirmationAction && (
+                <ComfirmationPop
+                  message={message}
+                  ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
+                />
+              )
+            : null}
+         <div className="d-flex justify-content-between">  
+          <BackButtonIcon/>
+           <TitleHeader text={"Track Materials"} />
+          <Filter
+                optionTitle={"Time"}
+                options={sortOptionUP}
+                defult={"This week"}
+                onSelect={(value) => setSortBy(value)}
+              />
+          </div>
+          <TitleHeader
+            text={"Movement Log"}
+            headerTextStyle={"headerTextStyle"}
+          />
+          <Row className="mb-3">
+            <Col lg={12} md={12} xl={12} sm={12} xs={12}>
+              <Search
+                Searchstyle={"seachContentBar"}
+                searchText={"Search Log..."}
+              />
+            </Col>
+          </Row>
+           
+          <Row className="d-lg-none ">
+            <Col className="d-flex justify-content-between ms-auto gap-3">
+              <Filter
+              Filterstyle={"responsive"}
+                optionTitle={"Filter by"}
+                options={filterOption}
+                defult={"Ramdom"}
+                onSelect={(value) => setFilterBy(value)}
+              />
+              <Filter
+              Filterstyle={"responsive"}
+                optionTitle={"Sort by"}
+                options={sortOption}
+                defult={"Ramdom"}
+                onSelect={(value) => setSortBy(value)}
+              />
+            </Col>
+          </Row>
+          <Row className="d-none d-lg-flex">
+            <Col className="d-flex justify-content-end ms-auto gap-3">
+              <Filter
+                optionTitle={"Filter by"}
+                options={filterOption}
+                defult={"Ramdom"}
+                onSelect={(value) => setFilterBy(value)}
+
+              />
+              <Filter
+                optionTitle={"Sort by"}
+                options={sortOption}
+                defult={"Ramdom"}
+                onSelect={(value) => setSortBy(value)}
+              />
+                 <Filter
+                optionTitle={"Export Data"}
+                options={filterData}
+                dropdrowStyle={"DashboardExportData"}
+                onSelect={(value) => setExportType(value)}
+                
+              />
+            </Col>
+          </Row>
+          
+          <Container className=" ListContainer pt-2">
+          <Table className="tablesSize" bordered  responsive>
+          <thead >
+        <tr>
+          {tableHeaders.map((header, keys) => (
+            <th style={{ backgroundColor: '#92D8C8' }}  key={keys}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+>>>>>>> master
             {!getTrackingsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 <Table className="tablesSize" bordered responsive>

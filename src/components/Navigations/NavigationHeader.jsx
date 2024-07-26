@@ -41,9 +41,9 @@ function NavigationHeader({ toggleSidebar }) {
         </Nav>
 
         <div className="d-flex align-items-center gap-3">
-          <Nav.Link as={NavLink} to="/Notifications" className="d-lg-none">
+          {/* <Nav.Link as={NavLink} to="/Notifications" className="d-lg-none">
             <i className="fa-regular fa-bell"></i>
-          </Nav.Link>
+          </Nav.Link> */}
           <Dropdown align="end" className="d-lg-none">
             <Dropdown.Toggle
               variant="light"
@@ -79,11 +79,11 @@ function NavigationHeader({ toggleSidebar }) {
               <i className="fa-solid fa-magnifying-glass"></i>
             </Nav.Link> */}
             <div style={{position:'relative'}}>
-            <Nav.Link as={NavLink} to="*">
+            {/* <Nav.Link as={NavLink} to="*">
               <i className="fa-regular fa-envelope"></i>
               
-            </Nav.Link>
-            <p style={{position:'absolute', color:'coral', fontSize:12, top:1.5, right:'12%'}}>{messages}</p>
+            </Nav.Link> */}
+            {/* <p style={{position:'absolute', color:'coral', fontSize:12, top:1.5, right:'12%'}}>{messages}</p> */}
             </div>
            
             {/* <Nav.Link as={NavLink} to="/Notifications">

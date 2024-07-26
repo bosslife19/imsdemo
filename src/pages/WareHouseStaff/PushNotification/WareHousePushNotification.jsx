@@ -8,6 +8,7 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons/faClockRotateLeft";
 import PushNotification from "../../../components/Notification/PushNotification";
+import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
 
 function WareHousePushNotification() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -39,7 +40,7 @@ function WareHousePushNotification() {
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
       <div className="d-flex justify-content-between">
-        <SideNavigation isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <WareHouseSideNavigation isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Container className="reportContainer">
           <TitleHeader text={"Push Notifications"} />
 

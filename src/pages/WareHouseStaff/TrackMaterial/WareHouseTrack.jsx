@@ -14,8 +14,11 @@ import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import Loading from "../../../components/Loading/Loading";
 import { convertDate, scrollToTop } from "../../../utils/HelperFunc";
+
 import MovementLog from "../Inventory/MovementLog";
 import Search from "../../../components/Search/Normalsearch/Search";
+
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function WareHouseTrack() {
   const navigate = useNavigate();
@@ -174,6 +177,7 @@ function WareHouseTrack() {
               />
             )
           ) : null}
+          <BackButtonIcon/>
           <TitleHeader text={"Track Materials"} />
           <Row className="mb-4">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>

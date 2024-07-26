@@ -11,6 +11,7 @@ import ExpireIcon from "../../../assets/bigIcon/Shape5.png";
 import "./Analytics.css";
 import { InventoryBox } from "../../BoxDisplaysections/InventoryBox";
 import { UserBox } from "../../BoxDisplaysections/UserBox";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function ReportAnalytics() {
   const [selectedBox, setSelectedBox] = useState(null);
@@ -156,6 +157,7 @@ function ReportAnalytics() {
       <div className="d-flex justify-content-between">
         <SideNavigation isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Container className="reportContainer">
+          <BackButtonIcon/>
           <TitleHeader text={"Reports & Analytics"} />
           <Row className="mb-3">
             <Col className="mb-3" lg={6} xl={7} md={9} sm={12} xs={12}>

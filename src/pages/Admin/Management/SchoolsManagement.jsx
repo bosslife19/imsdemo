@@ -259,6 +259,7 @@ function SchoolsManagement() {
                 className="sideNavSearchBar"
                 value={searchTerm}
                 onChange={handleSearchChange}
+                style={{borderWidth:1, borderRadius:3}}
                 
             />
             </Col>

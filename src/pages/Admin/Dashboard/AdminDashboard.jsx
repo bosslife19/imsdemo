@@ -142,7 +142,7 @@ function AdminDashboard() {
     getLowStockItems();
 
     if(filter ==='All'){
-      console.log('here')
+      
        setGetItemsData(originalItems);
 
        return setSchools(originalSchools);
@@ -660,7 +660,7 @@ function AdminDashboard() {
             <Filter
                             Filterstyle={"responsive"}
               optionTitle={"Time"}
-              options={filterData}
+              // options={filterData}
               defult={"This week"}
             />
           </div>

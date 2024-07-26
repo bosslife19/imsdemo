@@ -478,10 +478,10 @@ function HeadTeacherDashboard() {
     navigate("/ReportDiscrepancy")
   }
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    // Add your date filtering logic here
-  };
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  //   // Add your date filtering logic here
+  // };
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />

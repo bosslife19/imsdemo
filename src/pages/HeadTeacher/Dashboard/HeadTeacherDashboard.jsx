@@ -509,8 +509,7 @@ function HeadTeacherDashboard() {
 
                 clickEvent={()=>navigate('/HeaderTeacherInventory')}
 
-                clickEvent={() => handleHeaderTeacherInventory()}
-
+                
               />
             </Col>
             <Col lg={3} md={3} xl={3} sm={6} xs={6}>
@@ -520,7 +519,7 @@ function HeadTeacherDashboard() {
 
                 clickEvent={()=>navigate('/HeadTeacherRequestMaterial')}
 
-                clickEvent={() => handleRequestMaterial()}
+                
 
               />
             </Col>

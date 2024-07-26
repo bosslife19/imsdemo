@@ -118,10 +118,7 @@ function GenerateInventory() {
   ], []);
 
   const filterOptionForType = useMemo(()=>[
-    {
-      pk: 1,
-      type: 'School Type'
-    },
+    
     {
       pk: 2,
       type: 'JSS'

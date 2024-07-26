@@ -13,7 +13,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Form } from "react-bootstrap";
 import "./AdminDashboard.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import SideNavigation from "../../../components/Navigations/SideNavigation";
@@ -34,6 +34,10 @@ import SchoolContext from "../../../context/School/SchoolContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import jsPDF from 'jspdf'
+import autoTable from "jspdf-autotable"
+import * as XLSX from 'xlsx'
+
 import { UserBox } from "../ViewLowstock/UserBox";
 import { getLCP } from "web-vitals";
  
@@ -57,12 +61,39 @@ function AdminDashboard() {
   const [count, setCount] = useState(0);
   const [schools, setSchools] = useState([]);
   const [originalSchools, setOriginalSchools] = useState([])
+  const [exportType, setExportType] = useState("");
   
 
   const {
     getInventoryItems, getItemsData, getItemsIsLoading,setGetItemsData
   } = useContext(InventoryItemContext);
 
+  const exportAccordingToType = ()=>{
+    if(exportType ===''){
+      return;
+    }
+    if(exportType ==='pdf'){
+      let doc = new jsPDF();
+      autoTable(doc,{
+        head: [['Id','Name', 'Brand', 'Category','Quantity','Supplier' ]],
+        body: getItemsData.map(item=>[item.id, item.item_name, item.brand, item.subject_category, item.quantity, item.distribution]),
+      })
+      doc.save('edo-inventory.pdf');
+     
+   
+    }
+    else{
+      var wb = XLSX.utils.book_new()
+    var ws = XLSX.utils.json_to_sheet(getItemsData);
+
+    XLSX.utils.book_append_sheet(wb, ws, 'edo_iventory_report');
+    XLSX.writeFile(wb, 'edo_inventory_report.xlsx');
+   
+    }
+  }
+  useEffect(()=>{
+    exportAccordingToType();
+  }, [exportType])
   
   const {
     getSchoolsData, getSchools, getSchoolsIsLoading
@@ -111,7 +142,7 @@ function AdminDashboard() {
     getLowStockItems();
 
     if(filter ==='All'){
-      console.log('here')
+      
        setGetItemsData(originalItems);
 
        return setSchools(originalSchools);
@@ -216,6 +247,23 @@ function AdminDashboard() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const filterUserRole = useMemo(()=>[
+    {
+    pk:1,
+    type: 'Admin',
+
+    },
+    {
+      pk:2,
+      type: 'Warehouse Staff',
+  
+      },
+      {
+        pk:3,
+        type: 'Head Teacher',
+    
+        },
+])
   const filterOptionforLGA = useMemo(() => [
     {
 
@@ -341,16 +389,13 @@ function AdminDashboard() {
   const filterData = [
     {
       pk: 1,
-      type: "Last 24hrs",
+      type: "Excel",
     },
     {
       pk: 2,
-      type: "Last 3 Days",
-    },
-    {
-      pk: 3,
-      type: "Last 7 Days",
-    },
+      type:'pdf'
+    }
+   
   ];
   const handlePreviousPage = () => {
     setCurrentPage(prev => Math.max(prev - 1, 0));
@@ -587,10 +632,16 @@ function AdminDashboard() {
             : null}
           <div className="d-flex justify-content-between">
             <TitleHeader text={"Dashboard"} />
+            <Form.Control
+                    type="date"
+                    placeholder="Minimum Stock Level"
+                    className="pushNotificationTitle"
+                    style={{width:300}}
+                  />
             <Filter
                             Filterstyle={"responsive"}
               optionTitle={"Time"}
-              options={filterData}
+              // options={filterData}
               defult={"This week"}
             />
           </div>
@@ -712,6 +763,8 @@ function AdminDashboard() {
                 optionTitle={"Export Data"}
                 options={filterData}
                 dropdrowStyle={"DashboardExportData"}
+                onSelect={(value) => setExportType(value)}
+                
               />
             </Col>
           </Row>
@@ -729,11 +782,11 @@ function AdminDashboard() {
                 options={""}
                 defult={""}
               />
-              <Filter
+              {/* <Filter
                 optionTitle={"Sort by"}
-                options={filterData}
+                // options={filterData}
                 defult={"Ramdom"}
-              />
+              /> */}
             </Col>
           </Row>
           <Row className="mb-3">
@@ -754,7 +807,7 @@ function AdminDashboard() {
                 />
                 <Filter
                   optionTitle={"User Role"}
-                  options={filterData}
+                  options={filterUserRole}
                   defult={"All"}
                   Filterstyle={"d-none d-lg-block"}
                 />
@@ -762,7 +815,7 @@ function AdminDashboard() {
               <div className=" d-lg-none d-flex justify-content-end ">
                 <Filter
                   optionTitle={"User Role"}
-                  options={filterData}
+                  options={filterUserRole}
                   defult={"All"}
                 />
               </div>

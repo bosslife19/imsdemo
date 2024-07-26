@@ -244,7 +244,7 @@ function AddNewItem() {
                       name="category"
                       required
                     >
-                      <option value="">Category</option>
+                      <option value="">Subject Category</option>
                       <option value="English">English</option>
                       <option value="Mathematics">Mathematics</option>
                       <option value="Science">Science</option>

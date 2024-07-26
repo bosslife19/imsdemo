@@ -13,7 +13,7 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import { Container, Row, Col, Card, Form } from "react-bootstrap";
+import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import "./AdminDashboard.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import SideNavigation from "../../../components/Navigations/SideNavigation";
@@ -611,29 +611,10 @@ function AdminDashboard() {
     },
   ];
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        closeMenu();
-      }
-    };
-
-    // document.addEventListener('mousedown', handleClickOutside);
-    // return () => {
-    //   document.removeEventListener('mousedown', handleClickOutside);
-    // };
-  }, []);
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
   
   return (
     <div>
@@ -666,17 +647,16 @@ function AdminDashboard() {
           </div>
           <Row className="mb-3">
           <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
-        <PrimaryButton
-          text="View Low Stock Items"
-          Primarystyle="InventoryReportButton"
-          clickEvent={toggleMenu}
-          className="relatives"
-        />
-      </Col>
-      <div ref={menuRef} className={`view ${menuOpen ? 'open' : ''}`}>
+          <Button variant="primary" onClick={handleShow} className="InventoryReportButton">
+            View Low Stock Items
+          </Button>
+        </Col>
+      {/* <div  */}
+       {/* ref={menuRef} className={`view ${menuOpen ? 'open' : ''}`} */}
+      {/* > */}
         
-        <UserBox items={lowItems}/>
-      </div>
+        <UserBox items={lowItems} show={showModal} handleClose={handleClose} />
+      {/* </div> */}
             <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
               <PrimaryButton
                 text={"Add New Item"}

@@ -123,8 +123,7 @@ function DataInventory() {
     'Date',
      
    ];
-  const { userData, messages, } = useContext(AuthenticationContext);
-  return (
+   return (
     
     <div className="Bodied">
        <div className="Scrollingss">

@@ -22,6 +22,7 @@ import PresentaionCard, { NoImagCard } from "../../../components/Card/Presentaio
 import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
 import schoolImage from "../../../assets/schools/shelves.jpg";
 import BarGraph from "../../../components/Graph/BarGraph";
+
 import WareHouseSideNavigation from "../../../components/Navigations/ConditionalSideNavigation";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
@@ -31,6 +32,13 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import jsPDF from 'jspdf'
 import autoTable from "jspdf-autotable"
 import * as XLSX from 'xlsx'
+
+import LineGraph from "../../../components/Graph/LineGraph";
+import DoughnutGraph from "../../../components/Graph/DoughnutGraph";
+import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
+import { useNavigate } from "react-router-dom";
+
+
 // Register the components
 ChartJS.register(
   CategoryScale,
@@ -47,6 +55,7 @@ ChartJS.register(
 
 
 function HeadTeacherDashboard() {
+
   
   const {
     getInventoryItems, getItemsData, getItemsIsLoading,setGetItemsData
@@ -167,6 +176,8 @@ function HeadTeacherDashboard() {
   }, [getItemsIsLoading ])
 
   const {value: InvetoryDifference, trend: InvetoryTrend} = itemDataAnalysis
+  
+
   
 
   const toggleSidebar = () => {
@@ -352,6 +363,125 @@ function HeadTeacherDashboard() {
       },
     },
   };
+
+  const Piedata = {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [
+      {
+        data: [300, 50, 100, 40, 120, 75],
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+          "#FF9F40",
+        ],
+        hoverBackgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+          "#FF9F40",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const Pieoptions = {
+    cutout: "50%",
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            weight: "bold",
+          },
+        },
+      },
+      tooltip: {
+        titleFont: {
+          weight: "bold",
+        },
+        bodyFont: {
+          weight: "bold",
+        },
+      },
+    },
+  };
+
+  const Arkdata = {
+    labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    datasets: [
+      {
+        label: "Material Usage",
+        data: [650, 590, 800, 810, 560, 550, 400, 700, 750, 650],
+        fill: true,
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        pointBackgroundColor: "rgba(75, 192, 192, 1)",
+        pointBorderColor: "#fff",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "rgba(75, 192, 192, 1)",
+      },
+    ],
+  };
+
+  const Arkoptions = {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            weight: "bold",
+          },
+        },
+      },
+      tooltip: {
+        titleFont: {
+          weight: "bold",
+        },
+        bodyFont: {
+          weight: "bold",
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            weight: "bold",
+          },
+        },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          font: {
+            weight: "bold",
+          },
+        },
+      },
+    },
+  };
+
+  const handleRequestMaterial = () => { 
+    navigate("/HeadTeacherRequestMaterial");
+  };
+
+ const handleHeaderTeacherInventory =()=>{
+    navigate("/HeaderTeacherInventory")
+  }
+  const handleReports =()=>{
+    navigate("/ReportDiscrepancy")
+  }
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    // Add your date filtering logic here
+  };
   return (
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
@@ -363,11 +493,12 @@ function HeadTeacherDashboard() {
         <Container className="reportContainer">
           <div className="d-flex justify-content-between">
             <TitleHeader text={"Dashboard"} />
-            <Filter
+            {/* <Filter
               optionTitle={"Time"}
               options={filterData}
               defult={"This week"}
-            />
+              onDateChange={handleDateChange}
+            /> */}
           </div>
           <Row className="mb-3" style={{margin:'auto'}}>
             
@@ -375,21 +506,32 @@ function HeadTeacherDashboard() {
               <PrimaryButton
                 text={"View Inventory"}
                 Primarystyle={"InventoryReportButton"}
+
                 clickEvent={()=>navigate('/HeaderTeacherInventory')}
+
+                clickEvent={() => handleHeaderTeacherInventory()}
+
               />
             </Col>
             <Col lg={3} md={3} xl={3} sm={6} xs={6}>
               <PrimaryButton
                 text={"Request Materials"}
                 Primarystyle={"InventoryReportButton"}
+
                 clickEvent={()=>navigate('/HeadTeacherRequestMaterial')}
+
+                clickEvent={() => handleRequestMaterial()}
+
               />
             </Col>
             <Col lg={3} md={3} xl={3} sm={6} xs={6}>
               <PrimaryButton
                 text={"Report Discrepancy"}
                 Primarystyle={"InventoryReportButton"}
+
                 clickEvent={()=>navigate('/ReportDiscrepancy')}
+
+                
               />
             </Col>
           </Row>

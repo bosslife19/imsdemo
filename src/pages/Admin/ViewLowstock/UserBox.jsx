@@ -17,6 +17,7 @@ export const UserBox = ({ items, show, handleClose }) => {
                     Low Stock Items
                   </Card.Title>
                   <Card.Body className="AdminRecentUser m-1 rounded">
+                    
                     {items.map((item, index) => (
                       <Row
                         style={{ fontSize: "12px" }}

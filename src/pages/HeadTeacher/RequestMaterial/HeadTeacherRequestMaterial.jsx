@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import { scrollToTop } from "../../../utils/HelperFunc";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function HeadTeacherRequestMaterial() {
   const {
@@ -112,6 +113,7 @@ function HeadTeacherRequestMaterial() {
           toggleSidebar={toggleSidebar}
         />
         <Container className="reportContainer">
+          <BackButtonIcon/>
           <TitleHeader text={"Request Materials"} />
           {message
             ? comfirmationAction && (

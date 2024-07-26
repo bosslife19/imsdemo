@@ -15,6 +15,7 @@ import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import Loading from "../../../components/Loading/Loading";
 import { convertDate } from "../../../utils/HelperFunc";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function HeaderTeacherInventory() {
   const navigate = useNavigate();
@@ -123,6 +124,7 @@ function HeaderTeacherInventory() {
           toggleSidebar={toggleSidebar}
         />
         <Container className="reportContainer">
+          <BackButtonIcon/>
           <TitleHeader text={"Inventory Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>

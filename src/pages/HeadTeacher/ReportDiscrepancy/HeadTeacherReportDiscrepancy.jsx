@@ -4,6 +4,7 @@ import "./HeadTeacherReportDiscrepancy.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
 import TitleHeader from "../../../components/Headers/TitleHeader";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function HeadTeacherReportDiscrepancy() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -60,6 +61,7 @@ function HeadTeacherReportDiscrepancy() {
         </Row>
 
         <Row>
+          <BackButtonIcon/>
           <TitleHeader
             text={"Discrepancy Details"}
             headerTextStyle={"headerTextStyle"}

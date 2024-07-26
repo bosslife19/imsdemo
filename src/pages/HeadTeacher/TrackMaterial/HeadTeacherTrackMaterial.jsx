@@ -15,6 +15,7 @@ import TrackingContext from "../../../context/Tracking/TrackingContext";
 import jsPDF from 'jspdf'
 import autoTable from "jspdf-autotable"
 import * as XLSX from 'xlsx'
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 function HeadTeacherTrackMaterial() {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -190,6 +191,7 @@ function HeadTeacherTrackMaterial() {
         />
         <Container className="reportContainer">
           <div className="d-flex justify-content-between">
+            <BackButtonIcon/>
             <TitleHeader text={"Track Materials"} />
             <Filter
               optionTitle={"Time"}

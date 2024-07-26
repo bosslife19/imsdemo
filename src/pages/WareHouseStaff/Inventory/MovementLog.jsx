@@ -18,6 +18,7 @@ import Loading from "../../../components/Loading/Loading";
 import jsPDF from 'jspdf'
 import autoTable from "jspdf-autotable"
 import * as XLSX from 'xlsx'
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function MovementLog() {
   const navigate = useNavigate();
@@ -218,6 +219,7 @@ function MovementLog() {
               )
             : null}
          <div className="d-flex justify-content-between">  
+          <BackButtonIcon/>
            <TitleHeader text={"Track Materials"} />
           <Filter
                 optionTitle={"Time"}

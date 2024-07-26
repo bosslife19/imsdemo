@@ -72,15 +72,98 @@ function InventoryManagement() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const filterOption = useMemo(() =>[
-    {
-      pk: 1,
-      type: "All",
-    },
+ 
+  const filterOptionForType = useMemo(()=>[
+    
     {
       pk: 2,
-      type: "office_supplies",
+      type: 'JSS'
     },
+    {
+      pk: 3,
+      type: 'Primary'
+    },
+    {
+      pk: 4,
+      type: 'Progressive'
+    }
+  ])
+
+  const filterOption = useMemo(() => [
+   
+    {
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
   ], []);
 
   const sortOption = useMemo(() =>[
@@ -233,7 +316,7 @@ function InventoryManagement() {
               <Filter
                 Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
-                options={sortOption}
+                options={filterOptionForType}
                 defult={"School Type"}
                 onSelect={(value) => setSortBy(value)}
               />
@@ -249,7 +332,7 @@ function InventoryManagement() {
               />
               <Filter
                 optionTitle={"Filter by"}
-                options={sortOption}
+                options={filterOptionForType}
                 defult={"School Type"}
                 onSelect={(value) => setSortBy(value)}
               />

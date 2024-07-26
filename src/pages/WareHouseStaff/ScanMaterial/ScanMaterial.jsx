@@ -154,13 +154,13 @@ function ScanMaterial() {
           </Row>
           <Row className="justify-content-center mb-3">
             <Col xs={12} lg={12}>
-              <Button
+              {/* <Button
                 variant="outline-success"
                 className="w-100 p-3"
                 onClick={handleEnterDatabaseClick}
               >
                 Enter Item Into Database
-              </Button>
+              </Button> */}
             </Col>
           </Row>
         </Container>

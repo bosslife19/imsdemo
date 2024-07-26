@@ -106,6 +106,7 @@ function NavigationControl() {
           <Route path="/ItemDetail/:pk" element={<ItemDetail />} />
           <Route path="/AddNewItem" element={<AddNewItem />} />
           <Route path="/EditItem/:pk" element={<EditItem />} />
+          <Route path="/GenerateInventory" element={<GenerateInventory />} />
 
 
           <Route element={<PrivatteAdminRoute />}>

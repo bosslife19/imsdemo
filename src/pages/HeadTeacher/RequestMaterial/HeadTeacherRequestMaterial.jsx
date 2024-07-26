@@ -150,7 +150,7 @@ function HeadTeacherRequestMaterial() {
                       value={formData.head_teacher_name}
                       onChange={handleChange}
                       name="head_teacher_name"
-                      readOnly
+                     
                     />
                   </Col>
                 </Row>

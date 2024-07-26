@@ -36,7 +36,7 @@ import * as XLSX from 'xlsx'
 import LineGraph from "../../../components/Graph/LineGraph";
 import DoughnutGraph from "../../../components/Graph/DoughnutGraph";
 import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
-import { useNavigate } from "react-router-dom";
+
 
 
 // Register the components

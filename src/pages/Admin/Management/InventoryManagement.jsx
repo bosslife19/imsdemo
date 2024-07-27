@@ -398,7 +398,7 @@ function InventoryManagement() {
                           <span className="text-muted InventoryCategoryText">
                             | {Item.category} | {''}
                             <span className="d-none d-lg-inline me">
-                              {Item.item_code} | {`$${Item.school}`} | {Item.quantity} {''}
+                              {Item.item_code} | {`${Item.school}`} | {Item.quantity} {''}
                               <span
                                 className={
                                   Item.quantity > 35

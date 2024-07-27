@@ -1,7 +1,23 @@
-import React from 'react'
+import axios from 'axios';
+import React, {useEffect, useState} from 'react'
 import { Modal, Container, Row, Col, Card } from 'react-bootstrap';
 
 export const NotificationHistory = ({ show, handleClose }) => {
+  const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+const [history, setHistory] = useState([])
+  const getHistory = async()=>{
+    try {
+      const res =  await axios.get(`${baseUrl}/api/notification-history`);
+     
+      setHistory(res.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    getHistory()
+  }, [])
     return (
         <Modal show={show} onHide={handleClose} size="lg">
           <Modal.Header closeButton>
@@ -24,22 +40,44 @@ export const NotificationHistory = ({ show, handleClose }) => {
                              className="align-items-center mb-2 py-1"
                           >
                             <Col xs={4} lg={2} sm={4} md={4}>
-                              <span className="">name</span>
+                              <span className="">Title</span>
                             </Col>
                             <Col xs={4} lg={2} sm={4} md={4}>
                               <div className="text-decoration-none text-success">
-                                code
+                                Message
                               </div>
                             </Col>
-                            <Col xs={4} lg={4} className="d-none d-lg-flex">
-                              barcode
+                            <Col xs={4} lg={2} sm={4} md={4}>
+                              <div className="text-decoration-none text-success">
+                                Time
+                              </div>
                             </Col>
-                            <Col xs={2} lg={2} className="text-muted d-none d-lg-flex">
-                              dhdj
+                            
+                            
+                            
+                          </Row>
+                          <Row className='align-items-center mb-2 py-1'>
+                            {
+                              history && history.map(item=>(
+                                <>
+                                <Col xs={4} lg={2} sm={4} md={4}>
+                              <span className="">{item.title}</span>
                             </Col>
-                            <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                             jdhdghgj
+                            <Col xs={4} lg={2} sm={4} md={4}>
+                            <span className="">{item.message}</span>
+                          </Col>
+                          <Col xs={4} lg={2} sm={4} md={4}>
+                              <div className="text-decoration-none text-success">
+                                {item.created_at}
+                              </div>
                             </Col>
+                                </>
+                                
+                              ))
+                            }
+                         
+                           
+                            
                           </Row>
                        </Card.Body>
                      

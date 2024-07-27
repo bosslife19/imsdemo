@@ -253,13 +253,14 @@ function SchoolsManagement() {
           <TitleHeader text={"Schools Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-            <input
+            
+             <input
                 type="text"
-                placeholder='Search Schools'
-                className="sideNavSearchBar"
+                placeholder='Search School'
+                className="seachContentBar"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                style={{borderWidth:1, borderRadius:3}}
+                style={{display:'block', width:'100%', borderRadius:10}}
                 
             />
             </Col>

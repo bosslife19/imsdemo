@@ -10,6 +10,7 @@ import { scrollToTop } from "../../../utils/HelperFunc";
 import DiscrepancyContext from "../../../context/Discrepancy/DiscrepancyContext";
 import AuthenticationContext from "../../../context/Authentication/AuthenticationContext";
 import ConditionalSideNavigation from "../../../components/Navigations/ConditionalSideNavigation";
+import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function ReportDiscrepancy() {
   const {
@@ -108,8 +109,9 @@ function ReportDiscrepancy() {
       <NavigationHeader toggleSidebar={toggleSidebar} />
       <div className="d-flex justify-content-between">
       <ConditionalSideNavigation isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
+     
         <Container className="reportContainer">
+        <BackButtonIcon/>
           <TitleHeader text={"Report Discrepancy"} />
           {message
             ? comfirmationAction && (

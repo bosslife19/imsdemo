@@ -106,6 +106,22 @@ function NavigationControl() {
           <Route path="/EditItem/:pk" element={<EditItem />} />
           <Route path="/GenerateInventory" element={<GenerateInventory />} />
           <Route path="/WareHouseDashboard" element={<WareHouseDashboard />} />
+          <Route element={<PrivatteWareHouseRoute />}>
+          <Route path="/WareHouseDashboard" element={<WareHouseDashboard />} />
+          <Route path="/WareHouseInventory" element={<WareHouseInventory />} />
+          <Route path="/WareHouseTrack" element={<WareHouseTrack />} />
+          <Route path="/ScanMaterial" element={<ScanMaterial />} />
+          <Route path="/WareHouseGenerateInventory" element={<WareHouseGenerateReports />} />
+          <Route path="/TrackMovementLog" element={<MovementLog />} />
+           <Route
+            path="/WareHousePushNotification"
+            element={<WareHousePushNotification />}
+          />
+           <Route
+            path="/WareHouseAddMovement"
+            element={<WareHouseAddMovement />}
+          />
+          </Route>
 
 
           <Route element={<PrivatteAdminRoute />}>

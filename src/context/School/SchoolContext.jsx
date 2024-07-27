@@ -102,7 +102,7 @@ export const SchoolProvider = ({ children }) => {
       try {
         const result = await axios.post(`${baseUrl}/api/school`, formData);
         setAddSchoolResponse(result.data);
-        console.log(result);
+        
       } catch (error) {
         setAddSchoolError(error.response.data.message);
         console.log(error);

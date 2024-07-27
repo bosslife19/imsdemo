@@ -32,7 +32,7 @@ export const ItemRequestProvider = ({ children }) => {
         };
         try {
           const result = await axios.post(`${baseUrl}/api/item-request`, RequestData);
-          console.log(result.data)
+          
           setAddItemRequestResponse(result.data);
         } catch (error) {
           console.log(error)

@@ -38,7 +38,7 @@ function Search({ Searchstyle, searchText, }) {
             <input
                 type="text"
                 placeholder={searchText}
-                className="sideNavSearchBar"
+                className="sideNavSearchBar" 
                 value={searchQuery}
                 onChange={handleSearchChange}
                 onKeyDown={handleKeyDown}

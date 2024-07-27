@@ -359,7 +359,7 @@ function InventoryManagement() {
               <Filter
                 optionTitle={"Filters by"}
                 options={filterOption}
-                defult={"LGA"}
+                defult={"Category"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter

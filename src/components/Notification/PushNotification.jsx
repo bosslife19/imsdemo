@@ -10,14 +10,18 @@ import AuthenticationContext from "../../context/Authentication/AuthenticationCo
 import { Schedule } from "./Schedule/NotificationSchedule";
 
 function PushNotification({audience}) {
-    const fileInputRef = useRef(null);
+    // const fileInputRef = useRef(null);
     const {messages, setMessages} = useContext(AuthenticationContext);
    
+    const[title, setTitle] = useState('')
+    const [message, setMessage] = useState('')
+   
+   
   
-    const handleFileChange = (event) => {
-      const fileName = event.target.files[0]?.name || "Choose a file";
-      document.getElementById("fileLabel").innerText = fileName;
-    };
+    // const handleFileChange = (event) => {
+    //   const fileName = event.target.files[0]?.name || "Choose a file";
+    //   document.getElementById("fileLabel").innerText = fileName;
+    // };
     const handleSubmit = async (e)=>{
       e.preventDefault()
     
@@ -26,6 +30,7 @@ function PushNotification({audience}) {
         message:e.target.message.value,
         audience: audience
       }
+      
       const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.post(`${baseUrl}/api/notification/sendnotification`, data);
@@ -58,6 +63,7 @@ function PushNotification({audience}) {
                     placeholder="Notification Title"
                     className="pushNotificationTitle"
                     name='title'
+                    onChange={(e)=>setTitle(e.target.value)}
                   />
                 </Col>
               </Row>
@@ -72,12 +78,13 @@ function PushNotification({audience}) {
                     placeholder="Enter your message here..."
                     className="pushNotificationTextArea"
                     name='message'
+                    onChange={(e)=>setMessage(e.target.value)}
                   />
                 </Form.Group>
               </Col>
             </Row>
 
-            <Row className="align-items-center mb-3  d-flex justify-content-between">
+            {/* <Row className="align-items-center mb-3  d-flex justify-content-between">
               <Col xs={12} lg={3} sm={12} className="mb-2 mb-lg-0">
                 <Form.Control
                   type="file"
@@ -89,7 +96,7 @@ function PushNotification({audience}) {
                 />
                 <CustomFileInput fieldName={'fileInput'} title={'Attach File'} CustomFileInputicon={faPaperclip}/>
               </Col>
-            </Row>
+            </Row> */}
             <Row>
               <Col
                 xs={12}
@@ -105,7 +112,7 @@ function PushNotification({audience}) {
                   <FontAwesomeIcon icon={faClockRotateLeft} />
                 </Button> 
 
-                <Schedule  show={showModal} handleClose={handleClose} />
+                <Schedule  show={showModal} handleClose={handleClose} title={title} message={message} audience={audience} />
               </Col>
             </Row>
           </Form>

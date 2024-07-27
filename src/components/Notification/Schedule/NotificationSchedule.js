@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
-export const Schedule = ({ show, handleClose }) => {
+export const Schedule = ({ show, handleClose, title, message, audience }) => {
+  
   const [schedule, setSchedule] = useState([{ day: '', month: '', year: '', hour: '', minute: '', ampm: 'AM' }]);
+ 
+  const [sendAt, setSendAt] = useState('')
+  
+  
+  const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+ 
+ 
+ 
+  const handleInputChange = (e) => {
+    setSendAt(e.target.value)
+  };
 
   const customSelectStyle = {
     border: 'none',
@@ -20,26 +33,21 @@ export const Schedule = ({ show, handleClose }) => {
     boxShadow: 'none',
   };
 
-  const handleChange = (index, e) => {
-    const { name, value } = e.target;
-    let numericValue = value.replace(/[^0-9]/g, '');
-    if (name === 'year') {
-      numericValue = numericValue.slice(0, 4);
-    } else {
-      numericValue = numericValue.slice(0, 2);
-    }
-    const values = [...schedule];
-    values[index][name] = numericValue;
-    setSchedule(values);
-  };
+  
 
-  const handleAddSchedule = () => {
-    setSchedule([...schedule, { day: '', month: '', year: '', hour: '', minute: '', ampm: 'AM' }]);
-  };
+  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(schedule);
+    try {
+   
+      const response = await axios.post(`${baseUrl}/api/schedule-email`, {sendAt,title, message, audience});
+    console.log(response.data);
+      alert('Email scheduled successfully!');
+    } catch (error) {
+      console.log(error)
+    }
+    
   };
 
   return (
@@ -53,7 +61,7 @@ export const Schedule = ({ show, handleClose }) => {
             {schedule.map((item, index) => (
               <Card style={customSelectStyle} key={index} className="mb-3">
                 <Card.Body>
-                  <Row className="mb-3 g-3">
+                  {/* <Row className="mb-3 g-3">
                     <label>Date <FontAwesomeIcon icon={faPen} style={{ marginLeft: '5px' }} /></label>
                     <Col xs={4} md={4}>
                       <Form.Group controlId={`day-${index}`}>
@@ -137,7 +145,16 @@ export const Schedule = ({ show, handleClose }) => {
                         </Form.Control>
                       </Form.Group>
                     </Col>
-                  </Row>
+                  </Row> */}
+                   <input 
+            type="datetime-local" 
+            name="sendAt" 
+            id="sendAt" 
+            className="form-control" 
+            value={sendAt} 
+            onChange={handleInputChange} 
+            required 
+          />
                 </Card.Body>
               </Card>
             ))}

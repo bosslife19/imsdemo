@@ -9,7 +9,7 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
-// import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png";
+// import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png"; 
 import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
 import schoolImage from "../../../assets/schools/shelves.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,8 +21,10 @@ import { convertDate, scrollToTop } from "../../../utils/HelperFunc";
 import MessageContext from "../../../context/Message/MessageContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
 import BackButtonIcon from "../../../components/Button/BackButtonIcon";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-function InventoryManagement() {
+function InventoryManagement({ Searchstyle, searchText, }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -295,15 +297,21 @@ function InventoryManagement() {
                 searchText={"Search Inventory..."}
                 onSearchChange={handleSearchChange}
               /> */}
+               <div className={`sideNavSearchBarContainer ${Searchstyle}`}>
+            <FontAwesomeIcon
+                icon={faSearch}
+                className="sideNavSearchIcon"
+             />
               <input
                 type="text"
                 placeholder='Search Inventory'
-                className="seachContentBar"
+                className="sideNavSearchBar"
                 value={searchTerm}
                 onChange={handleSearchChange}
                 style={{display:'block', width:'100%', borderRadius:10}}
                 
             />
+            </div>
             </Col>
           </Row>
           <Row className="mb-3">

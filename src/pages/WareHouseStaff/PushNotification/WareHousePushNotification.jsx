@@ -54,11 +54,19 @@ function WareHousePushNotification() {
           <TitleHeader text={"Push Notifications"} />
 
           <Row>
-            <NotificationHistory   show={showModal} handleClose={handleClose} />
-             
-              
-            </Row>
 
+          <Row className="d-lg-none">
+            <Col className="d-flex text-center justify-content-end mb-3">
+              <NotificationBtn
+                Primaryicon={faClockRotateLeft}
+                onClick={handleShow}
+                text={"Notification History"}
+                Primarystyle={"pushNotificationTimer "}
+              />
+              
+            </Col>
+          </Row>
+            <NotificationHistory   show={showModal} handleClose={handleClose} />
 
             <Col className="d-flex justify-content-end ms-auto gap-3 mb-5">
               <Filter

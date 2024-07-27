@@ -602,6 +602,43 @@ function HeadTeacherDashboard() {
             />
             </Col>
           </Row>
+
+          <Row className="d-none d-lg-flex">
+            <Col lg={6} md={5} xl={6}>
+              <TitleHeader
+                text={"Inventory Insights"}
+                headerTextStyle={"headerTextStyle"}
+              />
+            </Col>
+            
+          </Row>
+          <Row className="mb-3">
+            <Col lg={6} md={6} xl={4} sm={12} xs={12} className="mb-3">
+              <DoughnutGraph data={Piedata} options={Pieoptions} />
+            </Col>
+            <Col lg={6} md={6} xl={8} sm={12} xs={12} className="">
+              <LineGraph data={Arkdata} options={Arkoptions} />
+            </Col>
+          </Row>
+          <Row className="mb-3 mt-5 gap-3">
+            <TitleHeader
+              text={"Recent Activity"}
+              headerTextStyle={"headerTextStyle"}
+            />
+            <NoImagCard
+              title={"Requested Material"}
+              figure={"4,678"}
+              margin={"↓"}
+              marginColor={"red"}
+            />
+            <NoImagCard
+              title={"Reported Items"}
+              figure={"26"}
+              margin={"↑"}
+              marginColor={"green"}
+            />
+            </Row>
+
           <Row className="mb-3 mt-5 gap-3">
             <TitleHeader text={"Recent User Activity"} headerTextStyle={'headerTextStyle'}/>
               <NoImagCard
@@ -616,6 +653,7 @@ function HeadTeacherDashboard() {
                 margin={"↑"}
                 marginColor={"green"}
               />
+
           </Row>
         </Container>
       </div>

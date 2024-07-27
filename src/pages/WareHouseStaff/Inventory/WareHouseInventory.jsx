@@ -70,12 +70,24 @@ function WareHouseInventory() {
   const filterOption = useMemo(() =>[
     {
       pk: 1,
-      type: "All",
+      type: "English",
     },
     {
       pk: 2,
-      type: "office_supplies",
+      type: "Mathematics",
     },
+    {
+      pk:3,
+      type:'Science'
+    },
+    {
+      pk:4,
+      type:'Home Work'
+    },
+    {
+      pk:5,
+      type:'Stationery'
+    }
   ], []);
 
   const sortOption = useMemo(() =>[
@@ -97,22 +109,22 @@ function WareHouseInventory() {
     let filtered = [...getItemsData];
 
     if (filterBy && filterBy !== 'All') {
-      filtered = filtered.filter((item) => item.category === filterBy);
+      filtered = filtered.filter((item) => item.subject_category === filterBy);
     }
 
     if (sortBy) {
       filtered.sort((a, b) => {
         if (sortBy === "ascending") {
-          return a.name.localeCompare(b.name); 
+          return a.item_name.localeCompare(b.item_name); 
         } else {
-          return b.name.localeCompare(a.name); 
+          return b.item_name.localeCompare(a.item_name); 
         }
       });
     }
 
     if (searchTerm) {
       filtered = filtered.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -163,7 +175,16 @@ function WareHouseInventory() {
           <TitleHeader text={"Inventory Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search Searchstyle={"seachContentBar"} searchText={'Search Inventory...'} onSearchChange={handleSearchChange}/>
+              {/* <Search Searchstyle={"seachContentBar"} searchText={'Search Inventory...'} onSearchChange={handleSearchChange}/> */}
+              <input
+                type="text"
+                placeholder='Search Inventory'
+                className="seachContentBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{display:'block', width:'100%', borderRadius:10}}
+                
+            />
             </Col>
           </Row>
           <Row className="mb-3">
@@ -215,22 +236,23 @@ function WareHouseInventory() {
             </Col>
           </Row>
           <Row className="d-none d-lg-flex">
-            <Col xl={2}>
+            <Col xl={2} style={{marginRight:20}}>
             <Filter
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"Category"}
                 onSelect={(value) => setFilterBy(value)}
+                
               />
             </Col>
-            <Col xl={2}>
+            {/* <Col xl={2}>
             <Filter
                 optionTitle={"Sort by"}
                 options={sortOption}
                 defult={"Ramdom"}
                 onSelect={(value) => setSortBy(value)}
               />
-            </Col>
+            </Col> */}
             <Col xl={3}> 
             <PrimaryButton
                 text={"Generate Inventory Report"}

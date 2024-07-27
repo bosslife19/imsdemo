@@ -45,7 +45,7 @@ function WareHousePushNotification() {
           <TitleHeader text={"Push Notifications"} />
 
           <Row>
-            <Row className="d-lg-none">
+            {/* <Row className="d-lg-none">
               <Col className="d-flex text-center justify-content-end mb-3">
                 <PrimaryButton
                   Primaryicon={faClockRotateLeft}
@@ -53,7 +53,7 @@ function WareHousePushNotification() {
                   Primarystyle={"pushNotificationTimer "}
                 />
               </Col>
-            </Row>
+            </Row> */}
 
             <Col className="d-flex justify-content-end ms-auto gap-3 mb-5">
               <Filter
@@ -63,11 +63,11 @@ function WareHousePushNotification() {
                 onSelect={(value)=>setAudience(value)}
 
               />
-              <PrimaryButton
+              {/* <PrimaryButton
                 Primaryicon={faClockRotateLeft}
                 text={"Notification History"}
                 Primarystyle={"pushNotificationTimer d-none d-lg-flex"}
-              />
+              /> */}
             </Col>
           </Row>
           <PushNotification audience={audience}/>

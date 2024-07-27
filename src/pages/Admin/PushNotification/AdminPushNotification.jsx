@@ -53,17 +53,13 @@ function AdminPushNotification() {
           <TitleHeader text={"Push Notifications"} />
 
           <Row>
-            <Row className="d-lg-none">
-              <Col className="d-flex text-center justify-content-end mb-3">
-              <NotificationBtn
-              Primaryicon={faClockRotateLeft}
-              onClick={handleShow}
-              text={"Notification History"}
-              Primarystyle={"pushNotificationTimer d-none d-lg-flex"}
-            />
-              </Col>
+
+
               <NotificationHistory   show={showModal} handleClose={handleClose} />
             </Row>
+
+           
+
 
             <Col className="d-flex justify-content-end ms-auto gap-3 mb-5">
               <Filter
@@ -73,12 +69,16 @@ function AdminPushNotification() {
                 onSelect={(value)=>setAudience(value)}
 
               />
+
               <NotificationBtn
               Primaryicon={faClockRotateLeft}
               onClick={handleShow}
               text={"Notification History"}
               Primarystyle={"pushNotificationTimer d-none d-lg-flex"}
             />
+
+             
+
             </Col>
             <NotificationHistory   show={showModal} handleClose={handleClose} />
           </Row>

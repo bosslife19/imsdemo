@@ -73,99 +73,122 @@ function InventoryManagement() {
   };
 
  
-  const filterOptionForType = useMemo(()=>[
+  // const filterOptionForType = useMemo(()=>[
     
-    {
-      pk: 2,
-      type: 'JSS'
-    },
-    {
-      pk: 3,
-      type: 'Primary'
-    },
-    {
-      pk: 4,
-      type: 'Progressive'
-    }
-  ])
+  //   {
+  //     pk: 2,
+  //     type: 'JSS'
+  //   },
+  //   {
+  //     pk: 3,
+  //     type: 'Primary'
+  //   },
+  //   {
+  //     pk: 4,
+  //     type: 'Progressive'
+  //   }
+  // ])
 
-  const filterOption = useMemo(() => [
+  // const filterOption = useMemo(() => [
    
+  //   {
+  //     pk: 2,
+  //     type: "AKOKO EDO",
+  //   },
+  //   {
+  //     pk: 3,
+  //     type: "EGOR",
+  //   },
+  //   {
+  //     pk: 4,
+  //     type: "ESAN CENTRAL",
+  //   },
+  //   {
+  //     pk: 5,
+  //     type: "ESAN NORTH EAST",
+  //   },
+  //   {
+  //     pk: 6,
+  //     type: "ESAN SOUTH EAST",
+  //   },
+  //   {
+  //     pk: 7,
+  //     type: "ESAN WEST",
+  //   },
+  //   {
+  //     pk: 8,
+  //     type: "ETSAKO CENTRAL",
+  //   },
+  //   {
+  //     pk: 9,
+  //     type: "ETSAKO EAST",
+  //   },
+  //   {
+  //     pk: 10,
+  //     type: "ETSAKO WEST",
+  //   },
+  //   {
+  //     pk: 11,
+  //     type: "IGUEBEN",
+  //   },
+  //   {
+  //     pk: 12,
+  //     type: "IKPOBA OKHA",
+  //   },
+  //   {
+  //     pk: 13,
+  //     type: "OREDO",
+  //   },
+  //   {
+  //     pk: 14,
+  //     type: "ORHIONMWON",
+  //   },
+  //   {
+  //     pk: 15,
+  //     type: "OVIA NORTH EAST",
+  //   },
+  //   {
+  //     pk: 16,
+  //     type: "OVIA SOUTH WEST",
+  //   },
+  //   {
+  //     pk: 17,
+  //     type: "OWAN EAST",
+  //   },
+  //   {
+  //     pk: 18,
+  //     type: "OWAN WEST",
+  //   },
+  //   {
+  //     pk: 19,
+  //     type: "UHUNMWODE",
+  //   },
+
+  // ], []);
+  const filterOption = useMemo(() =>[
+    {
+      pk: 1,
+      type: "English",
+    },
     {
       pk: 2,
-      type: "AKOKO EDO",
+      type: "Mathematics",
     },
     {
-      pk: 3,
-      type: "EGOR",
+      pk:3,
+      type:'Science'
     },
     {
-      pk: 4,
-      type: "ESAN CENTRAL",
+      pk:4,
+      type:'Home Work'
     },
     {
-      pk: 5,
-      type: "ESAN NORTH EAST",
-    },
-    {
-      pk: 6,
-      type: "ESAN SOUTH EAST",
-    },
-    {
-      pk: 7,
-      type: "ESAN WEST",
-    },
-    {
-      pk: 8,
-      type: "ETSAKO CENTRAL",
-    },
-    {
-      pk: 9,
-      type: "ETSAKO EAST",
-    },
-    {
-      pk: 10,
-      type: "ETSAKO WEST",
-    },
-    {
-      pk: 11,
-      type: "IGUEBEN",
-    },
-    {
-      pk: 12,
-      type: "IKPOBA OKHA",
-    },
-    {
-      pk: 13,
-      type: "OREDO",
-    },
-    {
-      pk: 14,
-      type: "ORHIONMWON",
-    },
-    {
-      pk: 15,
-      type: "OVIA NORTH EAST",
-    },
-    {
-      pk: 16,
-      type: "OVIA SOUTH WEST",
-    },
-    {
-      pk: 17,
-      type: "OWAN EAST",
-    },
-    {
-      pk: 18,
-      type: "OWAN WEST",
-    },
-    {
-      pk: 19,
-      type: "UHUNMWODE",
-    },
-
+      pk:5,
+      type:'Stationery'
+    }
   ], []);
 
+ 
   const sortOption = useMemo(() =>[
     {
       pk: 1,
@@ -185,22 +208,22 @@ function InventoryManagement() {
     let filtered = [...getItemsData];
 
     if (filterBy && filterBy !== 'All') {
-      filtered = filtered.filter((item) => item.category === filterBy);
+      filtered = filtered.filter((item) => item.subject_category === filterBy);
     }
 
     if (sortBy) {
       filtered.sort((a, b) => {
         if (sortBy === "ascending") {
-          return a.name.localeCompare(b.name); 
+          return a.item_name.localeCompare(b.item_name); 
         } else {
-          return b.name.localeCompare(a.name); 
+          return b.item_name.localeCompare(a.item_name); 
         }
       });
     }
 
     if (searchTerm) {
       filtered = filtered.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -267,11 +290,20 @@ function InventoryManagement() {
           </Row>
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search
+              {/* <Search
                 Searchstyle={"seachContentBar"}
                 searchText={"Search Inventory..."}
                 onSearchChange={handleSearchChange}
-              />
+              /> */}
+              <input
+                type="text"
+                placeholder='Search Inventory'
+                className="seachContentBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{display:'block', width:'100%', borderRadius:10}}
+                
+            />
             </Col>
           </Row>
           <Row className="mb-3">
@@ -310,14 +342,14 @@ function InventoryManagement() {
                 Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"LGA"}
+                defult={"Category"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
                 Filterstyle={"responsive"}
-                optionTitle={"Filter by"}
-                options={filterOptionForType}
-                defult={"School Type"}
+                optionTitle={"sort by"}
+                options={sortOption}
+                defult={"Ascending"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
@@ -331,9 +363,9 @@ function InventoryManagement() {
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
-                optionTitle={"Filter by"}
-                options={filterOptionForType}
-                defult={"School Type"}
+                optionTitle={"Sort by"}
+                options={sortOption}
+                defult={"Ascending"}
                 onSelect={(value) => setSortBy(value)}
               />
               <PrimaryButton

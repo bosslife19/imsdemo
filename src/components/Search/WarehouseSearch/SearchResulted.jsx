@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import LogoutIcon from "../../../assets/bigIcon/logoutIcon.png";
 // import LogoutIcon from "../../../assets/bigIcon/logoutIcon.png";
 import { Col, Container, Image, Row, Button } from 'react-bootstrap';
-import { FaArrowLeft } from 'react-icons/fa';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
  import AuthencationHeader from '../../Headers/AuthencationHeader';
 const SearchResulted = () => {
     const { query } = useParams();
@@ -45,7 +45,7 @@ const SearchResulted = () => {
             <Row className='pt-4 pb-4'>
                 <Col>
                 <Button variant="link" onClick={goBack} style={{ marginRight: "10px", fontSize: "24px", textDecoration: "none",color:"#000" }}>
-                            <FaArrowLeft />
+                            <faArrowLeft />
                         </Button>
                     <div style={{ display: "flex", alignItems: "center", textAlign: "center", marginBottom: "20px" ,justifyContent:"center"}}>
                         

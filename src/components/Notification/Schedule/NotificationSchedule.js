@@ -44,6 +44,7 @@ export const Schedule = ({ show, handleClose, title, message, audience }) => {
       const response = await axios.post(`${baseUrl}/api/schedule-email`, {sendAt,title, message, audience});
     console.log(response.data);
       alert('Email scheduled successfully!');
+      handleClose()
     } catch (error) {
       console.log(error)
     }

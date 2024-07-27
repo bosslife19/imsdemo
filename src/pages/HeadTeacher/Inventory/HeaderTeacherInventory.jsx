@@ -131,10 +131,11 @@ function HeaderTeacherInventory() {
             <input
                 type="text"
                 placeholder='Search Inventory'
-                className="sideNavSearchBar"
+                className="seachContentBar"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                style={{borderWidth:1, borderColor:'gray', borderRadius:4}}
+                style={{display:'block', width:'100%', borderRadius:10}}
+               
                
             />
              

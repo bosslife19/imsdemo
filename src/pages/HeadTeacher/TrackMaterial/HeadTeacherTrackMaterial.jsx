@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import "./HeadTeacherTrackMaterial.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import TitleHeader from "../../../components/Headers/TitleHeader";
@@ -193,11 +193,12 @@ function HeadTeacherTrackMaterial() {
           <div className="d-flex justify-content-between">
             <BackButtonIcon/>
             <TitleHeader text={"Track Materials"} />
-            <Filter
-              optionTitle={"Time"}
-              options={filterData}
-              defult={"This Week"}
-            />
+            <Form.Control
+                    type="date"
+                    placeholder="Minimum Stock Level"
+                    className="pushNotificationTitle"
+                    style={{width:300}}
+                  />
           </div>
           <div className="d-flex justify-content-between">
             <TitleHeader
@@ -216,11 +217,11 @@ function HeadTeacherTrackMaterial() {
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
             <input
                 type="text"
-                placeholder='Search Log'
-                className="sideNavSearchBar"
+                placeholder='Search Inventory'
+                className="seachContentBar"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                style={{borderWidth:1, borderRadius:3, borderColor:'gray'}}
+                style={{display:'block', width:'100%', borderRadius:10}}
                 
             />
             </Col>

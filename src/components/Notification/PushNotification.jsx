@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "./Notification.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +7,7 @@ import { faPaperclip } from "@fortawesome/free-solid-svg-icons/faPaperclip";
 import CustomFileInput from "../CustomFileInput/CustomFileInput";
 import axios from "axios";
 import AuthenticationContext from "../../context/Authentication/AuthenticationContext";
+import { Schedule } from "./Schedule/NotificationSchedule";
 
 function PushNotification({audience}) {
     const fileInputRef = useRef(null);
@@ -41,6 +42,11 @@ function PushNotification({audience}) {
       
       
     }
+    const [showModal, setShowModal] = useState(false);
+
+    const handleShow = () => setShowModal(true);
+    const handleClose = () => setShowModal(false);
+    
   return (
     <div>
          <Form onSubmit={handleSubmit}>
@@ -95,9 +101,11 @@ function PushNotification({audience}) {
                   Send Notification
                 </Button>
 
-                <Button variant="success" className="ms-2">
+                <Button onClick={handleShow} variant="success" className="ms-2">
                   <FontAwesomeIcon icon={faClockRotateLeft} />
-                </Button>
+                </Button> 
+
+                <Schedule  show={showModal} handleClose={handleClose} />
               </Col>
             </Row>
           </Form>

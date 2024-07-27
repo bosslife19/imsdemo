@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, { useContext, useEffect, useState, useMemo, useRef } from "react";
 import { Container, Row, Col, Image } from "react-bootstrap";
 import "./WareHouseTrack.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import TitleHeader from "../../../components/Headers/TitleHeader";
-import Search from "../../../components/Search/Search";
-import Filter from "../../../components/Filter/Filter";
+ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import inventoryListImage from "../../../assets/bigIcon/inventoryList.png";
@@ -15,11 +14,16 @@ import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import Loading from "../../../components/Loading/Loading";
 import { convertDate, scrollToTop } from "../../../utils/HelperFunc";
+
+import MovementLog from "../Inventory/MovementLog";
+import Search from "../../../components/Search/Normalsearch/Search";
+
 import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
 function WareHouseTrack() {
   const navigate = useNavigate();
   const location = useLocation();
+  const movementLogRef = useRef(null);  // Ref for the MovementLog section
 
   const { getTrackings, getTrackingsData, getTrackingsIsLoading } =
     useContext(TrackingContext);
@@ -32,6 +36,7 @@ function WareHouseTrack() {
   const [filterBy, setFilterBy] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedBox, setSelectedBox] = useState(null);
 
   useEffect(() => {
     getTrackings();
@@ -133,12 +138,26 @@ function WareHouseTrack() {
     }, 4000);
   };
 
-  const handleAddMovement = () => {
-    navigate("/WareHouseAddMovement");
+  const handleBoxClick = (boxName) => {
+    setSelectedBox(boxName); // Select the box
+    setTimeout(() => {
+      if (movementLogRef.current) {
+        movementLogRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 0);
   };
 
-  const handleTrackMovementLog = (itemId) => {
-    navigate("/TrackMovementLog");
+  const renderContent = () => {
+    switch (selectedBox) {
+      case "MovementLog":
+        return (
+          <div>
+            <MovementLog />
+          </div>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -169,16 +188,16 @@ function WareHouseTrack() {
               />
             </Col>
           </Row>
-          <Row className="d-lg-none mobileCreateButton my-3">
+          {/* <Row className="d-lg-none mobileCreateButton my-3">
             <Col className="d-flex justify-content-end">
               <PrimaryButton
                 Primaryicon={faAdd}
                 text={"Add Item"}
                 Primarystyle={"UserManagementCreateButton"}
-                clickEvent={() => handleAddMovement()}
+                clickEvent={() => handleBoxClick("MovementLog")}
               />
             </Col>
-          </Row>
+          </Row> */}
           <Row className="d-lg-none ">
             <Col className="d-flex justify-content-between ms-auto gap-3">
               <Filter
@@ -211,15 +230,15 @@ function WareHouseTrack() {
                 defult={"Ramdom"}
                 onSelect={(value) => setSortBy(value)}
               />
-              <PrimaryButton
+              {/* <PrimaryButton
                 Primaryicon={faAdd}
                 text={"Add Item"}
                 Primarystyle={"UserManagementCreateButton"}
-                clickEvent={() => handleAddMovement()}
-              />
+                clickEvent={() => handleBoxClick("MovementLog")}
+              /> */}
             </Col>
           </Row>
-          <Container className=" ListContainer">
+          <Container className=" ListContainer" responsive>
             {!getTrackingsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 filteredData.map((Item) => (
@@ -248,8 +267,10 @@ function WareHouseTrack() {
                               <span
                                 className={
                                   Item.priority === "low"
+                                    ? "text-success"
+                                    : Item.priority === "high"
                                     ? "text-danger"
-                                    : "text-success"
+                                    : "text-warning"
                                 }
                               >
                                 {Item.priority}
@@ -279,7 +300,7 @@ function WareHouseTrack() {
                       className="d-flex justify-content-end gap-2"
                     >
                       <PrimaryButton
-                        clickEvent={() => handleTrackMovementLog()}
+                        clickEvent={() => handleBoxClick("MovementLog")}
                         text={"Track"}
                         Primarystyle={"schoolViewButton"}
                       />
@@ -299,6 +320,21 @@ function WareHouseTrack() {
                 <Loading loading={getTrackingsIsLoading} />
               </Container>
             )}
+          </Container>
+          <Container className="">
+            <TitleHeader text={"Movement Log"} headerTextStyle={"headerTextStyle"} />
+            <Row className="mb-3">
+              <Col lg={12} md={12} xl={12} sm={12} xs={12}>
+                <Search
+                  Searchstyle={"seachContentBar"}
+                  searchText={"Search Log..."}
+                  onChange={handleSearchChange}
+                />
+              </Col>
+            </Row>
+            <Col className="mt-5" ref={movementLogRef}> {/* Ref applied here */}
+              {renderContent()}
+            </Col>
           </Container>
         </Container>
       </div>

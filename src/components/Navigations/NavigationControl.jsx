@@ -58,7 +58,12 @@ import Forgotemail from "../../pages/Admin/Authentication/Forgotpassword/Forgote
 import ResetPassword from "../../pages/Admin/Authentication/Forgotpassword/Forgetpasswords";
 import ForgotPasswordPage from "../../pages/Admin/Authentication/Forgotpassword/Forgotemail";
 import SearchResults from "../Search/SearchResults";
+
+import HeaderTeacherGenerateReports from "../../pages/HeadTeacher/Inventory/HeaderTeacherGenerateReport";
+import Searchresulting from "../Search/TeachersSearch/SearchResulting";
+import SearchResulted from "../Search/WarehouseSearch/SearchResulted";
 import MovementLog from "../../pages/WareHouseStaff/Inventory/MovementLog";
+
 
 function NavigationControl() {
   return (
@@ -136,6 +141,25 @@ function NavigationControl() {
             <Route path="/EditSchool/:pk" element={<EditSchool />} />
             <Route path="/UserDetail/:pk" element={<UserDetail />} />
             <Route path="/EditUser/:pk" element={<EditUser />} />
+
+            {/* <Route path="/WareHouseDashboard" element={<WareHouseDashboard />} />
+          <Route path="/WareHouseInventory" element={<WareHouseInventory />} />
+          <Route path="/WareHouseTrack" element={<WareHouseTrack />} />
+          <Route path="/ScanMaterial" element={<ScanMaterial />} />
+          <Route path="/WareHouseGenerateInventory" element={<WareHouseGenerateReports />} />
+          <Route path="/TrackMovementLog" element={<MovementLog />} />
+           <Route
+            path="/WareHousePushNotification"
+            element={<WareHousePushNotification />}
+          />
+          
+          <Route
+            path="/WareHouseAddMovement"
+            element={<WareHouseAddMovement />}
+          />
+              */}
+         
+
           </Route>
 
 
@@ -155,7 +179,14 @@ function NavigationControl() {
             path="/WareHouseAddMovement"
             element={<WareHouseAddMovement />}
           />
+             
+           <Route path="/warehouseSearch/:query" element={<SearchResulted />} />
+           <Route
+            path="/WareHouseScheduler"
+            element={<WareHouseAddMovement />}
+          />
           </Route>
+
 
 
           <Route element={<PrivatteHeadTeacherRoute />}>

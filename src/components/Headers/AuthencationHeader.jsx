@@ -1,6 +1,6 @@
 import React from "react";
 import "./Header.css";
-import logo from "../../assets/logo/Logo-new2-1 1.jpg";
+import logo from "../../assets/logo/subeblogo.svg";
 import { Container, Image } from "react-bootstrap";
 
 function AuthencationHeader({text}) {

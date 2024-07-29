@@ -610,12 +610,7 @@ function AdminDashboard() {
   {/* Header Section */}
   <div className="d-flex justify-content-between align-items-center mb-3">
     <TitleHeader text={"Dashboard"} />
-    <Form.Control
-      type="date"
-      placeholder="Minimum Stock Level"
-      className="pushNotificationTitle"
-      style={{ width: 300 }}
-    />
+    
   </div>
 
   {/* Button Section */}

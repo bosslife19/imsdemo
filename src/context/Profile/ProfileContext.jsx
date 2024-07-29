@@ -50,6 +50,8 @@ export const ProfileProvider = ({ children }) => {
         if (e.target.image.files[0]) {
           const imageData = e.target.image.files[0];
           fileResponse = await handleAddFile(imageData);
+
+          console.log(fileResponse);
         }
     
         const updatedData = {

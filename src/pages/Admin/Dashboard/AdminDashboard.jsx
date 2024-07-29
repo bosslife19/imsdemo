@@ -652,7 +652,7 @@ function AdminDashboard() {
 
   
   {/* Filter Section */}
-  <div>
+  
   <Row className="mb-3 mt-3">
     <Col lg={12} md={12} xl={12} sm={12} xs={12}>
       <div className="d-flex justify-content-between align-items-center">
@@ -734,7 +734,7 @@ function AdminDashboard() {
       </div>
     </Col>
   </Row>
-</div>
+
 
 
           <Row className="d-none d-lg-flex mobileCreateButton my-3">

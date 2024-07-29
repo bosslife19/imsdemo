@@ -97,6 +97,8 @@ export const InventoryItemProvider = ({ children }) => {
     const imageData = e.target.image.files[0];
   
     const fileResponse = await handleAddFile(imageData);
+
+    
   
     if (fileResponse && fileResponse.success) {
       

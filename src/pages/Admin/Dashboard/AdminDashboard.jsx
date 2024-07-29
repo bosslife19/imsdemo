@@ -650,6 +650,7 @@ function AdminDashboard() {
   {/* UserBox Section */}
   <UserBox items={lowItems} show={showModal} handleClose={handleClose} />
 
+  <div>
   {/* Filter Section */}
   <Row className="mb-3 mt-3">
     <Col lg={12} md={12} xl={12} sm={12} xs={12}>
@@ -664,7 +665,7 @@ function AdminDashboard() {
           className="pushNotificationTitle"
           style={{ width: 300 }}
         />
-       <Filter
+        <Filter
           optionTitle={"School Type"}
           options={filterOptionForType}
           defult={"All"}
@@ -693,49 +694,47 @@ function AdminDashboard() {
       </div>
     </Col>
   </Row>
+
+  {/* Presentation Section */}
+  <Row className="mb-3">
+    <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
+      <Row className="mb-3">
+        <PresentaionCard
+          title={"Total EdoSUBEB Schools"}
+          image={inventoryImage}
+          figure={count ? count : 0}
+          margin={`${SchoolTrend === 'up' ? '↑' : SchoolTrend === 'down' ? '↓' : '~'} ${SchoolDifference}`}
+          marginColor={SchoolTrend === 'up' ? 'text-success' : SchoolTrend === 'down' ? 'text-danger' : 'text-primary'}
+        />
+      </Row>
+      <Row className="mb-3">
+        <PresentaionCard
+          title={"Total Items"}
+          image={schoolImage}
+          figure={getItemsData ? getItemsData.length : 0}
+          margin={`${InvetoryTrend === 'up' ? '↑' : InvetoryTrend === 'down' ? '↓' : '~'} ${InvetoryDifference}`}
+          marginColor={InvetoryTrend === 'up' ? 'text-success' : InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}
+        />
+      </Row>
+    </Col>
+    <Col lg={6} md={12} xl={8} sm={12} xs={12}>
+      <BarGraph data={Bardata} options={Baroptions} />
+      <div style={{ width: 150, margin: 'auto' }}>
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          className="mt-3 mx-3 fa-2x backButtonIcon"
+          onClick={handlePreviousPage}
+        />
+        <FontAwesomeIcon
+          icon={faArrowRight}
+          className="mt-3 mx-3 fa-2x backButtonIcon"
+          onClick={handleNextPage}
+        />
+      </div>
+    </Col>
+  </Row>
 </div>
 
-
-          <Row className="mb-3">
-            <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
-              <Row className="mb-3">
-                <PresentaionCard
-                  title={"Total EdoSUBEB Schools"}
-                  image={inventoryImage}
-                  figure={count? count :0}
-                  margin={`${SchoolTrend === 'up' ? '↑' : SchoolTrend === 'down' ? '↓' : '~'} ${SchoolDifference}`}
-                  marginColor={SchoolTrend === 'up' ? 'text-success': SchoolTrend === 'down' ? 'text-danger' : 'text-primary'}
-                  />
-              </Row>
-              <Row className="mb-3">
-                <PresentaionCard
-                  title={"Total Items"}
-                  image={schoolImage}
-                  figure={getItemsData? getItemsData.length :0}
-                  margin={`${InvetoryTrend === 'up' ? '↑' : InvetoryTrend === 'down' ? '↓' : '~'} ${InvetoryDifference}`}
-                  marginColor={InvetoryTrend === 'up' ? 'text-success': InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}
-                />
-              </Row>
-            </Col>
-            <Col lg={6} md={12} xl={8} sm={12} xs={12} className="">
-              <BarGraph data={Bardata} options={Baroptions} />
-              <div style={{width:150, margin:'auto'}}>
-              <FontAwesomeIcon
-    icon={faArrowLeft}
-    className="mt-3 mx-3 fa-2x backButtonIcon"
-    onClick={handlePreviousPage}
-  />
-              
-              <FontAwesomeIcon
-    icon={faArrowRight}
-    className="mt-3 mx-3 fa-2x backButtonIcon"
-    onClick={handleNextPage}
-  />
-              </div>
-              
-
-            </Col>
-          </Row>
 
           <Row className="d-none d-lg-flex mobileCreateButton my-3">
             <Col className="d-flex justify-content-end">

@@ -638,12 +638,7 @@ function AdminDashboard() {
                     className="pushNotificationTitle"
                     style={{width:300}}
                   />
-          <!---  <Filter
-                            Filterstyle={"responsive"}
-              optionTitle={"Time"}
-              // options={filterData}
-              defult={"This week"}
-            />-->
+          
           </div>
           <Row className="mb-3">
           <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">

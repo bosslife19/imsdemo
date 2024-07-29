@@ -650,8 +650,9 @@ function AdminDashboard() {
   {/* UserBox Section */}
   <UserBox items={lowItems} show={showModal} handleClose={handleClose} />
 
-  <div>
+  
   {/* Filter Section */}
+  <div>
   <Row className="mb-3 mt-3">
     <Col lg={12} md={12} xl={12} sm={12} xs={12}>
       <div className="d-flex justify-content-between align-items-center">

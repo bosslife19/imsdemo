@@ -664,89 +664,78 @@ function AdminDashboard() {
           className="pushNotificationTitle"
           style={{ width: 300 }}
         />
-       const FilterComponent = ({ optionTitle, options, onSelect }) => (
-  <Filter
-    optionTitle={optionTitle}
-    options={options}
-    defult={"All"}
-    onSelect={onSelect}
-  />
-);
+       <Filter
+          optionTitle={"School Type"}
+          options={filterOptionForType}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
+        <Filter
+          optionTitle={"LGA"}
+          options={filterOptionforLGA}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
+      </div>
+      <div className="d-lg-none d-flex justify-content-end mt-3">
+        <Filter
+          optionTitle={"School Type"}
+          options={filterOptionForType}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
+        <Filter
+          optionTitle={"LGA"}
+          options={filterOptionforLGA}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
+      </div>
+    </Col>
+  </Row>
+</div>
 
-const PresentationCardComponent = ({ title, image, figure, trend, difference, trendColors }) => (
-  <PresentaionCard
-    title={title}
-    image={image}
-    figure={figure}
-    margin={`${trend === 'up' ? '↑' : trend === 'down' ? '↓' : '~'} ${difference}`}
-    marginColor={trendColors[trend]}
-  />
-);
 
-const App = () => {
-  const trendColors = {
-    up: 'text-success',
-    down: 'text-danger',
-    default: 'text-primary',
-  };
-
-  return (
-    <div>
-      <Row>
-        <Col>
-          <div className="d-none d-lg-flex justify-content-end mt-3">
-            <FilterComponent optionTitle="School Type" options={filterOptionForType} onSelect={setFilter} />
-            <FilterComponent optionTitle="LGA" options={filterOptionforLGA} onSelect={setFilter} />
-          </div>
-          <div className="d-lg-none d-flex justify-content-end mt-3">
-            <FilterComponent optionTitle="School Type" options={filterOptionForType} onSelect={setFilter} />
-            <FilterComponent optionTitle="LGA" options={filterOptionforLGA} onSelect={setFilter} />
-          </div>
-        </Col>
-      </Row>
-
-      <Row className="mb-3">
-        <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
           <Row className="mb-3">
-            <PresentationCardComponent
-              title="Total EdoSUBEB Schools"
-              image={inventoryImage}
-              figure={count || 0}
-              trend={SchoolTrend}
-              difference={SchoolDifference}
-              trendColors={trendColors}
-            />
+            <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
+              <Row className="mb-3">
+                <PresentaionCard
+                  title={"Total EdoSUBEB Schools"}
+                  image={inventoryImage}
+                  figure={count? count :0}
+                  margin={`${SchoolTrend === 'up' ? '↑' : SchoolTrend === 'down' ? '↓' : '~'} ${SchoolDifference}`}
+                  marginColor={SchoolTrend === 'up' ? 'text-success': SchoolTrend === 'down' ? 'text-danger' : 'text-primary'}
+                  />
+              </Row>
+              <Row className="mb-3">
+                <PresentaionCard
+                  title={"Total Items"}
+                  image={schoolImage}
+                  figure={getItemsData? getItemsData.length :0}
+                  margin={`${InvetoryTrend === 'up' ? '↑' : InvetoryTrend === 'down' ? '↓' : '~'} ${InvetoryDifference}`}
+                  marginColor={InvetoryTrend === 'up' ? 'text-success': InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}
+                />
+              </Row>
+            </Col>
+            <Col lg={6} md={12} xl={8} sm={12} xs={12} className="">
+              <BarGraph data={Bardata} options={Baroptions} />
+              <div style={{width:150, margin:'auto'}}>
+              <FontAwesomeIcon
+    icon={faArrowLeft}
+    className="mt-3 mx-3 fa-2x backButtonIcon"
+    onClick={handlePreviousPage}
+  />
+              
+              <FontAwesomeIcon
+    icon={faArrowRight}
+    className="mt-3 mx-3 fa-2x backButtonIcon"
+    onClick={handleNextPage}
+  />
+              </div>
+              
+
+            </Col>
           </Row>
-          <Row className="mb-3">
-            <PresentationCardComponent
-              title="Total Items"
-              image={schoolImage}
-              figure={getItemsData ? getItemsData.length : 0}
-              trend={InvetoryTrend}
-              difference={InvetoryDifference}
-              trendColors={trendColors}
-            />
-          </Row>
-        </Col>
-        <Col lg={6} md={12} xl={8} sm={12} xs={12}>
-          <BarGraph data={Bardata} options={Baroptions} />
-          <div style={{ width: 150, margin: 'auto' }}>
-            <FontAwesomeIcon
-              icon={faArrowLeft}
-              className="mt-3 mx-3 fa-2x backButtonIcon"
-              onClick={handlePreviousPage}
-            />
-            <FontAwesomeIcon
-              icon={faArrowRight}
-              className="mt-3 mx-3 fa-2x backButtonIcon"
-              onClick={handleNextPage}
-            />
-          </div>
-        </Col>
-      </Row>
-    </div>
-  );
-};
 
           <Row className="d-none d-lg-flex mobileCreateButton my-3">
             <Col className="d-flex justify-content-end">

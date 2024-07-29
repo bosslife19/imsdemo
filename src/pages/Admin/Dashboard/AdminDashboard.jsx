@@ -606,85 +606,84 @@ function AdminDashboard() {
               )
             : null}
           <div className="d-flex justify-content-between">
-            <TitleHeader text={"Dashboard"} />
-            <Form.Control
-                    type="date"
-                    placeholder="Minimum Stock Level"
-                    className="pushNotificationTitle"
-                    style={{width:300}}
-                  />
-          
-          </div>
-          <Row className="mb-3">
-          <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
-          <Button variant="primary" onClick={handleShow} className="InventoryReportButton">
-            View Low Stock Items
-          </Button>
-        </Col>
-      {/* <div  */}
-       {/* ref={menuRef} className={`view ${menuOpen ? 'open' : ''}`} */}
-      {/* > */}
-        
-        <UserBox items={lowItems} show={showModal} handleClose={handleClose} />
-      {/* </div> */}
-            <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
-              <PrimaryButton
-                text={"Add New Item"}
-                Primarystyle={"InventoryReportButton"}
-                clickEvent={() => navigate('/AddNewItem')}
-              />
-            </Col>
-            <Col lg={3} md={3} xl={3} sm={6} xs={6}>
-              <PrimaryButton
-                text={"Generate Inventory Report"}
-                Primarystyle={"InventoryReportButton"}
-                clickEvent={handleGenerateReport}
-              />
-            </Col>
-            <Col lg={3} md={3} xl={3} sm={6} xs={6}>
-              <PrimaryButton
-                text={"Send Push Notification"}
-                Primarystyle={"InventoryReportButton"}
-                clickEvent={handlePushNotification}
-              />
-            </Col>
-          </Row>
-          <Row className="mb-3 mt-3">
-            <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <div className="d-flex justify-content-between ">
-                <TitleHeader
-                  text={"Material Availability Overview"}
-                  headerTextStyle={"headerTextStyle"}
-                />
-                 <Filter
-                  optionTitle={"School Type"}
-                  options={filterOptionForType}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-                 <Filter
-                  optionTitle={"LGA"}
-                  options={filterOptionforLGA}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-              </div>
-              <div className=" d-lg-none d-flex justify-content-end ">
-                <Filter
-                  optionTitle={"School Type"}
-                  options={filterOptionForType}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-                 <Filter
-                  optionTitle={"LGA"}
-                  options={filterOptionforLGA}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-              </div>
-            </Col>
-          </Row>
+  <TitleHeader text={"Dashboard"} />
+  <Form.Control
+    type="date"
+    placeholder="Minimum Stock Level"
+    className="pushNotificationTitle"
+    style={{ width: 300 }}
+  />
+</div>
+
+<Row className="mb-3">
+  <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
+    <Button variant="primary" onClick={handleShow} className="InventoryReportButton">
+      View Low Stock Items
+    </Button>
+  </Col>
+  
+  <UserBox items={lowItems} show={showModal} handleClose={handleClose} />
+
+  <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
+    <PrimaryButton
+      text={"Add New Item"}
+      Primarystyle={"InventoryReportButton"}
+      clickEvent={() => navigate('/AddNewItem')}
+    />
+  </Col>
+  <Col lg={3} md={3} xl={3} sm={6} xs={6}>
+    <PrimaryButton
+      text={"Generate Inventory Report"}
+      Primarystyle={"InventoryReportButton"}
+      clickEvent={handleGenerateReport}
+    />
+  </Col>
+  <Col lg={3} md={3} xl={3} sm={6} xs={6}>
+    <PrimaryButton
+      text={"Send Push Notification"}
+      Primarystyle={"InventoryReportButton"}
+      clickEvent={handlePushNotification}
+    />
+  </Col>
+</Row>
+
+<Row className="mb-3 mt-3">
+  <Col lg={12} md={12} xl={12} sm={12} xs={12}>
+    <div className="d-flex justify-content-between">
+      <TitleHeader
+        text={"Material Availability Overview"}
+        headerTextStyle={"headerTextStyle"}
+      />
+      <Filter
+        optionTitle={"School Type"}
+        options={filterOptionForType}
+        defult={"All"}
+        onSelect={(value) => setFilter(value)}
+      />
+      <Filter
+        optionTitle={"LGA"}
+        options={filterOptionforLGA}
+        defult={"All"}
+        onSelect={(value) => setFilter(value)}
+      />
+    </div>
+    <div className="d-lg-none d-flex justify-content-end">
+      <Filter
+        optionTitle={"School Type"}
+        options={filterOptionForType}
+        defult={"All"}
+        onSelect={(value) => setFilter(value)}
+      />
+      <Filter
+        optionTitle={"LGA"}
+        options={filterOptionforLGA}
+        defult={"All"}
+        onSelect={(value) => setFilter(value)}
+      />
+    </div>
+  </Col>
+</Row>
+
 
           <Row className="mb-3">
             <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">

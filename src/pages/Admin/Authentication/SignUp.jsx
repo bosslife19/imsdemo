@@ -85,18 +85,19 @@ function SignUp() {
             <Form.Group>
               <Row>
                 <Col md={7}>
-                  <Form.Select
-                    size="lg"
-                    className="mb-3 inputSeleteField"
-                    name="role"
-                    required
-                  >
-                    <option value="">Role</option>
-                    <option value="qa">QA</option>
-                    <option value="admin">Admin</option>
-                    <option value="head-teacher">HeadTecher</option>
-                    <option value="warehouse-staff">WareHouseStaff</option>
-                  </Form.Select>
+                <Form.Select
+  size="lg"
+  className="mb-3 inputSeleteField select-placeholder"
+  name="role"
+  required
+  defaultValue=""
+>
+  <option value="" disabled hidden>Role</option>
+  <option value="qa">QA</option>
+  <option value="admin">Admin</option>
+  <option value="head-teacher">HeadTeacher</option>
+  <option value="warehouse-staff">WareHouseStaff</option>
+</Form.Select>
                 </Col>
                 <Col md={5}>
                   <Form.Control

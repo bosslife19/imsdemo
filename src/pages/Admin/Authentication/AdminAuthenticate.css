@@ -45,3 +45,13 @@ font-weight: 700;
 line-height: 25.6px;
 color: rgba(160, 160, 160, 1);
 }
+
+.select-placeholder {
+  /* color: #6c757d;  */
+  /* Placeholder color */
+}
+
+.select-placeholder:invalid {
+  /* color: #6c757d;     */
+  /* Ensure the color is applied when invalid */
+}

@@ -813,7 +813,7 @@ function AdminDashboard() {
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {log.log-details}
+                          {log["log-details"]}
                         </Col>
                         <Col
                           xs={2}
@@ -833,34 +833,34 @@ function AdminDashboard() {
                   </Card.Title>
 
                   <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
+                    {logs.map((log) => (
                       <Row
-                        key={activity.id}
+                        key={log.id}
                         className="align-items-center mb-2 py-2 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
+                          <span className="">{log.email}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {log.category}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {log["log-details"]}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {log.date}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {log.time}
                         </Col>
                       </Row>
                     ))}
@@ -870,34 +870,34 @@ function AdminDashboard() {
                   </Card.Title>
 
                   <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
+                    {logs.map((log) => (
                       <Row
-                        key={activity.id}
+                        key={log.id}
                         className="align-items-center mb-2 py-2 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
+                          <span className="">{log.email}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {log.category}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {log["log-details"]}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {log.date}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {log.time}
                         </Col>
                       </Row>
                     ))}

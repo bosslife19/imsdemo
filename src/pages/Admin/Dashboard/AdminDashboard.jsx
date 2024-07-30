@@ -120,6 +120,7 @@ function AdminDashboard() {
   const [filter, setFilter] = useState();
   const [originalItems, setOriginalItems] = useState([])
   const [lowItems, setLowItems] = useState([])
+  const [logs, setLogs] = useState([]);
   useEffect(() => {
     getInventoryItems();
     getSchools();
@@ -128,6 +129,21 @@ function AdminDashboard() {
    
   }, [ ])
 
+  const getLogs = async()=>{
+    const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+    try {
+      const response = await axios.get(`${baseUrl}/api/get-logs`);
+      
+      setLogs(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+   
+  }
+
+  useEffect(()=>{
+    getLogs()
+  }, [])
   const getLowStockItems = ()=>{
     const low = originalItems.filter(item=>item.quantity < 20);
     setLowItems(low);
@@ -568,48 +584,7 @@ function AdminDashboard() {
     },
   };
 
-  const activities = [
-    {
-      id: 1,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-    {
-      id: 2,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-    {
-      id: 3,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-    {
-      id: 4,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-    {
-      id: 5,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-  ];
+ 
 
   const [showModal, setShowModal] = useState(false);
 
@@ -630,132 +605,137 @@ function AdminDashboard() {
                 />
               )
             : null}
-          <div className="d-flex justify-content-between">
-            <TitleHeader text={"Dashboard"} />
-            <Form.Control
-                    type="date"
-                    placeholder="Minimum Stock Level"
-                    className="pushNotificationTitle"
-                    style={{width:300}}
-                  />
-            <Filter
-                            Filterstyle={"responsive"}
-              optionTitle={"Time"}
-              // options={filterData}
-              defult={"This week"}
-            />
-          </div>
-          <Row className="mb-3">
-          <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
-          <Button variant="primary" onClick={handleShow} className="InventoryReportButton">
-            View Low Stock Items
-          </Button>
-        </Col>
-      {/* <div  */}
-       {/* ref={menuRef} className={`view ${menuOpen ? 'open' : ''}`} */}
-      {/* > */}
-        
-        <UserBox items={lowItems} show={showModal} handleClose={handleClose} />
-      {/* </div> */}
-            <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
-              <PrimaryButton
-                text={"Add New Item"}
-                Primarystyle={"InventoryReportButton"}
-                clickEvent={() => navigate('/AddNewItem')}
-              />
-            </Col>
-            <Col lg={3} md={3} xl={3} sm={6} xs={6}>
-              <PrimaryButton
-                text={"Generate Inventory Report"}
-                Primarystyle={"InventoryReportButton"}
-                clickEvent={handleGenerateReport}
-              />
-            </Col>
-            <Col lg={3} md={3} xl={3} sm={6} xs={6}>
-              <PrimaryButton
-                text={"Send Push Notification"}
-                Primarystyle={"InventoryReportButton"}
-                clickEvent={handlePushNotification}
-              />
-            </Col>
-          </Row>
-          <Row className="mb-3 mt-3">
-            <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <div className="d-flex justify-content-between ">
-                <TitleHeader
-                  text={"Material Availability Overview"}
-                  headerTextStyle={"headerTextStyle"}
-                />
-                 <Filter
-                  optionTitle={"School Type"}
-                  options={filterOptionForType}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-                 <Filter
-                  optionTitle={"LGA"}
-                  options={filterOptionforLGA}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-              </div>
-              <div className=" d-lg-none d-flex justify-content-end ">
-                <Filter
-                  optionTitle={"School Type"}
-                  options={filterOptionForType}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-                 <Filter
-                  optionTitle={"LGA"}
-                  options={filterOptionforLGA}
-                  defult={"All"}
-                  onSelect={(value) => setFilter(value)}
-                />
-              </div>
-            </Col>
-          </Row>
+          <div className="dashboard-container">
 
-          <Row className="mb-3">
-            <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
-              <Row className="mb-3">
-                <PresentaionCard
-                  title={"Total EdoSUBEB Schools"}
-                  image={inventoryImage}
-                  figure={count? count :0}
-                  margin={`${SchoolTrend === 'up' ? '↑' : SchoolTrend === 'down' ? '↓' : '~'} ${SchoolDifference}`}
-                  marginColor={SchoolTrend === 'up' ? 'text-success': SchoolTrend === 'down' ? 'text-danger' : 'text-primary'}
-                  />
-              </Row>
-              <Row className="mb-3">
-                <PresentaionCard
-                  title={"Total Items"}
-                  image={schoolImage}
-                  figure={getItemsData? getItemsData.length :0}
-                  margin={`${InvetoryTrend === 'up' ? '↑' : InvetoryTrend === 'down' ? '↓' : '~'} ${InvetoryDifference}`}
-                  marginColor={InvetoryTrend === 'up' ? 'text-success': InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}
-                />
-              </Row>
-            </Col>
-            <Col lg={6} md={12} xl={8} sm={12} xs={12} className="">
-              <BarGraph data={Bardata} options={Baroptions} />
-              <div style={{width:150, margin:'auto'}}>
-              <FontAwesomeIcon
-    icon={faArrowLeft}
-    className="mt-3 mx-3 fa-2x backButtonIcon"
-    onClick={handlePreviousPage}
-  />
-              
-              <FontAwesomeIcon
-    icon={faArrowRight}
-    className="mt-3 mx-3 fa-2x backButtonIcon"
-    onClick={handleNextPage}
-  />
-              </div>
-              
+  {/* Header Section */}
+  <div className="d-flex justify-content-between align-items-center mb-3">
+    <TitleHeader text={"Dashboard"} />
+    
+  </div>
 
-            </Col>
-          </Row>
+  {/* Button Section */}
+  <Row className="mb-3">
+    <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
+      <Button
+        variant="primary"
+        onClick={handleShow}
+        className="InventoryReportButton"
+      >
+        View Low Stock Items
+      </Button>
+    </Col>
+    <Col lg={3} md={3} xl={3} sm={6} xs={6} className="mb-2">
+      <PrimaryButton
+        text={"Add New Item"}
+        Primarystyle={"InventoryReportButton"}
+        clickEvent={() => navigate('/AddNewItem')}
+      />
+    </Col>
+    <Col lg={3} md={3} xl={3} sm={6} xs={6}>
+      <PrimaryButton
+        text={"Generate Inventory Report"}
+        Primarystyle={"InventoryReportButton"}
+        clickEvent={handleGenerateReport}
+      />
+    </Col>
+    <Col lg={3} md={3} xl={3} sm={6} xs={6}>
+      <PrimaryButton
+        text={"Send Push Notification"}
+        Primarystyle={"InventoryReportButton"}
+        clickEvent={handlePushNotification}
+      />
+    </Col>
+  </Row>
+
+  {/* UserBox Section */}
+  <UserBox items={lowItems} show={showModal} handleClose={handleClose} />
+
+  
+  {/* Filter Section */}
+  
+  <Row className="mb-3 mt-3">
+    <Col lg={12} md={12} xl={12} sm={12} xs={12}>
+      <div className="d-flex justify-content-between align-items-center">
+        <TitleHeader
+          text={"Material Availability Overview"}
+          headerTextStyle={"headerTextStyle"}
+        />
+        <Form.Control
+          type="date"
+          placeholder="Minimum Stock Level"
+          className="pushNotificationTitle"
+          style={{ width: 300 }}
+        />
+        <Filter
+          optionTitle={"School Type"}
+          options={filterOptionForType}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
+        <Filter
+          optionTitle={"LGA"}
+          options={filterOptionforLGA}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
+      </div>
+      <div className="d-lg-none d-flex justify-content-end mt-3">
+        <Filter
+          optionTitle={"School Type"}
+          options={filterOptionForType}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
+        <Filter
+          optionTitle={"LGA"}
+          options={filterOptionforLGA}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
+      </div>
+    </Col>
+  </Row>
+
+  {/* Presentation Section */}
+  <Row className="mb-3">
+    <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
+      <Row className="mb-3">
+        <PresentaionCard
+          title={"Total EdoSUBEB Schools"}
+          image={inventoryImage}
+          figure={count ? count : 0}
+          margin={`${SchoolTrend === 'up' ? '↑' : SchoolTrend === 'down' ? '↓' : '~'} ${SchoolDifference}`}
+          marginColor={SchoolTrend === 'up' ? 'text-success' : SchoolTrend === 'down' ? 'text-danger' : 'text-primary'}
+        />
+      </Row>
+      <Row className="mb-3">
+        <PresentaionCard
+          title={"Total Items"}
+          image={schoolImage}
+          figure={getItemsData ? getItemsData.length : 0}
+          margin={`${InvetoryTrend === 'up' ? '↑' : InvetoryTrend === 'down' ? '↓' : '~'} ${InvetoryDifference}`}
+          marginColor={InvetoryTrend === 'up' ? 'text-success' : InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}
+        />
+      </Row>
+    </Col>
+    <Col lg={6} md={12} xl={8} sm={12} xs={12}>
+      <BarGraph data={Bardata} options={Baroptions} />
+      <div style={{ width: 150, margin: 'auto' }}>
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          className="mt-3 mx-3 fa-2x backButtonIcon"
+          onClick={handlePreviousPage}
+        />
+        <FontAwesomeIcon
+          icon={faArrowRight}
+          className="mt-3 mx-3 fa-2x backButtonIcon"
+          onClick={handleNextPage}
+        />
+      </div>
+    </Col>
+  </Row>
+
+
 
           <Row className="d-none d-lg-flex mobileCreateButton my-3">
             <Col className="d-flex justify-content-end">
@@ -785,7 +765,7 @@ function AdminDashboard() {
               {/* <Filter
                 optionTitle={"Sort by"}
                 // options={filterData}
-                defult={"Ramdom"}
+                defult={"All"}
               /> */}
             </Col>
           </Row>
@@ -827,74 +807,74 @@ function AdminDashboard() {
               <Card className="AdminRecentUserCardBody">
                 <div className="AdminRecentUserActivtyScroll">
                   <Card.Title className="CardTiTle fw-bold m-3">
-                    Admin
+                    User Acitivity Logs
                   </Card.Title>
                   <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
+                    {logs.map((log) => (
                       <Row
-                        key={activity.id}
+                        key={log.id}
                         className="align-items-center mb-2 py-2 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
+                          <span className="">{log.email}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {log.category}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {log["log-details"]}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {log.date}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {log.time}
                         </Col>
                       </Row>
                     ))}
                   </Card.Body>
-                  <Card.Title className="CardTiTle fw-bold m-3">
+                  {/* <Card.Title className="CardTiTle fw-bold m-3">
                     Warehouse Staff
                   </Card.Title>
 
                   <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
+                    {logs.map((log) => (
                       <Row
-                        key={activity.id}
+                        key={log.id}
                         className="align-items-center mb-2 py-2 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
+                          <span className="">{log.email}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {log.category}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {log["log-details"]}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {log.date}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {log.time}
                         </Col>
                       </Row>
                     ))}
@@ -904,38 +884,38 @@ function AdminDashboard() {
                   </Card.Title>
 
                   <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
+                    {logs.map((log) => (
                       <Row
-                        key={activity.id}
+                        key={log.id}
                         className="align-items-center mb-2 py-2 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
+                          <span className="">{log.email}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {log.category}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {log["log-details"]}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {log.date}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {log.time}
                         </Col>
                       </Row>
                     ))}
-                  </Card.Body>
+                  </Card.Body> */}
                 </div>
               </Card>
             </Col>

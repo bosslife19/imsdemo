@@ -797,7 +797,7 @@ function AdminDashboard() {
               <Card className="AdminRecentUserCardBody">
                 <div className="AdminRecentUserActivtyScroll">
                   <Card.Title className="CardTiTle fw-bold m-3">
-                    Admin
+                    User Acitivity Logs
                   </Card.Title>
                   <Card.Body className="AdminRecentUser m-4 rounded">
                     {logs.map((log) => (
@@ -832,7 +832,7 @@ function AdminDashboard() {
                       </Row>
                     ))}
                   </Card.Body>
-                  <Card.Title className="CardTiTle fw-bold m-3">
+                  {/* <Card.Title className="CardTiTle fw-bold m-3">
                     Warehouse Staff
                   </Card.Title>
 
@@ -905,7 +905,7 @@ function AdminDashboard() {
                         </Col>
                       </Row>
                     ))}
-                  </Card.Body>
+                  </Card.Body> */}
                 </div>
               </Card>
             </Col>

@@ -194,11 +194,11 @@ function InventoryManagement({ Searchstyle, searchText, }) {
   const sortOption = useMemo(() =>[
     {
       pk: 1,
-      type: "ascending",
+      type: "Highest to Lowest",
     },
     {
       pk: 2,
-      type: "descending",
+      type: " Lowest to Highest ",
     },
   ], []);
 
@@ -215,7 +215,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
 
     if (sortBy) {
       filtered.sort((a, b) => {
-        if (sortBy === "ascending") {
+        if (sortBy === "Highest to Lowest") {
           return a.item_name.localeCompare(b.item_name); 
         } else {
           return b.item_name.localeCompare(a.item_name); 
@@ -357,7 +357,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
                 Filterstyle={"responsive"}
                 optionTitle={"sort by"}
                 options={sortOption}
-                defult={"Ascending"}
+                defult={"Highest to Lowest"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
@@ -373,7 +373,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
               <Filter
                 optionTitle={"Sort by"}
                 options={sortOption}
-                defult={"Ascending"}
+                defult={"Highest to Lowest"}
                 onSelect={(value) => setSortBy(value)}
               />
               <PrimaryButton

@@ -664,7 +664,7 @@ function AdminDashboard() {
           type="date"
           placeholder="Minimum Stock Level"
           className="pushNotificationTitle"
-          style={{ width: 300 }}
+          style={{ width: 150 }}
         />
         <Filter
           optionTitle={"School Type"}
@@ -920,7 +920,9 @@ function AdminDashboard() {
               </Card>
             </Col>
           </Row>
+          </div>
         </Container>
+        
       </div>
     </div>
   );

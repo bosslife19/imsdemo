@@ -45,6 +45,7 @@ function UserManagement() {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [loadingUserStausId, setloadingUserStausId] = useState(null);
   const [filteredData, setFilteredData] = useState();
+  const [filter, setFilter] = useState();
   const [filterBy, setFilterBy] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -117,15 +118,16 @@ function UserManagement() {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
   const handleFilterSortSearch = () => {
     let filtered = [...getUsersData];
-
+  
+    // Apply role filter
     if (filterBy && filterBy !== "All") {
       const filterId = filterMapping[filterBy];
       filtered = filtered.filter((item) => item.role_id === filterId);
     }
-
+  
+    // Apply sorting
     if (sortBy) {
       filtered.sort((a, b) => {
         if (sortBy === "ascending") {
@@ -136,17 +138,101 @@ function UserManagement() {
       });
     }
   
-
+    // Apply search by name and email
     if (searchTerm) {
+      const searchWords = searchTerm.toLowerCase().split(' ');
       filtered = filtered.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        searchWords.every((word) => 
+          (item.name && item.name.toLowerCase().includes(word)) ||
+          (item.email && item.email.toLowerCase().includes(word))
+        )
       );
-     
-      setFilteredData(filtered);
     }
+  
+    setFilteredData(filtered);
+  };
+  const filterOptionforLGA = useMemo(() => [
+    {
+
+      pk: 1,
+      type: "All",
+    },
 
    
-  };
+    {
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
+  ], []);
 
   const handleLoadingClick = () => {
     if (
@@ -203,11 +289,16 @@ function UserManagement() {
           <TitleHeader text={"User Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search
-                Searchstyle={"seachContentBar"}
-                searchText={"Search Users..."}
-                onSearchChange={handleSearchChange}
-              />
+              
+             <input
+                type="text"
+                placeholder='Search School'
+                className="seachContentBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{display:'block', width:'100%', borderRadius:10}}
+                
+            />
             </Col>
           </Row>
           <Row className="mb-3">
@@ -240,13 +331,12 @@ function UserManagement() {
                 defult={"All"}
                 onSelect={(value) => setFilterBy(value)}
               />
-              <Filter
-                Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"All"}
-                onSelect={(value) => setSortBy(value)}
-              />
+               <Filter
+          optionTitle={"LGA"} 
+          options={filterOptionforLGA}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
             </Col>
           </Row>
           <Row className="d-none d-lg-flex">
@@ -258,11 +348,11 @@ function UserManagement() {
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"All"}
-                onSelect={(value) => setSortBy(value)}
-              />
+          optionTitle={"LGA"} 
+          options={filterOptionforLGA}
+          defult={"All"}
+          onSelect={(value) => setFilter(value)}
+        />
               <PrimaryButton
                 Primaryicon={faAdd}
                 text={"Create New User"}

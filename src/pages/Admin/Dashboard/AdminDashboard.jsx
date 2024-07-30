@@ -140,6 +140,10 @@ function AdminDashboard() {
     }
    
   }
+
+  useEffect(()=>{
+    getLogs()
+  }, [])
   const getLowStockItems = ()=>{
     const low = originalItems.filter(item=>item.quantity < 20);
     setLowItems(low);

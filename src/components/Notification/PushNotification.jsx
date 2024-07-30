@@ -2,9 +2,10 @@ import React, { useContext, useRef, useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "./Notification.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons/faClockRotateLeft";
-import { faPaperclip } from "@fortawesome/free-solid-svg-icons/faPaperclip";
-import CustomFileInput from "../CustomFileInput/CustomFileInput";
+
 import axios from "axios";
 import AuthenticationContext from "../../context/Authentication/AuthenticationContext";
 import { Schedule } from "./Schedule/NotificationSchedule";
@@ -15,6 +16,9 @@ function PushNotification({audience}) {
    
     const[title, setTitle] = useState('')
     const [message, setMessage] = useState('')
+    const [loading, setLoading] = useState("");
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState('');
    
    
   
@@ -27,21 +31,35 @@ function PushNotification({audience}) {
     
       const data ={
         title: e.target.title.value,
-        message:e.target.message.value,
+        message:message,
         audience: audience
       }
       
       const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
+      setLoading(true)
+      setError('');
+      setSuccess('')
       const response = await axios.post(`${baseUrl}/api/notification/sendnotification`, data);
+      if(response.data){
+        setLoading(false)
 
-      console.log(response.data);
+        setSuccess('Email Sent Successfully')
+      }
+     
       // temporal
       // setMessages(response.data.message);
     
      
     } catch (error) {
       console.log(error)
+     
+      setLoading(false)
+    if(error?.response?.data){
+      setError(error.response.data.message)
+    }else{
+      setError('Network Error. Please check your connection')
+    }
     } 
 
       
@@ -105,15 +123,22 @@ function PushNotification({audience}) {
                 className="text-end d-flex justify-content-between"
               >
                 <Button variant="success" className="w-100 p-2" type='submit'>
-                  Send Notification
+                {loading ? (
+                <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+              ) : (
+                "Send Notification"
+              )}
                 </Button>
+               
 
                 <Button onClick={handleShow} variant="success" className="ms-2">
                   <FontAwesomeIcon icon={faClockRotateLeft} />
                 </Button> 
-
+                
                 <Schedule  show={showModal} handleClose={handleClose} title={title} message={message} audience={audience} />
               </Col>
+              <p style={{color:'coral', textAlign:'center', marginTop:5}}>{error}</p>
+                <p style={{color:'green', textAlign:'center', marginTop:5}}>{success}</p>
             </Row>
           </Form>
     </div>

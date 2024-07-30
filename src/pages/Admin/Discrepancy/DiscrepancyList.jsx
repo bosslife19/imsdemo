@@ -16,6 +16,7 @@ import { convertDate } from "../../../utils/HelperFunc";
 import DiscrepancyContext from "../../../context/Discrepancy/DiscrepancyContext";
 import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 
+
 function DiscrepancyList() {
   const navigate = useNavigate();
 
@@ -46,12 +47,96 @@ function DiscrepancyList() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  
+
+  const filterOptionForType = useMemo(()=>[
+    
+    {
+      pk: 2,
+      type: 'Old to New'
+    },
+    {
+      pk: 3,
+      type: 'New to Old'
+    },
+
+  ])
 
   const filterOption = useMemo(() => [
+   
     {
-      pk: 1,
-      type: "All",
-    }
+      pk: 2,
+      type: "AKOKO EDO",
+    },
+    {
+      pk: 3,
+      type: "EGOR",
+    },
+    {
+      pk: 4,
+      type: "ESAN CENTRAL",
+    },
+    {
+      pk: 5,
+      type: "ESAN NORTH EAST",
+    },
+    {
+      pk: 6,
+      type: "ESAN SOUTH EAST",
+    },
+    {
+      pk: 7,
+      type: "ESAN WEST",
+    },
+    {
+      pk: 8,
+      type: "ETSAKO CENTRAL",
+    },
+    {
+      pk: 9,
+      type: "ETSAKO EAST",
+    },
+    {
+      pk: 10,
+      type: "ETSAKO WEST",
+    },
+    {
+      pk: 11,
+      type: "IGUEBEN",
+    },
+    {
+      pk: 12,
+      type: "IKPOBA OKHA",
+    },
+    {
+      pk: 13,
+      type: "OREDO",
+    },
+    {
+      pk: 14,
+      type: "ORHIONMWON",
+    },
+    {
+      pk: 15,
+      type: "OVIA NORTH EAST",
+    },
+    {
+      pk: 16,
+      type: "OVIA SOUTH WEST",
+    },
+    {
+      pk: 17,
+      type: "OWAN EAST",
+    },
+    {
+      pk: 18,
+      type: "OWAN WEST",
+    },
+    {
+      pk: 19,
+      type: "UHUNMWODE",
+    },
+
   ], []);
 
   const sortOption = useMemo(() =>[
@@ -78,7 +163,7 @@ function DiscrepancyList() {
 
     if (sortBy) {
       filtered.sort((a, b) => {
-        if (sortBy === "ascending") {
+        if (sortBy === "Old to New") {
           return a.discrepancy_type.localeCompare(b.discrepancy_type);
         } else {
           return b.discrepancy_type.localeCompare(a.discrepancy_type);
@@ -87,9 +172,11 @@ function DiscrepancyList() {
     }
 
     if (searchTerm) {
+      
       filtered = filtered.filter((item) =>
-        item.discrepancy_type.toLowerCase().includes(searchTerm.toLowerCase())
+        item.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
+      
     }
 
     setFilteredData(filtered);
@@ -157,11 +244,20 @@ function DiscrepancyList() {
           <TitleHeader text={"Discrepancy"} />
           <Row className="mb-3 ">
             <Col className="mb-3 " lg={6} xl={8} md={12} sm={12} xs={12}>
-              <Search
+              {/* <Search
                 Searchstyle={"seachContentBar"}
                 searchText={"Search Discrepancies..."}
                 onSearchChange={handleSearchChange}
-              />
+              /> */}
+                <input
+                type="text"
+                placeholder='Search Discrepancies'
+                className="sideNavSearchBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{display:'block', width:'100%', borderRadius:10, borderWidth:2, borderColor:'gray'}}
+                
+            />
             </Col>
             <Col
               lg={3}
@@ -174,7 +270,7 @@ function DiscrepancyList() {
               <Filter
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"LGA"}
                 onSelect={(value) => setFilterBy(value)}
               />
             </Col>
@@ -189,8 +285,8 @@ function DiscrepancyList() {
             >
               <Filter
                 optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"Ramdom"}
+                options={filterOptionForType}
+                defult={"All"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>

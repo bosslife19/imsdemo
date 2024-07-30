@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
@@ -9,6 +10,7 @@ export const Schedule = ({ show, handleClose, title, message, audience }) => {
   const [schedule, setSchedule] = useState([{ day: '', month: '', year: '', hour: '', minute: '', ampm: 'AM' }]);
  
   const [sendAt, setSendAt] = useState('')
+  const [isLoading, setIsLoading] = useState("");
   
   
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
@@ -39,14 +41,21 @@ export const Schedule = ({ show, handleClose, title, message, audience }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
    
+    try {
+      setIsLoading(true);
+      setTimeout(()=>{
+        handleClose();
+      },30000)
       const response = await axios.post(`${baseUrl}/api/schedule-email`, {sendAt,title, message, audience});
     console.log(response.data);
+    setIsLoading(false)
       alert('Email scheduled successfully!');
       handleClose()
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
+      handleClose()
     }
     
   };
@@ -58,7 +67,7 @@ export const Schedule = ({ show, handleClose, title, message, audience }) => {
       </Modal.Header>
       <Modal.Body>
         <Container>
-          <Form onSubmit={handleSubmit}>
+          <Form>
             {schedule.map((item, index) => (
               <Card style={customSelectStyle} key={index} className="mb-3">
                 <Card.Body>
@@ -160,8 +169,12 @@ export const Schedule = ({ show, handleClose, title, message, audience }) => {
               </Card>
             ))}
             <div className="d-flex justify-content-between mt-3">
-              <Button style={{ width: '100%' }} variant="success" type="submit">
-                Done
+              <Button style={{ width: '100%' }} variant="success" onClick={handleSubmit}>
+              {isLoading ? (
+                <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+              ) : (
+                "Done"
+              )}
               </Button>
             </div>
           </Form>

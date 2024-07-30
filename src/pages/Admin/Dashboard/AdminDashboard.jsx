@@ -120,6 +120,7 @@ function AdminDashboard() {
   const [filter, setFilter] = useState();
   const [originalItems, setOriginalItems] = useState([])
   const [lowItems, setLowItems] = useState([])
+  const [logs, setLogs] = useState([]);
   useEffect(() => {
     getInventoryItems();
     getSchools();
@@ -128,6 +129,17 @@ function AdminDashboard() {
    
   }, [ ])
 
+  const getLogs = async()=>{
+    const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+    try {
+      const response = await axios.get('/api/get-logs');
+      console.log(response.data)
+      setLogs(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+   
+  }
   const getLowStockItems = ()=>{
     const low = originalItems.filter(item=>item.quantity < 20);
     setLowItems(low);
@@ -568,48 +580,7 @@ function AdminDashboard() {
     },
   };
 
-  const activities = [
-    {
-      id: 1,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-    {
-      id: 2,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-    {
-      id: 3,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-    {
-      id: 4,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-    {
-      id: 5,
-      name: "JOHN DIGGLE",
-      action: "Viewed stock items",
-      description: "Books sent to ABC Academy",
-      date: "10th Feb, 2022",
-      time: "3:56pm",
-    },
-  ];
+ 
 
   const [showModal, setShowModal] = useState(false);
 
@@ -825,34 +796,34 @@ function AdminDashboard() {
                     Admin
                   </Card.Title>
                   <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
+                    {logs.map((log) => (
                       <Row
-                        key={activity.id}
+                        key={log.id}
                         className="align-items-center mb-2 py-2 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
+                          <span className="">{log.email}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {log.category}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {log.log-details}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {log.date}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {log.time}
                         </Col>
                       </Row>
                     ))}

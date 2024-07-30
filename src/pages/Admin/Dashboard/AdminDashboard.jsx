@@ -133,7 +133,7 @@ function AdminDashboard() {
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/get-logs`);
-      console.log(response.data)
+      
       setLogs(response.data)
     } catch (error) {
       console.log(error)

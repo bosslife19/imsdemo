@@ -89,7 +89,7 @@ function Login() {
   return (
     <Container
       fluid
-      className="d-flex justify-content-center align-items-center min-vh-100"
+      className="d-flex justify-content-center align-items-center min-vh-100 bgmodes"
     >
       <Row className="w-100 text-center">
         <AuthencationHeader text={"EdoSUBEB Inventory Management System"} />

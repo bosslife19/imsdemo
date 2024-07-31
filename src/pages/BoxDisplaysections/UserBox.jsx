@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Container } from 'react-bootstrap'
-import Filter from '../../components/Filter/Filter'
-import TitleHeader from '../../components/Headers/TitleHeader'
+
+import axios from 'axios'
 import { Row, Col, Card } from "react-bootstrap";
 
 export const UserBox = () => {
@@ -11,6 +11,22 @@ export const UserBox = () => {
           type: "Date",
         },
       ];
+const [logs, setLogs] = useState([])
+      const getLogs = async()=>{
+        const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+        try {
+          const response = await axios.get(`${baseUrl}/api/get-logs`);
+          
+          setLogs(response.data)
+        } catch (error) {
+          console.log(error)
+        }
+       
+      }
+    
+      useEffect(()=>{
+        getLogs()
+      }, [])
       const activities = [
         {
           id: 1,
@@ -62,27 +78,28 @@ export const UserBox = () => {
               <Card className="AdminRecentUserCardBodys">
                 <div className="AdminRecentUserActivtyScrolls">
                   <Card.Title className="CardTiTle fw-bold m-3">
-                    Admin
+                    User Activity Reports
                   </Card.Title>
                   <Card.Body className="AdminRecentUser m-1 rounded">
-                    {activities.map((activity) => (
+                  
+                    {logs.map((activity) => (
                       <Row
                       style={{fontSize:"12px"}}
                         key={activity.id}
                         className="align-items-center mb-2 py-1 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="" >{activity.name}</span>
+                          <span className="" >{activity.email}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <div
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {activity.category}
                           </div>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {activity["log-details"]}
                         </Col>
                         <Col
                           xs={2}
@@ -97,82 +114,8 @@ export const UserBox = () => {
                       </Row>
                     ))}
                   </Card.Body>
-                  <Card.Title className="CardTiTle fw-bold m-3">
-                    Warehouse Staff
-                  </Card.Title>
-
-                  <Card.Body className="AdminRecentUser m-1 rounded">
-                    {activities.map((activity) => (
-                      <Row
-                      style={{fontSize:"12px"}}
-                        key={activity.id}
-                        className="align-items-center mb-2 py-2 " 
-                      >
-                        <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
-                        </Col>
-                        <Col xs={4} lg={2} sm={4} md={4}>
-                          <a
-                            href="/"
-                            className="text-decoration-none text-success"
-                          >
-                            {activity.action}
-                          </a>
-                        </Col>
-                        <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
-                        </Col>
-                        <Col
-                          xs={2}
-                          lg={2}
-                          className="text-muted d-none d-lg-flex"
-                        >
-                          {activity.date}
-                        </Col>
-                        <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
-                        </Col>
-                      </Row>
-                    ))}
-                  </Card.Body>
-                  <Card.Title className="CardTiTle fw-bold m-3">
-                    Head Teacher
-                  </Card.Title>
-
-                  <Card.Body className="AdminRecentUser m-1 rounded">
-                    {activities.map((activity) => (
-                      <Row
-                      style={{fontSize:"12px"}}
-                        key={activity.id}
-                        className="align-items-center mb-2 py-2 "
-                      >
-                        <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="" >{activity.name}</span>
-                        </Col>
-                        <Col xs={4} lg={2} sm={4} md={4}>
-                          <a
-                            href="/"
-                            className="text-decoration-none text-success"
-                          >
-                            {activity.action}
-                          </a>
-                        </Col>
-                        <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
-                        </Col>
-                        <Col
-                          xs={2}
-                          lg={2}
-                          className="text-muted d-none d-lg-flex"
-                        >
-                          {activity.date}
-                        </Col>
-                        <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
-                        </Col>
-                      </Row>
-                    ))}
-                  </Card.Body>
+                  
+                  
                 </div>
               </Card>
             </Col>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import smallLogo from "../../assets/logo/small-Logo.jpg";
 import {
   Navbar,
@@ -11,10 +11,28 @@ import {
 import "./Navigation.css";
 import { NavLink } from "react-router-dom";
 import AuthenticationContext from "../../context/Authentication/AuthenticationContext";
+import axios from "axios";
+
 
 
 function NavigationHeader({ toggleSidebar }) {
+  const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
   const { userData, messages, } = useContext(AuthenticationContext);
+  const [messageCount, setMessageCount] = useState(0)
+  const getUser = async ()=>{
+    try {
+      const res = await axios.get(`${baseUrl}/api/user/${userData.id}`);
+    setMessageCount(res.data.user.message_count);
+    } catch (error) {
+      console.log(error)
+    }
+    
+    
+  }
+
+  useEffect(()=>{
+    getUser()
+  }, [])
   return (
     <Navbar
       expand="lg"
@@ -85,10 +103,13 @@ function NavigationHeader({ toggleSidebar }) {
             </Nav.Link> */}
             {/* <p style={{position:'absolute', color:'coral', fontSize:12, top:1.5, right:'12%'}}>{messages}</p> */}
             </div>
+
+            {/* <Nav.Link as={NavLink} to="/Notifications" style={{position:'relative'}}> */}
            
-            {/* <Nav.Link as={NavLink} to="/Notifications">
+            <Nav.Link as={NavLink} to="#" style={{position:'relative'}}>
+            <p style={{position:'absolute', top:-5, right:2, color:'coral'}}>{messageCount}</p>
               <i className="fa-regular fa-bell"></i>
-            </Nav.Link> */}
+            </Nav.Link>
             <Dropdown align="end">
               <Dropdown.Toggle
                 variant="light"

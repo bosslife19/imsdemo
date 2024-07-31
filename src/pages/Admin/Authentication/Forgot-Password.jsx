@@ -12,7 +12,9 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 
-function Login() { 
+
+function Login() {
+
   const navigate = useNavigate();
   
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;

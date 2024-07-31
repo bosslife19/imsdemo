@@ -41,7 +41,7 @@ function AddNewItem() {
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      console.log(response.data);
+      
       setSchools(response.data.schools.map(item=>( {id: item.SCHOOL_NAME, name: item.SCHOOL_NAME })));
       
       

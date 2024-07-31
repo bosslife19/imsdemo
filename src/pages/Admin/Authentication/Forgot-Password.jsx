@@ -3,24 +3,43 @@ import "./AdminAuthenticate.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Outlet, Link, useNavigate, } from "react-router-dom";
 import AuthencationHeader from "../../../components/Headers/AuthencationHeader";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 // import AuthenticationContext from "../../../context/Authentication/AuthenticationContext";
 // import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+
 
 function Login() { 
   const navigate = useNavigate();
   
   const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [email, setEmail] = useState('');
+  const [error, setError] = useState("")
   const handleSubmit = async (e)=>{ 
+    
     e.preventDefault();
-    const res = await axios.post(`${baseUrl}/api/auth/forgot-password`,{email});
-   
-    if(res.status ===200){
-        navigate('/change-password');
+    try {
+      setButtonLoading(true)
+      const res = await axios.post(`${baseUrl}/api/auth/forgot-password`,{email});
+     
+      if(res.status ===200){
+        setButtonLoading(false)
+          navigate('/change-password');
+      }
+    } catch (error) {
+      console.log(error)
+      setButtonLoading('false')
+    if(error.response){
+      setError(error.response.data.message)
+    }else{
+      setError('Network Error. Please check your connection')
     }
+    }
+   
 
   }
 
@@ -53,8 +72,13 @@ function Login() {
               type="submit"
               className="w-100 mb-3 mt-5 button rounded rounded-0"
             >
-              Submit
+             {buttonLoading ? (
+                <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+              ) : (
+                "Submit"
+              )}
             </Button>
+            {error&& <p style={{textAlign:'center', color:"coral"}}>{error}</p>}
             <p>
               Are you a new user?{" "}
               <Link to={"/SignUp"} className="text-decoration-none">

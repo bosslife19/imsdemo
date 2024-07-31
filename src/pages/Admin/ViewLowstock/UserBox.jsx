@@ -20,9 +20,6 @@ export const UserBox = ({ items, show, handleClose }) => {
               </tr>
             </thead>
             <tbody>
-              {/* <tr>
-                <td>djdj</td>
-              </tr> */}
               {items.map((item, index) => (
                 <tr key={index}>
                   <td>{item.item_name}</td>

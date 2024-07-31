@@ -29,6 +29,7 @@ export const GeneralProvider = ({ children }) => {
       setFileResponse(result.data);
       return result.data;
     } catch (error) {
+      console.log(error)
       setAddFileError(error.response.data.message);
       return null;
     } finally {

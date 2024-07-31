@@ -13,6 +13,7 @@ import Loading from "../../components/Loading/Loading";
 import { scrollToTop } from "../../utils/HelperFunc";
 import ProfileContext from "../../context/Profile/ProfileContext";
 import ConditionalSideNavigation from "../../components/Navigations/ConditionalSideNavigation";
+import BackButtonIcon from "../../components/Button/BackButtonIcon";
 
 function Profile() {
   const fileInputRef = useRef(null);
@@ -124,6 +125,7 @@ function Profile() {
           toggleSidebar={toggleSidebar}
         />
         <Container className="reportContainer">
+        <BackButtonIcon/>
           <TitleHeader text={"Profile"} />
           {message ? (
             comfirmationAction && (

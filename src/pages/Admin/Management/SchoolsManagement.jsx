@@ -4,14 +4,12 @@ import "./Management.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import SideNavigation from "../../../components/Navigations/SideNavigation";
 import TitleHeader from "../../../components/Headers/TitleHeader";
-import Search from "../../../components/Search/Search";
-import Filter from "../../../components/Filter/Filter";
+ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
 import schoolImage from "../../../assets/schools/schoolchildrens.jpg";
-import userListImage from "../../../assets/bigIcon/userList.png";
-import { useLocation, useNavigate } from "react-router-dom";
+ import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "../../../components/Loading/Loading";
 import SchoolContext from "../../../context/School/SchoolContext";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
@@ -69,7 +67,10 @@ function SchoolsManagement() {
   };
 
   const filterOptionForType = useMemo(()=>[
-    
+    {
+      pk: 1,
+      type: 'All'
+    },
     {
       pk: 2,
       type: 'JSS'
@@ -85,7 +86,10 @@ function SchoolsManagement() {
   ])
 
   const filterOption = useMemo(() => [
-   
+    {
+      pk: 1,
+      type: 'All'
+    },
     {
       pk: 2,
       type: "AKOKO EDO",
@@ -179,43 +183,34 @@ function SchoolsManagement() {
 
   const handleFilterSortSearch = () => {
     let filtered = [...getSchoolsData];
-
-    
-    if (filterBy && filterBy === "JSS") {
-      filtered = filtered.filter((item) => item.SCHOOL_TYPE === filterBy);
-      
-    }else if(filterBy && filterBy === "Primary"){
-      filtered = filtered.filter((item) => item.SCHOOL_TYPE === filterBy);
+  
+    if (filterBy && filterBy !== "All") {
+      if (filterBy === "JSS" || filterBy === "Primary" || filterBy === "Progressive") {
+        filtered = filtered.filter((item) => item.SCHOOL_TYPE === filterBy);
+      } else {
+        filtered = filtered.filter((item) => item.LGA === filterBy);
+      }
     }
-    else if(filterBy && filterBy === "Progressive"){
-      filtered = filtered.filter((item) => item.SCHOOL_TYPE === filterBy);
-    } 
-
-    else if(filterBy && filterBy !=='JSS' && filterBy!== 'Primary' && filterBy !=='Progressive'){
-   
-      filtered = filtered.filter((item) => item.LGA === filterBy);
-    }
-    
-
+  
     if (sortBy) {
       filtered.sort((a, b) => {
         if (sortBy === "ascending") {
-          return a.name.localeCompare(b.name);
+          return a.SCHOOL_NAME.localeCompare(b.SCHOOL_NAME);
         } else {
-          return b.name.localeCompare(a.name);
+          return b.SCHOOL_NAME.localeCompare(a.SCHOOL_NAME);
         }
       });
     }
-
+  
     if (searchTerm) {
-      
       filtered = filtered.filter((item) =>
         item.SCHOOL_NAME.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
+  
     setFilteredData(filtered);
   };
+  
 
   const handleComfirmationPopUps = (messageInfo, messageBgColor) => {
     setmessage(messageInfo);
@@ -228,7 +223,7 @@ function SchoolsManagement() {
 
   const handleCreateSchool = () => {
     navigate("/AddSchool");
-  };
+  }; 
   const handleSchoolDetail = (pk) => {
     navigate(`/SchoolDetail/${pk}`);
   };

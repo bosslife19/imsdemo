@@ -130,13 +130,16 @@ function UserManagement() {
     // Apply sorting
     if (sortBy) {
       filtered.sort((a, b) => {
+        const nameA = a.name || '';
+        const nameB = b.name || '';
         if (sortBy === "ascending") {
-          return a.name.localeCompare(b.name);
+          return nameA.localeCompare(nameB);
         } else {
-          return b.name.localeCompare(a.name);
+          return nameB.localeCompare(nameA);
         }
       });
     }
+  
   
     // Apply search by name and email
     if (searchTerm) {
@@ -151,88 +154,6 @@ function UserManagement() {
   
     setFilteredData(filtered);
   };
-  const filterOptionforLGA = useMemo(() => [
-    {
-
-      pk: 1,
-      type: "All",
-    },
-
-   
-    {
-      pk: 2,
-      type: "AKOKO EDO",
-    },
-    {
-      pk: 3,
-      type: "EGOR",
-    },
-    {
-      pk: 4,
-      type: "ESAN CENTRAL",
-    },
-    {
-      pk: 5,
-      type: "ESAN NORTH EAST",
-    },
-    {
-      pk: 6,
-      type: "ESAN SOUTH EAST",
-    },
-    {
-      pk: 7,
-      type: "ESAN WEST",
-    },
-    {
-      pk: 8,
-      type: "ETSAKO CENTRAL",
-    },
-    {
-      pk: 9,
-      type: "ETSAKO EAST",
-    },
-    {
-      pk: 10,
-      type: "ETSAKO WEST",
-    },
-    {
-      pk: 11,
-      type: "IGUEBEN",
-    },
-    {
-      pk: 12,
-      type: "IKPOBA OKHA",
-    },
-    {
-      pk: 13,
-      type: "OREDO",
-    },
-    {
-      pk: 14,
-      type: "ORHIONMWON",
-    },
-    {
-      pk: 15,
-      type: "OVIA NORTH EAST",
-    },
-    {
-      pk: 16,
-      type: "OVIA SOUTH WEST",
-    },
-    {
-      pk: 17,
-      type: "OWAN EAST",
-    },
-    {
-      pk: 18,
-      type: "OWAN WEST",
-    },
-    {
-      pk: 19,
-      type: "UHUNMWODE",
-    },
-
-  ], []);
 
   const handleLoadingClick = () => {
     if (
@@ -331,12 +252,13 @@ function UserManagement() {
                 defult={"All"}
                 onSelect={(value) => setFilterBy(value)}
               />
-               <Filter
-          optionTitle={"LGA"} 
-          options={filterOptionforLGA}
-          defult={"All"}
-          onSelect={(value) => setFilter(value)}
-        />
+                <Filter
+                Filterstyle={"responsive"}
+                optionTitle={"Sort by"}
+                options={sortOption}
+                defult={"All"}
+                onSelect={(value) => setSortBy(value)}
+              />
             </Col>
           </Row>
           <Row className="d-none d-lg-flex">
@@ -348,11 +270,12 @@ function UserManagement() {
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
-          optionTitle={"LGA"} 
-          options={filterOptionforLGA}
-          defult={"All"}
-          onSelect={(value) => setFilter(value)}
-        />
+                Filterstyle={"responsive"}
+                optionTitle={"Sort by"}
+                options={sortOption}
+                defult={"All"}
+                onSelect={(value) => setSortBy(value)}
+              />
               <PrimaryButton
                 Primaryicon={faAdd}
                 text={"Create New User"}

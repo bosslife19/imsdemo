@@ -697,7 +697,7 @@ function AdminDashboard() {
   </Row>
 
   {/* Presentation Section */}
-  <Row className="mb-3">
+       <Row className="mb-3">
     <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
       <Row className="mb-3">
         <PresentaionCard
@@ -733,7 +733,7 @@ function AdminDashboard() {
         />
       </div>
     </Col>
-  </Row>
+        </Row>
 
 
 
@@ -920,9 +920,7 @@ function AdminDashboard() {
               </Card>
             </Col>
           </Row>
-          </div>
-        </Container>
-        
+         </Container>
       </div>
     </div>
   );

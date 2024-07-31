@@ -160,7 +160,7 @@ function ReportAnalytics() {
           <BackButtonIcon/>
           <TitleHeader text={"Reports & Analytics"} />
           <Row className="mb-3">
-            <Col className="mb-3" lg={6} xl={7} md={9} sm={12} xs={12}>
+            <Col className="mb-3" lg={6} xl={7} md={7} sm={10} xs={12}>
               <Search
                 Searchstyle={"seachContentBar"}
                 searchText={"Search Users..."}

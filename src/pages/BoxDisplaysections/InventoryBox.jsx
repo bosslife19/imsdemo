@@ -15,8 +15,8 @@ import {
 import { Container, Row, Col } from "react-bootstrap";
 import SchoolContext from "../../context/School/SchoolContext";
 import AnalysisContext from "../../context/Analysis/AnalysisContext";
-import schoolImage from "./../../assets/bigIcon/schoolIcon.png";
-import inventoryImage from "./../../assets/bigIcon/inventoryIcon.png";
+import schoolImage from "../../assets/schools/shelves.jpg";
+import inventoryImage from "../../assets/schools/schoolchildrens.jpg";
 import InventoryItemContext from "../../context/Item/InventoryItemContext";
 import PresentaionCard from "../../components/Card/PresentaionCard";
 import BarGraph from "../../components/Graph/BarGraph";
@@ -24,6 +24,8 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import TitleHeader from "../../components/Headers/TitleHeader";
 import Filter from "../../components/Filter/Filter";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   // Register the components
 ChartJS.register(
     CategoryScale,
@@ -44,13 +46,15 @@ export const InventoryBox = () => {
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [schools, setSchools] = useState([]);
+  const [originalSchools, setOriginalSchools] = useState([])
+  const [exportType, setExportType] = useState("");
   
 
   const {
     getInventoryItems, getItemsData, getItemsIsLoading,setGetItemsData
   } = useContext(InventoryItemContext);
-
-  
+ 
+ 
   const {
     getSchoolsData, getSchools, getSchoolsIsLoading
   } = useContext(SchoolContext);
@@ -59,21 +63,67 @@ export const InventoryBox = () => {
   const { ProcessAnalysis, itemDataAnalysis, schoolDataAnalysis} =
   useContext(AnalysisContext);
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
+
+  // Calculate the number of pages
+  const totalPages = Math.ceil(getItemsData.length / itemsPerPage);
+  const paginatedData = getItemsData.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [comfirmationAction, setComfirmationAction] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
   const [filter, setFilter] = useState();
   const [originalItems, setOriginalItems] = useState([])
+  const [lowItems, setLowItems] = useState([])
+  const [logs, setLogs] = useState([]);
   useEffect(() => {
     getInventoryItems();
     getSchools();
     setOriginalItems(getItemsData);
+    
+   
   }, [ ])
+
+  const getLogs = async()=>{
+    const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+    try {
+      const response = await axios.get(`${baseUrl}/api/get-logs`);
+      
+      setLogs(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+   
+  }
+
+  useEffect(()=>{
+    getLogs()
+  }, [])
+  const getLowStockItems = ()=>{
+    const low = originalItems.filter(item=>item.quantity < 20);
+    setLowItems(low);
+    
+  }
+  
+
 
   useEffect(() => {
     ProcessAnalysis(getSchoolsData);
     ProcessAnalysis(getItemsData);
+    getLowStockItems();
+
+    if(filter ==='All'){
+      
+       setGetItemsData(originalItems);
+
+       return setSchools(originalSchools);
+    
+    }
     
     if(filter && schools){
       let schoolsMatch = schools.filter(item=>item.
@@ -91,46 +141,50 @@ export const InventoryBox = () => {
         
         
     }
-    
-    if(filter==='AKOKO EDO'){
+    if(filter && filter === 'All'){
+      setGetItemsData(originalItems); // Show all items
+      setCount(schools.length); // Update count based on all schools
+  
+    }
+   else if(filter==='AKOKO EDO'){
      
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Pencil' ||
-        item.name === 'Eraser' ||
-        item.name === 'Sharpner'
+        item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ));
     
-    } if(filter ==='EGOR'){
+    } else if(filter ==='EGOR'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Mathematics Textbook – Grade 1' ||
-        item.name === 'Mathematics Textbook - Grade 2' ||
-        item.name === 'Literacy Text Book - Grade 1'
+        item.item_name === 'Basic Science: An Integrated Science Course' ||
+        item.item_name === 'Junior Secondary Business Studies Textbook' 
       ))
     }
-     if(filter ==='ESAN CENTRAL'){
+    else if(filter ==='ESAN CENTRAL'){
       
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Laptops' ||
-        item.name === 'ChalkBoard'
+        item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ));
-    } if(filter && filter==='JSS'){
+    } else if(filter && filter==='JSS'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Pencil' ||
-        item.name === 'Eraser' ||
-        item.name === 'Sharpner'
+       item.item_name === 'Basic Science: An Integrated Science Course' ||
+        item.item_name === 'Junior Secondary Business Studies Textbook' 
       ))
     }
-    if(filter &&filter==='Primary'){
+    else if(filter &&filter==='Primary'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Mathematics Textbook – Grade 1' ||
-        item.name === 'Mathematics Textbook - Grade 2' ||
-        item.name === 'Literacy Text Book - Grade 1'
+       item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ))
     }
-    if(filter && filter==='Progressive'){
+    else if(filter && filter==='Progressive'){
       setGetItemsData(originalItems.filter(item =>
-        item.name === 'Laptops' ||
-        item.name === 'ChalkBoard'
+       item.item_name === 'New Concept Mathematics' ||
+        item.item_name === 'New English Concept' ||
+        item.item_name === 'Wabp Social Studies Book 1'
       ))
     }
   }, [getItemsIsLoading, getSchoolsIsLoading,filter ])
@@ -151,10 +205,11 @@ export const InventoryBox = () => {
     const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
     try {
       const response = await axios.get(`${baseUrl}/api/school`);
-      console.log(response.data)
+      
       setSchools(response.data.schools);
       
       setCount(response.data.count);
+      setOriginalSchools(response.data.schools);
     } catch (error) {
       console.log(error)
     } 
@@ -163,13 +218,16 @@ export const InventoryBox = () => {
   useEffect(()=>{
     getSchoolsNew()
   },[])
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
+ 
+ 
   const filterOptionforLGA = useMemo(() => [
-    
+    {
+
+      pk: 1,
+      type: "All",
+    },
+
+   
     {
       pk: 2,
       type: "AKOKO EDO",
@@ -246,7 +304,13 @@ export const InventoryBox = () => {
   ], []);
 
   const filterOptionForType = useMemo(()=>[
-   
+
+ 
+   {
+    pk:1,
+    type:'All'
+   },
+
     {
       pk: 2,
       type: 'JSS'
@@ -270,23 +334,20 @@ export const InventoryBox = () => {
     }, 4000);
   };
 
-  const handlePushNotification = () => {
-    navigate("/AdminPushNotification");
+  
+ 
+  const handlePreviousPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 0));
   };
 
-  const handleGenerateReport = () => {
-    navigate("/GenerateInventory");
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages - 1));
   };
-
-  const filterData = [
-    {
-      pk: 1,
-      type: "Date",
-    },
-  ];
   const Bardata = {
     // labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    labels: getItemsData.map(item=>item.name)||["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+
+    labels: paginatedData.map(item => item.item_name),
+   
     datasets: [
       {
         label: "Stock Level",
@@ -295,7 +356,7 @@ export const InventoryBox = () => {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(146, 216, 200, 1)",
         hoverBorderColor: "rgba(75,192,192,1)",
-        data:  getItemsData.map(item=>item.quantity),
+        data: paginatedData.map(item => item.quantity),
       },
     ],
   };
@@ -341,114 +402,16 @@ export const InventoryBox = () => {
     },
   };
 
-  const Piedata = {
-    labels: getItemsData.map(item=>item.name)||["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    datasets: [
-      {
-        data: getItemsData.map(item=>item.quantity) ||[300, 50, 100, 40, 120, 75],
-        backgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#4BC0C0",
-          "#9966FF",
-          "#FF9F40",
-        ],
-        hoverBackgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#4BC0C0",
-          "#9966FF",
-          "#FF9F40",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+ 
+ 
+ 
 
-  const Pieoptions = {
-    cutout: "50%",
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        labels: {
-          font: {
-            weight: "bold",
-          },
-        },
-      },
-      tooltip: {
-        titleFont: {
-          weight: "bold",
-        },
-        bodyFont: {
-          weight: "bold",
-        },
-      },
-    },
-  };
-
-  const Arkdata = {
-    labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    datasets: [
-      {
-        label: "Material Usage",
-        data: [650, 590, 800, 810, 560, 550, 400, 700, 750, 650],
-        fill: true,
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        pointBackgroundColor: "rgba(75, 192, 192, 1)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(75, 192, 192, 1)",
-      },
-    ],
-  };
-
-  const Arkoptions = {
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        labels: {
-          font: {
-            weight: "bold",
-          },
-        },
-      },
-      tooltip: {
-        titleFont: {
-          weight: "bold",
-        },
-        bodyFont: {
-          weight: "bold",
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          font: {
-            weight: "bold",
-          },
-        },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          font: {
-            weight: "bold",
-          },
-        },
-      },
-    },
-  };
-
+ 
   return (
     <div>
-      <div className="d-flex gap-7 p-3" style={{position:"relative", top:"-70px",left:"80px"}}>
+      <div className=" upbox">
       <Row className="mb-3 mt-3">
-            <Col lg={12} md={12} xl={12} sm={12} xs={12}>
+            <Col   md={12}   sm={12} xs={12}>
               <div className="d-flex justify-content-between ">
                 
                  <Filter
@@ -482,38 +445,52 @@ export const InventoryBox = () => {
           </Row>
       </div>
       <Container>
-        <div style={{position:"relative",top:"-40px"}}>
+        <div style={{ position: "relative", top: "-40px" }}>
         
         {/* <Row className="mb-3"> */}
-            {/* <Row lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2"> */}
+       
               <Row className="mb-3">
+              <Col   md={10}  sm={11} xs={11} className="marl m-auto">
                 <PresentaionCard
                   title={"Total EdoSUBEB Schools"}
-                  image={schoolImage}
+                  image={inventoryImage}
                   figure={count? count :0}
                   margin={`${SchoolTrend === 'up' ? '↑' : SchoolTrend === 'down' ? '↓' : '~'} ${SchoolDifference}`}
                   marginColor={SchoolTrend === 'up' ? 'text-success': SchoolTrend === 'down' ? 'text-danger' : 'text-primary'}
                   />
+                  </Col>
               </Row>
+              
               <Row className="mb-3">
-                <PresentaionCard
+              <Col   md={10}  sm={11} xs={11} className="marl m-auto" >
+                 <PresentaionCard
                   title={"Total Items"}
-                  image={inventoryImage}
+                  image={schoolImage}
                   figure={getItemsData? getItemsData.length :0}
                   margin={`${InvetoryTrend === 'up' ? '↑' : InvetoryTrend === 'down' ? '↓' : '~'} ${InvetoryDifference}`}
                   marginColor={InvetoryTrend === 'up' ? 'text-success': InvetoryTrend === 'down' ? 'text-danger' : 'text-primary'}
                 />
-              </Row>
-            {/* </Row> */}
-            {/* <Container> */}
-            {/* <Col lg={6} md={12} xl={8} sm={12} xs={12} className=""> */}
-           
+                </Col>
+               </Row>
+               
+              <Row>
+              <Col  md={10}  sm={11} xs={11} className="marl m-auto">
               <BarGraph data={Bardata} options={Baroptions} />
-             
-            {/* </Col> */}
-            {/* </Container> */}
-          {/* </Row> */}
-        
+              </Col>
+      <div style={{ width: "100%", margin: 'auto' ,paddingBottom:"10px"}}>
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          className="mt-3 mx-3 fa-2x backButtonIcon"
+          onClick={handlePreviousPage}
+        />
+        <FontAwesomeIcon
+          icon={faArrowRight}
+          className="mt-3 mx-3 fa-2x backButtonIcon"
+          onClick={handleNextPage}
+        />
+      </div>
+     
+              </Row>
         </div>
         </Container>
     </div>

@@ -666,6 +666,7 @@ function AdminDashboard() {
           className="pushNotificationTitle"
           style={{ width: 150 }}
         />
+        <div className="d-none d-lg-flex">
         <Filter
           optionTitle={"School Type"}
           options={filterOptionForType}
@@ -678,6 +679,7 @@ function AdminDashboard() {
           defult={"All"}
           onSelect={(value) => setFilter(value)}
         />
+        </div>
       </div>
       <div className="d-lg-none d-flex justify-content-end mt-3">
         <Filter

@@ -39,15 +39,15 @@ const [history, setHistory] = useState([])
                             style={{ fontSize: "12px" }}
                              className="align-items-center mb-2 py-1"
                           >
-                            <Col xs={4} lg={2} sm={4} md={4}>
+                            <Col xs={4} >
                               <span className="">Title</span>
                             </Col>
-                            <Col xs={4} lg={2} sm={4} md={4}>
+                            <Col xs={4} >
                               <div className="text-decoration-none text-success">
                                 Message
                               </div>
                             </Col>
-                            <Col xs={4} lg={2} sm={4} md={4}>
+                            <Col xs={4} >
                               <div className="text-decoration-none text-success">
                                 Time
                               </div>
@@ -60,13 +60,13 @@ const [history, setHistory] = useState([])
                             {
                               history && history.map(item=>(
                                 <>
-                                <Col xs={4} lg={2} sm={4} md={4}>
+                                <Col xs={4} >
                               <span className="">{item.title}</span>
                             </Col>
-                            <Col xs={4} lg={2} sm={4} md={4}>
+                            <Col xs={4} >
                             <span className="">{item.message}</span>
                           </Col>
-                          <Col xs={4} lg={2} sm={4} md={4}>
+                          <Col xs={4}>
                               <div className="text-decoration-none text-success">
                                 {item.created_at}
                               </div>

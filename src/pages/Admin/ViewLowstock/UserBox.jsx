@@ -18,7 +18,7 @@ export const UserBox = ({ items, show, handleClose }) => {
                   <th className="">Barcode ID</th>
                   <th className="">Category</th>
                   <th>Quantity</th>
-                  <th>LGA</th>
+                  
                   <th>School</th>
                 </tr>
               </thead>
@@ -30,6 +30,7 @@ export const UserBox = ({ items, show, handleClose }) => {
                     <td className="">{item.barcode_id}</td>
                     <td className="">{item.subject_category}</td>
                     <td>{item.quantity}</td>
+                    <td>{item.school}</td>
                   </tr>
                 ))}
               </tbody>

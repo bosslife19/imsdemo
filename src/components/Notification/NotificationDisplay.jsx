@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import { Container, Card} from "react-bootstrap";
+import { Container, Card, Row, Col} from "react-bootstrap";
 import NavigationHeader from '../Navigations/NavigationHeader';
 import TitleHeader from '../Headers/TitleHeader';
 import NonAvaliable from '../NonAvaliable/NonAvaliable';

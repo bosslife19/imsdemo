@@ -10,14 +10,23 @@ import { NoImagCard } from "../../../components/Card/PresentaionCard";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import { useLocation, useNavigate } from "react-router-dom";
 import inventoryListImage from "../../../assets/bigIcon/inventoryList.png";
-
+import NotificationBtn from "../../../components/Button/NotificationBtn";
+import { faClockRotateLeft, faHome,faTableList } from '@fortawesome/free-solid-svg-icons';
+import ApprovalListPage from "../ApproveList/Listtoapprove";
+import ApprovedItem from "../ApproveList/ApprovedList";
+ 
 function QualityDashboard() {
     const navigate = useNavigate();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showList, setShowList] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const toggleList = () => {
+    setShowList(!showList); // Toggle the state when NotificationBtn is clicked
   };
   const filterData = [
     {
@@ -211,13 +220,22 @@ function QualityDashboard() {
           </Row>
           <Row className="d-lg-none mb-2">
             <Col xl={6} lg={6} md={12} sm={12} xs={12}>
-              <TitleHeader
-                text={"Approval Queue"}
-                headerTextStyle={"headerTextStyle"}
-              />
+            <TitleHeader
+        text={showList ? "Approval Queue" : "Approval History"}
+        headerTextStyle={"headerTextStyle"}
+      />
             </Col>
+            
             <Col xl={6} lg={6} md={12} sm={12} xs={12} className="d-flex justify-content-between ms-auto gap-3">
-              <Filter
+            <NotificationBtn
+         Primaryicon={showList ? faClockRotateLeft : faTableList }
+          text={showList ? "History" : "Queue"}
+          
+          Primarystyle={"pushNotificationTimer mb-3"}
+          onClick={toggleList}
+          className="fs-14"
+        />
+               <Filter
                 optionTitle={"Filter by"}
                 options={filterData}
                 defult={"Ramdom"}
@@ -231,12 +249,18 @@ function QualityDashboard() {
           </Row>
           <Row className="d-none d-lg-flex">
             <div className="d-flex justify-content-between">
-              <TitleHeader
-                text={"Approval Queue"}
-                headerTextStyle={"headerTextStyle"}
-              />
-
-              <Col className="d-flex justify-content-end ms-auto gap-3">
+            <TitleHeader
+        text={showList ? "Approval Queue" : "Approval History"}
+        headerTextStyle={"headerTextStyle"}
+      />
+              
+               <Col className="d-flex justify-content-end ms-auto gap-3">
+               <NotificationBtn
+          Primaryicon={showList ? faClockRotateLeft : faTableList}
+          text={showList ? "History" : "Queue"}
+          Primarystyle={"pushNotificationTimer mb-3"}
+          onClick={toggleList}
+        />
                 <Filter
                   optionTitle={"Filter by"}
                   options={filterData}
@@ -250,68 +274,11 @@ function QualityDashboard() {
               </Col>
             </div>
           </Row>
-          <Container className="ListContainer mb-5">
-            {users1.map((user) => (
-              <Row
-                key={user.id}
-                className="UserListRow my-2 py-2 align-items-center"
-              >
-                <Col xs={7} md={7} sm={7} lg={7} className="d-flex gap-3">
-                  <Image
-                    src={inventoryListImage}
-                    rounded
-                    width="50"
-                    height="50"
-                  />
-                  <div>
-                    <h6>{user.itemType}</h6>
-                    <h6 className="fs-6">
-                      {" "}
-                      {user.action}
-                      <span className="quailtyDashboardListText">
-                        {" "}
-                        | {user.suppy}{" "}
-                        <span className="d-none d-lg-inline me">
-                          {user.itemName} | {user.Admin} | {user.joinDate}
-                                             </span>{" "}
-                      </span>
-                    </h6>
-                  </div>
-                </Col>
-                <Col
-                  xs={2}
-                  md={2}
-                  sm={2}
-                  lg={2}
-                  className=""
-                >
-                  <PrimaryButton
-                    text={"View"}
-                    Primarystyle={"quailtyListViewButton rounded rounded-4 px-4 "}
-                    clickEvent={() => handleApprovalDetail()}
-
-                  />
-                </Col>
-                <Col
-                  xs={3}
-                  md={3}
-                  sm={3}
-                  lg={3}
-                  className="d-flex justify-content-end gap-2 d-none d-lg-flex"
-                >
-                  <PrimaryButton
-                    text={"Approve"}
-                    Primarystyle={"bg-success border border-0 rounded rounded-4 px-3 "}
-                  />
-                  <PrimaryButton
-                    text={"Deny"}
-                    Primarystyle={"bg-danger border border-0 rounded rounded-4 px-3"}
-                    clickEvent={""}
-                  />
-                </Col>
-              </Row>
-            ))}
-          </Container>
+          {showList ? (
+        <ApprovalListPage users={users1} handleApprovalDetail={handleApprovalDetail} />
+      ) : (
+        <ApprovedItem  />
+      )}
           <Row>
             <Col lg={12} md={12} xl={12} sm={12} xs={12} className="">
               <Card className="AdminRecentUserCardBody">
@@ -409,7 +376,7 @@ function QualityDashboard() {
                           >
                             {activity.action}
                           </a>
-                        </Col>
+                          </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
                           {activity.description}
                         </Col>

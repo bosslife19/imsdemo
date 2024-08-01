@@ -161,13 +161,13 @@ function ReportAnalytics() {
           <TitleHeader text={"Reports & Analytics"} />
           <Row className="mb-3">
 
-//             <Col className="mb-3" lg={6} xl={7} md={7} sm={10} xs={12}>
+{/* //             <Col className="mb-3" lg={6} xl={7} md={7} sm={10} xs={12}> */}
 
-//               <Search
-//                 Searchstyle={"seachContentBar"}
-//                 searchText={"Search Users..."}
-//               />
-//             </Col> 
+{/* //               <Search */}
+                {/* Searchstyle={"seachContentBar"}
+                 searchText={"Search Users..."} */}
+{/* //               /> */}
+{/* //             </Col>  */}
             {/* <Col lg={3} md={3} xl={2} sm={6} xs={6}>
               <Filter
                 optionTitle={"Filter by"}
@@ -215,7 +215,7 @@ function ReportAnalytics() {
               </div> */}
            
           {/* </Row> */}
-          </Row>
+          // </Row>
           <Row>
             <Col md={6} className="p-3 grid-container mb-5">
               <Row className="rowContainer">

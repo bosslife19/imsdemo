@@ -123,7 +123,7 @@ function SchoolDetail() {
           <Row className="itemDetailMainRow mb-2">
             <TitleHeader text={"School Information  "} headerTextStyle={'headerTextStyle'}/>
             <Row className="mb-4 align-items-center">
-                <Col className="itemHeaderText">School Logo:<Image src={getSingleSchoolData.school_image} rounded width="50" height="50" className="mx-2" /></Col>
+                {/* <Col className="itemHeaderText">School Logo:<Image src={getSingleSchoolData.school_image} rounded width="50" height="50" className="mx-2" /></Col> */}
             </Row>
             <Row className="mb-4 align-items-center">
                 <Col className="itemHeaderText">School Name: <b className="itemDetailText mx-2">{getSingleSchoolData.name}</b> </Col>

@@ -367,9 +367,9 @@ function AddNewItem() {
                     <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                       <Form.Control
                         as="textarea"
-                        rows={6}
+                        rows={2}
                         placeholder="Class Grade"
-                        className="UserCreateTextArea"
+                        className="UserCreateInput"
                         name='classGrade'
                       />
                     </Col>

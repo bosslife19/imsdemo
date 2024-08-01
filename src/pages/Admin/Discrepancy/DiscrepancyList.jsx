@@ -291,7 +291,7 @@ function DiscrepancyList() {
               />
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col className="d-flex justify-content-end">
               <PrimaryButton
                 Primaryicon={faTrashCan}
@@ -299,7 +299,7 @@ function DiscrepancyList() {
                 Primarystyle={"DiscrepancyDeleteButton"}
               />
             </Col>
-          </Row>
+          </Row> */}
           <Row>
             <Container className="ListContainer">
               {!getDiscrepancysIsLoading ? (

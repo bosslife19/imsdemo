@@ -4,13 +4,10 @@ import "./Management.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import SideNavigation from "../../../components/Navigations/SideNavigation";
 import TitleHeader from "../../../components/Headers/TitleHeader";
-import Search from "../../../components/Search/Search";
 import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
-// import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png"; 
-import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
 import schoolImage from "../../../assets/schools/shelves.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
@@ -24,23 +21,19 @@ import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-function InventoryManagement({ Searchstyle, searchText, }) {
+function InventoryManagement({ Searchstyle, searchText }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { getInventoryItems, getItemsData, getItemsIsLoading } =
-  useContext(InventoryItemContext);
-
-  const { ProcessAnalysis, itemDataAnalysis } =
-  useContext(AnalysisContext);
-
+  const { getInventoryItems, getItemsData, getItemsIsLoading } = useContext(InventoryItemContext);
+  const { ProcessAnalysis, itemDataAnalysis } = useContext(AnalysisContext);
   const { navigationMessages, setnavigationMessages } = useContext(MessageContext);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [comfirmationAction, setComfirmationAction] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
-  const [filteredData, setFilteredData] = useState();
+  const [filteredData, setFilteredData] = useState([]);
   const [filterBy, setFilterBy] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -54,7 +47,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
     ProcessAnalysis(getItemsData, 'items');
   }, [getItemsIsLoading]); 
 
-  const {value, trend} = itemDataAnalysis
+  const { value, trend } = itemDataAnalysis;
 
   useEffect(() => {
     handleFilterSortSearch();
@@ -66,7 +59,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
       const redirectMessage = location.state?.message;
       handleComfirmationPopUps(redirectMessage || navigationMessages, "bg-success");
       navigate(location.pathname, { replace: true, state: {} });
-      setnavigationMessages('')
+      setnavigationMessages('');
     }
   }, []);
 
@@ -74,41 +67,17 @@ function InventoryManagement({ Searchstyle, searchText, }) {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
- 
-  
   const filterOption = useMemo(() =>[
-    {
-      pk: 1,
-      type: "English",
-    },
-    {
-      pk: 2,
-      type: "Mathematics",
-    },
-    {
-      pk:3,
-      type:'Science'
-    },
-    {
-      pk:4,
-      type:'Home Work'
-    },
-    {
-      pk:5,
-      type:'Stationery'
-    }
+    { pk: 1, type: "English" },
+    { pk: 2, type: "Mathematics" },
+    { pk: 3, type: 'Science' },
+    { pk: 4, type: 'Home Work' },
+    { pk: 5, type: 'Stationery' }
   ], []);
 
- 
   const sortOption = useMemo(() =>[
-    {
-      pk: 1,
-      type: "Highest to Lowest",
-    },
-    {
-      pk: 2,
-      type: " Lowest to Highest ",
-    },
+    { pk: 1, type: "Highest to Lowest" },
+    { pk: 2, type: "Lowest to Highest" }
   ], []);
 
   const handleSearchChange = (event) => {
@@ -119,7 +88,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
     let filtered = [...getItemsData];
 
     if (filterBy && filterBy !== 'All') {
-      filtered = filtered.filter((item) => item.subject_category === filterBy);
+      filtered = filtered.filter((item) => item.category === filterBy);
     }
 
     if (sortBy) {
@@ -173,15 +142,13 @@ function InventoryManagement({ Searchstyle, searchText, }) {
       <div className="d-flex justify-content-between">
         <SideNavigation isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Container className="reportContainer">
-          {message
-            ? comfirmationAction && (
-                <ComfirmationPop
-                  message={message}
-                  ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
-                />
-              )
-            : null}
-            <BackButtonIcon/>
+          {message && comfirmationAction && (
+            <ComfirmationPop
+              message={message}
+              ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
+            />
+          )}
+          <BackButtonIcon/>
           <TitleHeader text={"Inventory Management"} />
           <Row className="mb-3">
             <Col lg={6} md={6} xl={6} sm={6} xs={6}>
@@ -201,26 +168,20 @@ function InventoryManagement({ Searchstyle, searchText, }) {
           </Row>
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              {/* <Search
-                Searchstyle={"seachContentBar"}
-                searchText={"Search Inventory..."}
-                onSearchChange={handleSearchChange}
-              /> */}
-               <div className={`sideNavSearchBarContainer ${Searchstyle}`}>
-            <FontAwesomeIcon
-                icon={faSearch}
-                className="sideNavSearchIcon"
-             />
-              <input
-                type="text"
-                placeholder='Search Inventory'
-                className="sideNavSearchBar"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                style={{display:'block', width:'100%', borderRadius:10}}
-                
-            />
-            </div>
+              <div className={`sideNavSearchBarContainer ${Searchstyle}`}>
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  className="sideNavSearchIcon"
+                />
+                <input
+                  type="text"
+                  placeholder='Search Inventory'
+                  className="sideNavSearchBar"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  style={{ display: 'block', width: '100%', borderRadius: 10 }}
+                />
+              </div>
             </Col>
           </Row>
           <Row className="mb-3">
@@ -264,7 +225,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
               />
               <Filter
                 Filterstyle={"responsive"}
-                optionTitle={"sort by"}
+                optionTitle={"Sort by"}
                 options={sortOption}
                 defult={"Highest to Lowest"}
                 onSelect={(value) => setSortBy(value)}
@@ -274,7 +235,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
           <Row className="d-none d-lg-flex">
             <Col className="d-flex justify-content-end ms-auto gap-3">
               <Filter
-                optionTitle={"Filters by"}
+                optionTitle={"Filter by"}
                 options={filterOption}
                 defult={"Category"}
                 onSelect={(value) => setFilterBy(value)}
@@ -296,52 +257,52 @@ function InventoryManagement({ Searchstyle, searchText, }) {
           <Container className="ListContainer">
             {!getItemsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
-                filteredData.map((Item) => (
+                filteredData.map((item) => (
                   <Row
-                    key={Item.id}
+                    key={item.id}
                     className="UserListRow my-2 py-2 align-items-center"
                   >
                     <Col xs={9} className="d-flex gap-3">
                       <Image
-                        src={Item.image}
+                        src={item.image}
                         rounded
                         width="50"
                         height="50"
                       />
                       <div>
-                        <h6>{Item.item_name}</h6>
+                        <h6>{item.item_name}</h6>
                         <h6 className="fs-6">
-                        INV-{Item.id}
+                          {`INV-${item.id}`}
                           <span className="text-muted InventoryCategoryText">
-                            | {Item.category} | {''}
+                            | {item.category} | {''}
                             <span className="d-none d-lg-inline me">
-                              {Item.item_code} | {`${Item.school}`} | {Item.quantity} {''}
+                              {item.item_code} | {`${item.school}`} | {item.quantity} {''}
                               <span
                                 className={
-                                  Item.quantity > 35
+                                  item.quantity > 35
                                     ? "text-success"
-                                    : Item.quantity < 1
+                                    : item.quantity < 1
                                     ? "text-danger"
                                     : "text-warning"
                                 }
                               >
-                                {Item.quantity > 35
+                                {item.quantity > 35
                                   ? "| In stock"
-                                  : Item.quantity < 1
+                                  : item.quantity < 1
                                   ? "| Out of stock"
                                   : "| Low on stock"}
                               </span> | {''}
-                               {Item.supplier} | {''}
+                              {item.distribution} | {''}
                               <span
                                 className={
-                                  Item.status === "pending"
+                                  item.status === "pending"
                                     ? "text-danger"
                                     : "text-success"
                                 }
                               >
-                                {Item.status}
+                                {item.status}
                               </span> | {''}
-                              {convertDate(Item.created_at)}
+                              {convertDate(item.created_at)}
                             </span>
                           </span>
                         </h6>
@@ -351,21 +312,19 @@ function InventoryManagement({ Searchstyle, searchText, }) {
                       <PrimaryButton
                         text={"Edit"}
                         Primarystyle={"UserViewButton d-none d-lg-block"}
-                        clickEvent={() => handleEditDetail(Item.id)}
+                        clickEvent={() => handleEditDetail(item.id)}
                       />
                       <PrimaryButton
                         text={"View details"}
                         Primarystyle={"schoolViewButton"}
-                        clickEvent={() => handleItemDetail(Item.id)}
+                        clickEvent={() => handleItemDetail(item.id)}
                       />
                     </Col>
                   </Row>
                 ))
               ) : (
                 <NonAvaliable
-                  textMessage={
-                    "Sorry, there is currently no available item! 😥"
-                  }
+                  textMessage={"Sorry, there is currently no available item! 😥"}
                   imageWidth={"300px"}
                 />
               )

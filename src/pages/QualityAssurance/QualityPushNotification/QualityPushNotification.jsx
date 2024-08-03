@@ -5,12 +5,23 @@ import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import QualityNavigation from "../../../pages/QualityAssurance/QualityNavigation/QualityNavigation";
 import TitleHeader from "../../../components/Headers/TitleHeader";
 import Filter from "../../../components/Filter/Filter";
+import { NotificationHistory } from "../../Admin/PushNotification/NotificationHistory";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons/faClockRotateLeft";
 import PushNotification from "../../../components/Notification/PushNotification";
 
 
 function QualityPushNotification() {
+  const [audience, setAudience] = useState('')
+  
+
+  const [showModal, setShowModal] = useState(false);
+  
+  
+
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -19,8 +30,21 @@ function QualityPushNotification() {
   const filterData = [
     {
       pk: 1,
-      type: "Date",
+      type: "QA",
     },
+    {
+      pk: 2,
+      type: "Warehouse Staff",
+    },
+    {
+      pk: 3,
+      type: "Head Teacher",
+    },
+    {
+      pk: 4,
+      type: "Admin",
+    },
+    
   ];
   return (
     <div>
@@ -54,8 +78,9 @@ function QualityPushNotification() {
               Primarystyle={"pushNotificationTimer d-none d-lg-flex"}
             />
           </Col>
+          <NotificationHistory   show={showModal} handleClose={handleClose} />
         </Row>
-        <PushNotification />
+        <PushNotification audience={audience}/>
       </Container>
     </div>
       </div>

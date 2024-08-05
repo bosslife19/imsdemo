@@ -92,12 +92,7 @@ function WareHouseTrack() {
     []
   );
 
-  const filterData = [
-    {
-      pk: 1,
-      type: "Date",
-    },
-  ];
+  
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);

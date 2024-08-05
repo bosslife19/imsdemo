@@ -1,38 +1,124 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Col, Image, Card, Button } from "react-bootstrap";
 import "./QualityDashboard.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import QualityNavigation from "../../../pages/QualityAssurance/QualityNavigation/QualityNavigation";
 import TitleHeader from "../../../components/Headers/TitleHeader";
 import Filter from "../../../components/Filter/Filter";
+import TrackingContext from "../../../context/Tracking/TrackingContext";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import { NoImagCard } from "../../../components/Card/PresentaionCard";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
 import { useLocation, useNavigate } from "react-router-dom";
 import inventoryListImage from "../../../assets/bigIcon/inventoryList.png";
-import NotificationBtn from "../../../components/Button/NotificationBtn";
-import { faClockRotateLeft, faHome,faTableList } from '@fortawesome/free-solid-svg-icons';
-import ApprovalListPage from "../ApproveList/Listtoapprove";
-import ApprovedItem from "../ApproveList/ApprovedList";
- 
+import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
+import Loading from "../../../components/Loading/Loading";
+import axios from "axios";
+
 function QualityDashboard() {
     const navigate = useNavigate();
+    const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+    const [filterBy, setFilterBy] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
+    const [sortBy, setSortBy] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
+    const [change, setChange] = useState(false);
+    const [logs, setLogs] = useState([])
+    const { getTrackings, getTrackingsData, getTrackingsIsLoading } =
+    useContext(TrackingContext);
+    const getLogs = async()=>{
+      const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
+      try {
+        const response = await axios.get(`${baseUrl}/api/get-logs`);
+        
+        setLogs(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+     
+    }
+  
+    useEffect(()=>{
+      getLogs()
+    }, [])
+
+    useEffect(() => {
+      getTrackings();
+      setFilteredData(getTrackingsData);
+    }, [change]);
+    const handleSearchChange = (event) => {
+      setSearchTerm(event.target.value);
+    };
+    useEffect(() => {
+      handleFilterSortSearch();
+    }, [filterBy, sortBy, searchTerm, getTrackingsData]);
+
+    const handleApprove = async (status, id)=>{
+      try {
+        const res = await axios.put(`${baseUrl}/api/tracking/${id}`, {status})
+        console.log(res.data)
+        setChange(true)
+      } catch (error) {
+        console.log(error)
+      }
+     
+    }
+    const handleFilterSortSearch = () => {
+      let filtered = [...getTrackingsData];
+  
+      if (filterBy && filterBy !== "All") {
+        filtered = filtered.filter((item) => item.status === filterBy);
+      }
+  
+      if (sortBy) {
+        filtered.sort((a, b) => {
+          if (sortBy === "ascending") {
+            return a.item_name.localeCompare(b.item_name);
+          } else {
+            return b.item_name.localeCompare(a.item_name);
+          }
+        });
+      }
+
+  
+      if (searchTerm) {
+        filtered = filtered.filter((item) =>
+          item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+  
+      setFilteredData(filtered);
+    };
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [showList, setShowList] = useState(true);
+  
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
-  const toggleList = () => {
-    setShowList(!showList); // Toggle the state when NotificationBtn is clicked
-  };
+  const filterDataSortBy = [
+    {
+      pk:1,
+      type:'ascending'
+    },
+    {
+    pk:2,
+    type:'descending'
+    }
+  ]
   const filterData = [
     {
       pk: 1,
-      type: "Date",
+      type: "pending",
     },
+    {
+      pk:2,
+      type:'approved'
+    },
+    {
+      pk:3,
+      type:'denied'
+    }
   ];
   const users1 = [
     {
@@ -147,13 +233,13 @@ function QualityDashboard() {
         <Container className="reportContainer">
           <div className="d-flex justify-content-between">
             <TitleHeader text={"Dashboard"} />
-            <Filter
+            {/* <Filter
               optionTitle={"Time"}
               options={filterData}
               defult={"This week"}
-            />
+            /> */}
           </div>
-          <Row className="mb-3 mt-3 ">
+          {/* <Row className="mb-3 mt-3 ">
             <TitleHeader
               text={"System Performance"}
               headerTextStyle={"headerTextStyle"}
@@ -200,8 +286,8 @@ function QualityDashboard() {
                 </span>
               </div>
             </div>
-          </Row>
-          <Row className="mb-5 mt-5">
+          </Row> */}
+          {/* <Row className="mb-5 mt-5">
             <TitleHeader
               text={"Your Schools"}
               headerTextStyle={"headerTextStyle"}
@@ -217,7 +303,7 @@ function QualityDashboard() {
                 />
               ))}
             </div>
-          </Row>
+          </Row> */}
           <Row className="d-lg-none mb-2">
             <Col xl={6} lg={6} md={12} sm={12} xs={12}>
             <TitleHeader
@@ -239,11 +325,13 @@ function QualityDashboard() {
                 optionTitle={"Filter by"}
                 options={filterData}
                 defult={"Ramdom"}
+                onSelect={(value)=>setFilterBy(value)}
               />
               <Filter
                 optionTitle={"Sort by"}
-                options={filterData}
+                options={filterDataSortBy}
                 defult={"Ramdom"}
+                onSelect={(value)=>setSortBy(value)}
               />
             </Col>
           </Row>
@@ -265,134 +353,135 @@ function QualityDashboard() {
                   optionTitle={"Filter by"}
                   options={filterData}
                   defult={"Ramdom"}
+                  onSelect={(value)=>setFilterBy(value)}
                 />
                 <Filter
                   optionTitle={"Sort by"}
-                  options={filterData}
+                  options={filterDataSortBy}
                   defult={"Ramdom"}
+                  onSelect={(value)=>setSortBy(value)}
                 />
               </Col>
             </div>
           </Row>
-          {showList ? (
-        <ApprovalListPage users={users1} handleApprovalDetail={handleApprovalDetail} />
-      ) : (
-        <ApprovedItem  />
-      )}
+          <Container className="ListContainer mb-5">
+            {
+              !getTrackingsIsLoading? (
+                filteredData && filterData.length>0?(
+                  filteredData.map((item) => (
+                    <Row
+                      key={item.id}
+                      className="UserListRow my-2 py-2 align-items-center"
+                    >
+                      <Col xs={7} md={7} sm={7} lg={7} className="d-flex gap-3">
+                        <Image
+                          src={inventoryListImage}
+                          rounded
+                          width="50"
+                          height="50"
+                        />
+                        <div>
+                          <h6>{item.item_name}</h6>
+                          <h6 className="fs-6">
+                            {" "}
+                            {item.action}
+                            <span className="quailtyDashboardListText">
+                              {" "}
+                              | {item.address}{" "}| <span style={{color:item.status=='approved'? 'green': 'red'}}>{item.status}</span>|
+                              <span className="d-none d-lg-inline me">
+                                {item.brand}  | {item.created_at}
+                                                   </span>{" "}
+                            </span>
+                          </h6>
+                        </div>
+                      </Col>
+                      <Col
+                        xs={2}
+                        md={2}
+                        sm={2}
+                        lg={2}
+                        className=""
+                      >
+                        <PrimaryButton
+                          text={"View"}
+                          Primarystyle={"quailtyListViewButton rounded rounded-4 px-4 "}
+                          clickEvent={() => handleApprovalDetail()}
+      
+                        />
+                      </Col>
+                      <Col
+                        xs={3}
+                        md={3}
+                        sm={3}
+                        lg={3}
+                        className="d-flex justify-content-end gap-2 d-none d-lg-flex"
+                      >
+                        <PrimaryButton
+                          text={"Approve"}
+                          Primarystyle={"bg-success border border-0 rounded rounded-4 px-3 "}
+                          clickEvent={()=>handleApprove('approved', item.id)}
+                        />
+                        <PrimaryButton
+                          text={"Deny"}
+                          Primarystyle={"bg-danger border border-0 rounded rounded-4 px-3"}
+                          clickEvent={()=>handleApprove('denied', item.id)}
+                        />
+                      </Col>
+                    </Row>
+                  ))
+                ):(
+                  <NonAvaliable textMessage={ "Sorry, there is currently no available item! 😥"}  imageWidth={"300px"}/>
+                )
+              ):(
+                <Container className="d-flex justify-content-center align-items-center h-50">
+                <Loading loading={getTrackingsIsLoading} />
+              </Container>
+              )
+            }
+           
+          </Container>
           <Row>
             <Col lg={12} md={12} xl={12} sm={12} xs={12} className="">
               <Card className="AdminRecentUserCardBody">
                 <div className="AdminRecentUserActivtyScroll">
                   <Card.Title className="CardTiTle fw-bold m-3">
-                    Admin
+                    User Activities Log
                   </Card.Title>
                   <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
+                    {logs.map((log) => (
                       <Row
-                        key={activity.id}
+                        key={log.id}
                         className="align-items-center mb-2 py-2 "
                       >
                         <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
+                          <span className="">{log.email}</span>
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4}>
                           <a
                             href="/"
                             className="text-decoration-none text-success"
                           >
-                            {activity.action}
+                            {log.category}
                           </a>
                         </Col>
                         <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
+                          {log["log-details"]}
                         </Col>
                         <Col
                           xs={2}
                           lg={2}
                           className="text-muted d-none d-lg-flex"
                         >
-                          {activity.date}
+                          {log.date}
                         </Col>
                         <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
+                          {log.time}
                         </Col>
                       </Row>
                     ))}
                   </Card.Body>
-                  <Card.Title className="CardTiTle fw-bold m-3">
-                    Warehouse Staff
-                  </Card.Title>
-
-                  <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
-                      <Row
-                        key={activity.id}
-                        className="align-items-center mb-2 py-2 "
-                      >
-                        <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
-                        </Col>
-                        <Col xs={4} lg={2} sm={4} md={4}>
-                          <a
-                            href="/"
-                            className="text-decoration-none text-success"
-                          >
-                            {activity.action}
-                          </a>
-                        </Col>
-                        <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
-                        </Col>
-                        <Col
-                          xs={2}
-                          lg={2}
-                          className="text-muted d-none d-lg-flex"
-                        >
-                          {activity.date}
-                        </Col>
-                        <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
-                        </Col>
-                      </Row>
-                    ))}
-                  </Card.Body>
-                  <Card.Title className="CardTiTle fw-bold m-3">
-                    Head Teacher
-                  </Card.Title>
-
-                  <Card.Body className="AdminRecentUser m-4 rounded">
-                    {activities.map((activity) => (
-                      <Row
-                        key={activity.id}
-                        className="align-items-center mb-2 py-2 "
-                      >
-                        <Col xs={4} lg={2} sm={4} md={4}>
-                          <span className="">{activity.name}</span>
-                        </Col>
-                        <Col xs={4} lg={2} sm={4} md={4}>
-                          <a
-                            href="/"
-                            className="text-decoration-none text-success"
-                          >
-                            {activity.action}
-                          </a>
-                          </Col>
-                        <Col xs={4} lg={4} className="d-none d-lg-flex">
-                          {activity.description}
-                        </Col>
-                        <Col
-                          xs={2}
-                          lg={2}
-                          className="text-muted d-none d-lg-flex"
-                        >
-                          {activity.date}
-                        </Col>
-                        <Col xs={4} lg={2} sm={4} md={4} className="text-muted">
-                          {activity.time}
-                        </Col>
-                      </Row>
-                    ))}
-                  </Card.Body>
+                  
+                 
                 </div>
               </Card>
             </Col>

@@ -287,7 +287,7 @@ function QualityDashboard() {
               </div>
             </div>
           </Row> */}
-          {/* <Row className="mb-5 mt-5">
+          <Row className="mb-5 mt-5">
             <TitleHeader
               text={"Your Schools"}
               headerTextStyle={"headerTextStyle"}
@@ -303,7 +303,7 @@ function QualityDashboard() {
                 />
               ))}
             </div>
-          </Row> */}
+          </Row>
           <Row className="d-lg-none mb-2">
             <Col xl={6} lg={6} md={12} sm={12} xs={12}>
               <TitleHeader

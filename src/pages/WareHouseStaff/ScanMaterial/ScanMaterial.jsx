@@ -55,12 +55,11 @@ function ScanMaterial() {
   };
   const handleViewItem = (pk) => {
   
-  // if(item){
-    navigate(`/ItemDetails/${pk}`)
-  // }else{
-  //   return console.log("veb");
-  //   ;
-  // }
+  if(item){
+    navigate(`/ItemDetail/${item.item_code}`)
+  }else{
+    return;
+  }
     
   }
 

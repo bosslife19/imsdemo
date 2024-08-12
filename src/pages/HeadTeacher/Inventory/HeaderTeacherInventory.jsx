@@ -8,7 +8,7 @@ import Filter from "../../../components/Filter/Filter";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
  import schoolImage from "../../../assets/schools/shelves.jpg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
@@ -229,6 +229,7 @@ function HeaderTeacherInventory() {
             {!getItemsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 filteredData.map((Item, index) => (
+                  
                   <Row
                     key={index}
                     className="UserListRow my-2 py-2 align-items-center"
@@ -287,6 +288,8 @@ function HeaderTeacherInventory() {
                       </div>
                     </Col>
                   </Row>
+                  
+                  
                 ))
               ) : (
                 <NonAvaliable

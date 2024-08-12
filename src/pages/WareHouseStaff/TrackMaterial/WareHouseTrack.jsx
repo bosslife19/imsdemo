@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useMemo, useRef } from "react";
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import "./WareHouseTrack.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import TitleHeader from "../../../components/Headers/TitleHeader";
@@ -55,7 +55,9 @@ function WareHouseTrack() {
       navigate(location.pathname, { replace: true, state: {} });
     }
   }, []);
-
+  const handleaddmovement =()=>{
+    navigate("/WareHouseAddMovement");
+ }
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -315,6 +317,15 @@ function WareHouseTrack() {
                 <Loading loading={getTrackingsIsLoading} />
               </Container>
             )}
+             <Button
+                variant="success"
+                className="w-100 p-3"
+                // clickEvent={() => handleaddmovement()}
+                onClick={handleaddmovement}
+              >
+                 Add Movement 
+                
+              </Button>
           </Container>
           <Container className="">
             <TitleHeader text={"Movement Log"} headerTextStyle={"headerTextStyle"} />

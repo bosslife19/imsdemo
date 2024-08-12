@@ -356,7 +356,7 @@ function InventoryManagement({ Searchstyle, searchText, }) {
                       <PrimaryButton
                         text={"View details"}
                         Primarystyle={"schoolViewButton"}
-                        clickEvent={() => handleItemDetail(Item.id)}
+                        clickEvent={() => handleItemDetail(Item.item_code)}
                       />
                     </Col>
                   </Row>

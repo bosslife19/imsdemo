@@ -9,7 +9,7 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import PresentaionCard from "../../../components/Card/PresentaionCard";
 import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
 import schoolImage from "../../../assets/schools/shelves.jpg";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import WareHouseSideNavigation from "../Navigation/WareHouseSideNavigation";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
@@ -283,7 +283,8 @@ function WareHouseInventory() {
             {!getItemsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 filteredData.map((Item) => (
-                  <Row
+                  <Link to={`/ItemDetail/${Item.item_code}`}>
+                   <Row
                     key={Item.id}
                     className="UserListRow my-2 py-2 align-items-center"
                   >
@@ -349,6 +350,8 @@ function WareHouseInventory() {
                       />
                     </Col>
                   </Row>
+                  </Link>
+                 
                 ))
               ) : (
                 <NonAvaliable

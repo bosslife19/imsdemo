@@ -56,7 +56,7 @@ function ScanMaterial() {
   const handleViewItem = () => {
   
   if(item){
-    navigate(`/ItemDetail/${item.id}`)
+    navigate(`/ItemDetail/${item.item_code}`)
   }else{
     return;
   }

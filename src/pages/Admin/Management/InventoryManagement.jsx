@@ -12,7 +12,7 @@ import PresentaionCard from "../../../components/Card/PresentaionCard";
 // import inventoryImage from "../../../assets/bigIcon/inventoryIcon.png"; 
 import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
 import schoolImage from "../../../assets/schools/shelves.jpg";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
 import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationPop";
@@ -297,7 +297,8 @@ function InventoryManagement({ Searchstyle, searchText, }) {
             {!getItemsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 filteredData.map((Item) => (
-                  <Row
+                  <Link to={`/ItemDetail/${Item.item_code}`}>
+                    <Row
                     key={Item.id}
                     className="UserListRow my-2 py-2 align-items-center"
                   >
@@ -360,6 +361,8 @@ function InventoryManagement({ Searchstyle, searchText, }) {
                       />
                     </Col>
                   </Row>
+                  </Link>
+                  
                 ))
               ) : (
                 <NonAvaliable

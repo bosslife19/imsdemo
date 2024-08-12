@@ -229,7 +229,7 @@ function HeaderTeacherInventory() {
             {!getItemsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 filteredData.map((Item, index) => (
-                  <Link to={`/ItemDetail/${Item.item_code}`}>
+                  
                   <Row
                     key={index}
                     className="UserListRow my-2 py-2 align-items-center"
@@ -288,7 +288,7 @@ function HeaderTeacherInventory() {
                       </div>
                     </Col>
                   </Row>
-                  </Link>
+                  
                   
                 ))
               ) : (

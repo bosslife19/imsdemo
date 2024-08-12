@@ -283,7 +283,7 @@ function WareHouseInventory() {
             {!getItemsIsLoading ? (
               filteredData && filteredData.length > 0 ? (
                 filteredData.map((Item) => (
-                  <Link to={`/ItemDetail/${Item.item_code}`}>
+                  
                    <Row
                     key={Item.id}
                     className="UserListRow my-2 py-2 align-items-center"
@@ -350,7 +350,7 @@ function WareHouseInventory() {
                       />
                     </Col>
                   </Row>
-                  </Link>
+                  
                  
                 ))
               ) : (

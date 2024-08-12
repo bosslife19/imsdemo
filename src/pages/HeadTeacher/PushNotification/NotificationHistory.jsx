@@ -5,7 +5,7 @@ export const NotificationHistory = ({ show, handleClose }) => {
     return (
         <Modal show={show} onHide={handleClose} size="lg">
           <Modal.Header closeButton>
-            <Modal.Title>NotificationHistory</Modal.Title>
+            <Modal.Title>Notification History</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Container>
@@ -14,7 +14,7 @@ export const NotificationHistory = ({ show, handleClose }) => {
                   <Card className="AdminRecentUserCardBodys">
                     <div className="AdminRecentUserActivtyScrolls">
                       <Card.Title className="CardTiTle fw-bold m-3">
-                      NotificationHistory
+                      Notification History
                       </Card.Title>
                       <Card.Body className="AdminRecentUser m-1 rounded">
                         

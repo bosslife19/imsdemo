@@ -233,13 +233,13 @@ function QualityDashboard() {
         <Container className="reportContainer">
           <div className="d-flex justify-content-between">
             <TitleHeader text={"Dashboard"} />
-            {/* <Filter
+            <Filter
               optionTitle={"Time"}
               options={filterData}
               defult={"This week"}
-            /> */}
+            /> 
           </div>
-          {/* <Row className="mb-3 mt-3 ">
+          <Row className="mb-3 mt-3 ">
             <TitleHeader
               text={"System Performance"}
               headerTextStyle={"headerTextStyle"}
@@ -286,8 +286,8 @@ function QualityDashboard() {
                 </span>
               </div>
             </div>
-          </Row> */}
-          {/* <Row className="mb-5 mt-5">
+          </Row>
+          <Row className="mb-5 mt-5">
             <TitleHeader
               text={"Your Schools"}
               headerTextStyle={"headerTextStyle"}
@@ -303,25 +303,16 @@ function QualityDashboard() {
                 />
               ))}
             </div>
-          </Row> */}
+          </Row>
           <Row className="d-lg-none mb-2">
             <Col xl={6} lg={6} md={12} sm={12} xs={12}>
-            <TitleHeader
-        text={showList ? "Approval Queue" : "Approval History"}
-        headerTextStyle={"headerTextStyle"}
-      />
+              <TitleHeader
+                text={"Approval Queue"}
+                headerTextStyle={"headerTextStyle"}
+              />
             </Col>
-            
             <Col xl={6} lg={6} md={12} sm={12} xs={12} className="d-flex justify-content-between ms-auto gap-3">
-            <NotificationBtn
-         Primaryicon={showList ? faClockRotateLeft : faTableList }
-          text={showList ? "History" : "Queue"}
-          
-          Primarystyle={"pushNotificationTimer mb-3"}
-          onClick={toggleList}
-          className="fs-14"
-        />
-               <Filter
+              <Filter
                 optionTitle={"Filter by"}
                 options={filterData}
                 defult={"Ramdom"}
@@ -337,18 +328,12 @@ function QualityDashboard() {
           </Row>
           <Row className="d-none d-lg-flex">
             <div className="d-flex justify-content-between">
-            <TitleHeader
-        text={showList ? "Approval Queue" : "Approval History"}
-        headerTextStyle={"headerTextStyle"}
-      />
-              
-               <Col className="d-flex justify-content-end ms-auto gap-3">
-               <NotificationBtn
-          Primaryicon={showList ? faClockRotateLeft : faTableList}
-          text={showList ? "History" : "Queue"}
-          Primarystyle={"pushNotificationTimer mb-3"}
-          onClick={toggleList}
-        />
+              <TitleHeader
+                text={"Approval Queue"}
+                headerTextStyle={"headerTextStyle"}
+              />
+
+              <Col className="d-flex justify-content-end ms-auto gap-3">
                 <Filter
                   optionTitle={"Filter by"}
                   options={filterData}

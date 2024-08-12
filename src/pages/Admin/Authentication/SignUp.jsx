@@ -109,7 +109,7 @@ function SignUp() {
                     <option value="" disabled hidden>Role</option>
                     <option value="qa">QA</option>
                     <option value="admin">Admin</option>
-                    <option value="head-teacher">HeadTeacher</option>
+                    {/* <option value="head-teacher">HeadTeacher</option> */}
                     <option value="warehouse-staff">WareHouseStaff</option>
                   </Form.Select>
                 </Col>

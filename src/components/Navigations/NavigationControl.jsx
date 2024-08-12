@@ -14,7 +14,8 @@ import CreateNewUser from "../../pages/Admin/User/CreateNewUser";
 import AddSchool from "../../pages/Admin/School/AddSchool";
 import AddNewItem from "../../pages/Admin/Inventory/AddNewItem";
 import GenerateInventory from "../../pages/Admin/Inventory/GenerateInventory";
-import ItemDetail from "../../pages/Admin/Inventory/ItemDetail";
+import ItemDetail from "../../pages/Admin/Inventory/ItemDetail"; 
+import ItemDetails from "../../pages/WareHouseStaff/ScanMaterial/ItemDetails";
 import SchoolDetail from "../../pages/Admin/School/SchoolDetail";
 import UserDetail from "../../pages/Admin/User/UserDetail";
 import WareHouseDashboard from "../../pages/WareHouseStaff/Dashboard/WareHouseDashboard";
@@ -170,8 +171,9 @@ function NavigationControl() {
           <Route path="/TrackMovementLog" element={<MovementLog />} />
           <Route path="/WareHouseGenerateInventory" element={<GenerateInventory />} />
           <Route path="/ScanMaterial" element={<ScanMaterial />} />
+          <Route path="/ItemDetails/:pk" element={<ItemDetails />} />
            <Route path="/WareHouseGenerateInventory" element={<GenerateInventory />} />
-          <Route
+          <Route 
             path="/WareHousePushNotification"
             element={<WareHousePushNotification />}
           />

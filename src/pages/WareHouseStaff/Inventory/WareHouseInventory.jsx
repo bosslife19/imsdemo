@@ -246,7 +246,7 @@ function WareHouseInventory() {
                 onSelect={(value) => setFilterBy(value)}
                 
               />
-            </Col>
+            </Col> 
             {/* <Col xl={2}>
             <Filter
                 optionTitle={"Sort by"}

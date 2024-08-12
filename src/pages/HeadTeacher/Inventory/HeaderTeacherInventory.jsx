@@ -183,14 +183,14 @@ function HeaderTeacherInventory() {
                 Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"All"}
                 onSelect={(value) => setSortBy(value)}
               />
               <Filter
                 Filterstyle={"responsive"}
                 optionTitle={"Sort by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"All"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
@@ -200,13 +200,13 @@ function HeaderTeacherInventory() {
               <Filter
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"All"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
                 optionTitle={"Sort by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"All"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>

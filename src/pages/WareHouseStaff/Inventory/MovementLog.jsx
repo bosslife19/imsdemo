@@ -262,6 +262,7 @@ function MovementLog() {
       paddingRight: 3,
       paddingLeft: 3,
       borderRadius: 3,
+      color:'white',
       backgroundColor: Item.status === 'received' ? 'green' : '#6a5a2c',
     }}
     disabled={disable}

@@ -210,14 +210,14 @@ function WareHouseTrack() {
                 Filterstyle={"responsive"}
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"All"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
                 Filterstyle={"responsive"}
                 optionTitle={"Sort by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"All"}
                 onSelect={(value) => setSortBy(value)}
               />
             </Col>
@@ -227,13 +227,13 @@ function WareHouseTrack() {
               <Filter
                 optionTitle={"Filter by"}
                 options={filterOption}
-                defult={"Ramdom"}
+                defult={"All"}
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
                 optionTitle={"Sort by"}
                 options={sortOption}
-                defult={"Ramdom"}
+                defult={"All"}
                 onSelect={(value) => setSortBy(value)}
               />
               {/* <PrimaryButton

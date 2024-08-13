@@ -38,6 +38,7 @@ function MovementLog() {
     try {
       const res = await axios.put(`${baseUrl}/api/tracking/${id}`, {status, action})
       setDisable(true)
+      setRecieved(true)
     } catch (error) {
       console.log(error)
     }
@@ -80,11 +81,12 @@ function MovementLog() {
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [received, setRecieved] = useState(false)
 
   useEffect(() => {
     getTrackings();
     setFilteredData(getTrackingsData);
-  }, []);
+  }, [received]);
 
   useEffect(() => {
     handleFilterSortSearch();

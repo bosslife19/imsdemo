@@ -21,18 +21,27 @@ import jsPDF from 'jspdf'
 import autoTable from "jspdf-autotable"
 import * as XLSX from 'xlsx'
 import BackButtonIcon from "../../../components/Button/BackButtonIcon";
+import axios from "axios";
 
 
 function MovementLog() {
   const navigate = useNavigate();
   const location = useLocation();
+  const baseUrl = process.env.REACT_APP_EDO_SUBEB_BASE_URL;
 
   const { getTrackings, getTrackingsData, getTrackingsIsLoading } = useContext(TrackingContext);
 
     const [exportType, setExportType] = useState("");
   
 
-  
+  const handleReceived = async(id, status, action) =>{
+    try {
+      const res = await axios.put(`${baseUrl}/api/tracking/${id}`, {status, action})
+      setDisable(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const exportAccordingToType = ()=>{
     if(exportType ===''){
@@ -93,6 +102,8 @@ function MovementLog() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const [disable, setDisable] = useState(false)
 
   const filterOption = useMemo(
     () => [
@@ -184,7 +195,8 @@ function MovementLog() {
     "Priority",
     "Location",
     "Action",
-     "Status"
+     "Status",
+     "Received"
    ];
   const handleaddmovement =()=>{
      navigate("/WareHouseAddMovement");
@@ -239,6 +251,11 @@ function MovementLog() {
                                 {" "}
                                 {Item.status}
                               </td>
+                            <td>
+                              <button onClick={handleReceived(Item.id, 'received','received')} style={{paddingTop:2,
+                                 paddingBottom:2, paddingRight:3, paddingLeft:3,borderRadius:3, backgroundColor:
+                                  Item.status=='received'?'green':'#6a5a2c' }} disabled={disable}>{Item.status=='recieved'?'received':'confirm'}</button>
+                            </td>
                        </tr>
                     ))}
                   </tbody>

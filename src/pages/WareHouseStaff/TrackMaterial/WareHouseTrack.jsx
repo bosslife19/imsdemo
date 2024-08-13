@@ -178,11 +178,20 @@ function WareHouseTrack() {
           <TitleHeader text={"Track Materials"} />
           <Row className="mb-4">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search
+            <input
+                type="text"
+                placeholder='Search Materials'
+                className="seachContentBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{display:'block', width:'100%', borderRadius:10}}
+                
+            />
+              {/* <Search
                 Searchstyle={"seachContentBar"}
                 searchText={"Search Materials..."}
                 onSearchChange={handleSearchChange}
-              />
+              /> */}
             </Col>
           </Row>
           {/* <Row className="d-lg-none mobileCreateButton my-3">
@@ -329,7 +338,7 @@ function WareHouseTrack() {
           </Container>
           <Container className="">
             <TitleHeader text={"Movement Log"} headerTextStyle={"headerTextStyle"} />
-            <Row className="mb-3">
+            {/* <Row className="mb-3">
               <Col lg={12} md={12} xl={12} sm={12} xs={12}>
                 <Search
                   Searchstyle={"seachContentBar"}
@@ -337,7 +346,7 @@ function WareHouseTrack() {
                   onChange={handleSearchChange}
                 />
               </Col>
-            </Row>
+            </Row> */}
             <Col className="mt-5" ref={movementLogRef}> {/* Ref applied here */}
               {renderContent()}
             </Col>

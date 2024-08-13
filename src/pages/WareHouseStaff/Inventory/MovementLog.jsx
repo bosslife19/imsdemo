@@ -253,9 +253,9 @@ function MovementLog() {
                                 {" "}
                                 {Item.status}
                               </td>
-                            <td>
-                              <button onClick={handleReceived(Item.id, 'received','received')} style={{paddingTop:2,
-                                 paddingBottom:2, paddingRight:3,color:'white',cursor:"pointer", paddingLeft:3,borderRadius:3, backgroundColor:
+                             <td>
+                              <button onClick={() => handleReceived(Item.id, 'received', 'received')} style={{paddingTop:2,
+                                 paddingBottom:2, paddingRight:3, paddingLeft:3,borderRadius:3, backgroundColor:
                                   Item.status=='received'?'green':'#6a5a2c' }} disabled={disable}>{Item.status=='recieved'?'received':'confirm'}</button>
                             </td>
                        </tr>

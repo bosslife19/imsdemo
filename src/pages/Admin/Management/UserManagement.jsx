@@ -45,6 +45,7 @@ function UserManagement() {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [loadingUserStausId, setloadingUserStausId] = useState(null);
   const [filteredData, setFilteredData] = useState();
+  const [filter, setFilter] = useState();
   const [filterBy, setFilterBy] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -117,35 +118,41 @@ function UserManagement() {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
   const handleFilterSortSearch = () => {
     let filtered = [...getUsersData];
-
+  
+    // Apply role filter
     if (filterBy && filterBy !== "All") {
       const filterId = filterMapping[filterBy];
       filtered = filtered.filter((item) => item.role_id === filterId);
     }
-
+  
+    // Apply sorting
     if (sortBy) {
       filtered.sort((a, b) => {
+        const nameA = a.name || '';
+        const nameB = b.name || '';
         if (sortBy === "ascending") {
-          return a.name.localeCompare(b.name);
+          return nameA.localeCompare(nameB);
         } else {
-          return b.name.localeCompare(a.name);
+          return nameB.localeCompare(nameA);
         }
       });
     }
   
-
+  
+    // Apply search by name and email
     if (searchTerm) {
+      const searchWords = searchTerm.toLowerCase().split(' ');
       filtered = filtered.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        searchWords.every((word) => 
+          (item.name && item.name.toLowerCase().includes(word)) ||
+          (item.email && item.email.toLowerCase().includes(word))
+        )
       );
-     
-      setFilteredData(filtered);
     }
-
-   
+  
+    setFilteredData(filtered);
   };
 
   const handleLoadingClick = () => {
@@ -203,11 +210,16 @@ function UserManagement() {
           <TitleHeader text={"User Management"} />
           <Row className="mb-3">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>
-              <Search
-                Searchstyle={"seachContentBar"}
-                searchText={"Search Users..."}
-                onSearchChange={handleSearchChange}
-              />
+              
+             <input
+                type="text"
+                placeholder='Search School'
+                className="seachContentBar"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{display:'block', width:'100%', borderRadius:10}}
+                
+            />
             </Col>
           </Row>
           <Row className="mb-3">
@@ -240,7 +252,7 @@ function UserManagement() {
                 defult={"All"}
                 onSelect={(value) => setFilterBy(value)}
               />
-              <Filter
+                <Filter
                 Filterstyle={"responsive"}
                 optionTitle={"Sort by"}
                 options={sortOption}
@@ -258,6 +270,7 @@ function UserManagement() {
                 onSelect={(value) => setFilterBy(value)}
               />
               <Filter
+                Filterstyle={"responsive"}
                 optionTitle={"Sort by"}
                 options={sortOption}
                 defult={"All"}

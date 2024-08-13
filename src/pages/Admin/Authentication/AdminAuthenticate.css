@@ -45,3 +45,25 @@ font-weight: 700;
 line-height: 25.6px;
 color: rgba(160, 160, 160, 1);
 }
+
+.select-placeholder {
+  /* color: #6c757d;  */
+  /* Placeholder color */
+}
+
+.select-placeholder:invalid {
+  /* color: #6c757d;     */
+  /* Ensure the color is applied when invalid */
+}
+
+
+.bgmodes{
+ 
+width: 100%;
+ background:linear-gradient(#F2F2F2E5, #F2F2F2E5), url("../../../assets/bg/c5e7fbb8a86b53a3d54af05c22aa2a5f.jpg");
+background-position: center;
+background-size: cover;
+padding-top: 20px;
+padding-bottom: 20px;
+
+}

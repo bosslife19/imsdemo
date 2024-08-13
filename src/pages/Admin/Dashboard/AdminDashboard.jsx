@@ -664,8 +664,9 @@ function AdminDashboard() {
           type="date"
           placeholder="Minimum Stock Level"
           className="pushNotificationTitle"
-          style={{ width: 300 }}
+          style={{ width: 150 }}
         />
+        <div className="d-none d-lg-flex">
         <Filter
           optionTitle={"School Type"}
           options={filterOptionForType}
@@ -678,6 +679,7 @@ function AdminDashboard() {
           defult={"All"}
           onSelect={(value) => setFilter(value)}
         />
+        </div>
       </div>
       <div className="d-lg-none d-flex justify-content-end mt-3">
         <Filter
@@ -697,7 +699,7 @@ function AdminDashboard() {
   </Row>
 
   {/* Presentation Section */}
-  <Row className="mb-3">
+       <Row className="mb-3">
     <Col lg={6} md={12} xl={4} sm={12} xs={12} className="mb-2">
       <Row className="mb-3">
         <PresentaionCard
@@ -733,7 +735,7 @@ function AdminDashboard() {
         />
       </div>
     </Col>
-  </Row>
+        </Row>
 
 
 
@@ -920,7 +922,7 @@ function AdminDashboard() {
               </Card>
             </Col>
           </Row>
-        </Container>
+         </Container>
       </div>
     </div>
   );

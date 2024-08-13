@@ -27,7 +27,7 @@ function SignUp() {
 
   useEffect(() => {
     if (!signInIsLoading && sigUpResponse) {
-      navigate("/Login", { state: { message: 'Sigup successfull please login' } });
+      navigate("/Login", { state: { message: 'Signup successful, please login' } });
       setSigUpResponse(null);
     }
   }, [signInIsLoading, sigUpResponse, navigate]);
@@ -60,7 +60,21 @@ function SignUp() {
     }
   };
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+
+    if (!isValidEmail(email)) {
+      handleComfirmationPopUps("Invalid email address", "bg-danger");
+      return;
+    }
+
     handleSigUpSubmit(e);
     handleLoadingClick();
   };
@@ -87,14 +101,15 @@ function SignUp() {
                 <Col md={7}>
                   <Form.Select
                     size="lg"
-                    className="mb-3 inputSeleteField"
+                    className="mb-3 inputSeleteField select-placeholder"
                     name="role"
                     required
+                    defaultValue=""
                   >
-                    <option value="">Role</option>
+                    <option value="" disabled hidden>Role</option>
                     <option value="qa">QA</option>
                     <option value="admin">Admin</option>
-                    <option value="head-teacher">HeadTecher</option>
+                    <option value="head-teacher">HeadTeacher</option>
                     <option value="warehouse-staff">WareHouseStaff</option>
                   </Form.Select>
                 </Col>
@@ -114,7 +129,7 @@ function SignUp() {
                 placeholder="phone number"
                 className="mb-3 inputField"
                 name="phone_number"
-                required
+                 
               />
             </Form.Group>
             <Form.Group controlId="formEmail">
@@ -123,7 +138,7 @@ function SignUp() {
                 placeholder="Oracle ID or Email Address"
                 className="mb-3 inputField"
                 name="email"
-                required
+                
               />
             </Form.Group>
             <Form.Group controlId="formPassword">
@@ -163,6 +178,5 @@ function SignUp() {
     </Container>
   );
 }
+
 export default SignUp;
-
-

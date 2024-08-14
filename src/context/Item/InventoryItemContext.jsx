@@ -56,7 +56,9 @@ export const InventoryItemProvider = ({ children }) => {
      
       setGetItemsData(response.data.items);
     } catch (error) {
+      console.log(error);
       setGetItemsError(error);
+      
     } finally {
       setGetItemsIsLoading(false);
     }

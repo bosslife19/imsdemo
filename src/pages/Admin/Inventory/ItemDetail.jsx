@@ -14,7 +14,7 @@ function ItemList() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    fetchItems();
+    fetchItems(1);
   }, []);
 
   const fetchItems = async (page = 1) => {

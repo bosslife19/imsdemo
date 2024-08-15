@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Button } from "react-bootstrap";
 import "./Inventory.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
@@ -32,7 +32,9 @@ function ItemList() {
   };
 
   const handlePageChange = (page) => {
-    fetchItems(page);
+    if (page >= 1 && page <= pagination.last_page) {
+      fetchItems(page);
+    }
   };
 
   const toggleSidebar = () => {
@@ -65,20 +67,22 @@ function ItemList() {
                   <Col className="itemHeaderText">{item.distribution}</Col>
                 </Row>
               ))}
-              <div className="pagination">
-                {pagination.prev_page_url && (
-                  <Button onClick={() => handlePageChange(pagination.current_page - 1)}>
-                    Previous
-                  </Button>
-                )}
-                <span>
+              <div className="pagination d-flex justify-content-center mt-4">
+                <Button
+                  onClick={() => handlePageChange(pagination.current_page - 1)}
+                  disabled={!pagination.prev_page_url}
+                >
+                  Previous
+                </Button>
+                <span className="mx-2">
                   Page {pagination.current_page} of {pagination.last_page}
                 </span>
-                {pagination.next_page_url && (
-                  <Button onClick={() => handlePageChange(pagination.current_page + 1)}>
-                    Next
-                  </Button>
-                )}
+                <Button
+                  onClick={() => handlePageChange(pagination.current_page + 1)}
+                  disabled={!pagination.next_page_url}
+                >
+                  Next
+                </Button>
               </div>
             </div>
           ) : (
@@ -94,4 +98,5 @@ function ItemList() {
 }
 
 export default ItemList;
+
 

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
+import "./Inventory.css";
 import NavigationHeader from "../../../components/Navigations/NavigationHeader";
 import TitleHeader from "../../../components/Headers/TitleHeader";
 import BackButtonIcon from "../../../components/Button/BackButtonIcon";
 import PrimaryButton from "../../../components/Button/PrimaryButton";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import Loading from "../../../components/Loading/Loading";
 import NonAvaliable from "../../../components/NonAvaliable/NonAvaliable";
@@ -15,39 +16,29 @@ import ComfirmationPop from "../../../components/ComfirmationPopUp/ComfirmationP
 
 function ItemDetail() {
   const navigate = useNavigate();
-  const { getInventoryItems } = useContext(InventoryItemContext);
+  let { pk } = useParams();
+
+  const { getInventorySingleItem, getSingleItemData, getSingleItemIsLoading } =
+    useContext(InventoryItemContext);
+
   const { navigationMessages, setnavigationMessages } = useContext(MessageContext);
+
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [message, setmessage] = useState("");
   const [messageColor, setmessageColor] = useState("");
   const [comfirmationAction, setComfirmationAction] = useState(false);
-  const [items, setItems] = useState([]);
-  const [pagination, setPagination] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
-    fetchItems();
+    getInventorySingleItem(pk);
   }, []);
-
-  const fetchItems = async (page = 1) => {
-    setIsLoading(true);
-    try {
-      const response = await getInventoryItems(page);
-      setItems(response.items);
-      setPagination(response.pagination);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Failed to fetch items", error);
-      setIsLoading(false);
-    }
-  };
 
   useEffect(() => {
     if (navigationMessages) {
       scrollToTop();
       handleComfirmationPopUps(navigationMessages, "bg-success");
-      setnavigationMessages("");
+      setnavigationMessages('')
     }
   }, []);
 
@@ -64,11 +55,9 @@ function ItemDetail() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handlePageChange = (url) => {
-    if (url) {
-      const page = new URL(url).searchParams.get("page");
-      fetchItems(page);
-    }
+
+  const handleEditDetail = () => {
+    navigate(`/EditItem/${pk}`);
   };
 
   return (
@@ -77,61 +66,155 @@ function ItemDetail() {
       <div className="d-flex justify-content-between">
         <ConditionalSideNavigation isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         <Container className="reportContainer">
-          {message && comfirmationAction && (
-            <ComfirmationPop
-              message={message}
-              ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
-            />
-          )}
+        {message
+            ? comfirmationAction && (
+                <ComfirmationPop
+                  message={message}
+                  ComfirmationContainerStyle={`${messageColor} d-flex mb-2`}
+                />
+              )
+            : null}
           <div className="d-flex">
             <BackButtonIcon />
-            <TitleHeader text={"Item List"} />
+            <TitleHeader text={"View Item Details"} />
           </div>
-          {isLoading ? (
+          {getSingleItemIsLoading ? (
             <Container className="d-flex justify-content-center align-items-center vh-100">
-              <Loading loading={isLoading} />
+              <Loading loading={getSingleItemIsLoading} />
             </Container>
-          ) : items.length ? (
-            <>
+          ) : getSingleItemData ? (
+            <div>
               <Row className="itemDetailMainRow mb-2">
-                {items.map((item) => (
-                  <Col key={item.id} className="itemHeaderText">
+                <TitleHeader
+                  text={"Item Information "}
+                  headerTextStyle={"headerTextStyle"}
+                />
+                <Row className="mb-4  align-items-center">
+                  <Col className="itemHeaderText">
+                    item Image:
                     <Image
-                      src={item.image}
+                      src={getSingleItemData.image}
                       rounded
                       width="50"
                       height="50"
                       className="mx-2"
                     />
-                    <b className="itemDetailText mx-2">{item.item_name}</b>
                   </Col>
-                ))}
+                </Row>
+                <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Item Name:{" "}
+                    <b className="itemDetailText mx-2">
+                      {getSingleItemData.item_name}
+                    </b>{" "}
+                  </Col>
+                </Row>
+                <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Item Category:{" "}
+                    <b className="itemDetailText mx-2">
+                      {getSingleItemData.subject_category}
+                    </b>{" "}
+                  </Col>
+                </Row>
+                {/* <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Brand:{" "}
+                    <b className="itemDetailText mx-2">
+                      {getSingleItemData.brand}
+                    </b>{" "}
+                  </Col>
+                </Row> */}
+                {/* <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Category:{" "}
+                    <b className="itemDetailText mx-2">
+                      {getSingleItemData.category}
+                    </b>{" "}
+                  </Col>
+                </Row> */}
+              </Row>
+              <Row className="itemDetailMainRow mb-2">
+                <TitleHeader
+                  text={"Inventory Details "}
+                  headerTextStyle={"headerTextStyle"}
+                />
+                {/* <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Unit Cost:{" "}
+                    <b className="itemDetailText mx-2">
+                      {getSingleItemData.unit_cost}
+                    </b>{" "}
+                  </Col>
+                </Row> */}
+                <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Quantity on Hand:{" "}
+                    <b className="itemDetailText mx-2">
+                      {getSingleItemData.quantity}
+                    </b>{" "}
+                  </Col>
+                </Row>
+                {/* <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Reorder Point:{" "}
+                    <b className="itemDetailText mx-2">
+                      {getSingleItemData.reorder_point}
+                    </b>{" "}
+                  </Col>
+                </Row> */}
+                <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Supplier:{" "}
+                    <b className="itemDetailText mx-2">
+                      {getSingleItemData.distribution}
+                    </b>{" "}
+                  </Col>
+                </Row>
+              </Row>
+              <Row className="itemDetailMainRow mb-2">
+                <TitleHeader
+                  text={"Additional Information "}
+                  headerTextStyle={"headerTextStyle"}
+                />
+                <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Serial Number:{" "}
+                    <b className="itemDetailText mx-2">{getSingleItemData.item_code}</b>{" "}
+                  </Col>
+                </Row>
+                {/* <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Warranty Information:{" "}
+                    <b className="itemDetailText mx-2">2 months</b>{" "}
+                  </Col>
+                </Row> */}
+                {/* <Row className="mb-4 align-items-center">
+                  <Col className="itemHeaderText">
+                    Custom Fields: <b className="itemDetailText mx-2">__</b>{" "}
+                  </Col>
+                </Row> */}
               </Row>
               <Row>
-                <Col>
-                  <Button
-                    onClick={() => handlePageChange(pagination.prev_page_url)}
-                    disabled={!pagination.prev_page_url}
-                  >
-                    Previous
-                  </Button>
+                <Col lg={8} md={8} xl={8} sm={12} xs={12} className="mb-3">
+                  <PrimaryButton
+                    text={"Edit Item Data"}
+                    Primarystyle={"w-100 itemDetailEditButton"}
+                    clickEvent={handleEditDetail}
+                  />
                 </Col>
-                <Col className="text-center">
-                  Page {pagination.current_page} of {pagination.last_page}
-                </Col>
-                <Col className="text-end">
-                  <Button
-                    onClick={() => handlePageChange(pagination.next_page_url)}
-                    disabled={!pagination.next_page_url}
-                  >
-                    Next
-                  </Button>
-                </Col>
+                {/* <Col lg={4} md={4} xl={4} sm={12} xs={12}>
+                  <PrimaryButton
+                    text={"print Item Label"}
+                    Primarystyle={"w-100 itemDetailPrintButton"}
+                    clickEvent={() => null}
+                  />
+                </Col> */}
               </Row>
-            </>
+            </div>
           ) : (
             <NonAvaliable
-              textMessage={"Sorry, no items available"}
+              textMessage={"Sorry, Item not available"}
               imageWidth={"300px"}
             />
           )}
@@ -142,6 +225,5 @@ function ItemDetail() {
 }
 
 export default ItemDetail;
-
 
 

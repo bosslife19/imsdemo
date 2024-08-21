@@ -287,7 +287,7 @@ function MovementLog() {
               </Container>
             )}
              <Row className="justify-content-center mb-4">
-            <Col xs={12} lg={12}>
+            {/* <Col xs={12} lg={12}>
               <Button
                 variant="success"
                 className="w-100 p-3"
@@ -297,7 +297,7 @@ function MovementLog() {
                  Add Movement 
                 
               </Button>
-            </Col>
+            </Col> */}
           </Row>
       </div>
   );

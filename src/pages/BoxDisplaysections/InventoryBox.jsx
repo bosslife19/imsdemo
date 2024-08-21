@@ -480,12 +480,12 @@ export const InventoryBox = () => {
       <div style={{ width: "100%", margin: 'auto' ,paddingBottom:"10px"}}>
         <FontAwesomeIcon
           icon={faArrowLeft}
-          className="mt-3 mx-3 fa-2x backButtonIcon"
+          className="mt-3 mx-3 fa-1x backButtonIcon"
           onClick={handlePreviousPage}
         />
         <FontAwesomeIcon
           icon={faArrowRight}
-          className="mt-3 mx-3 fa-2x backButtonIcon"
+          className="mt-3 mx-3 fa-1x backButtonIcon"
           onClick={handleNextPage}
         />
       </div>

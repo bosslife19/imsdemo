@@ -233,13 +233,13 @@ function QualityDashboard() {
         <Container className="reportContainer">
           <div className="d-flex justify-content-between">
             <TitleHeader text={"Dashboard"} />
-            {/* <Filter
+            <Filter
               optionTitle={"Time"}
               options={filterData}
               defult={"This week"}
-            /> */}
+            /> 
           </div>
-          {/* <Row className="mb-3 mt-3 ">
+          <Row className="mb-3 mt-3 ">
             <TitleHeader
               text={"System Performance"}
               headerTextStyle={"headerTextStyle"}
@@ -286,7 +286,7 @@ function QualityDashboard() {
                 </span>
               </div>
             </div>
-          </Row> */}
+          </Row> 
           <Row className="mb-5 mt-5">
             <TitleHeader
               text={"Your Schools"}

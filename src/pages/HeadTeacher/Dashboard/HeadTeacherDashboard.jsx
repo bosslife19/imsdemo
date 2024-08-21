@@ -23,8 +23,7 @@ import inventoryImage from "../../../assets/schools/schoolchildrens.jpg";
 import schoolImage from "../../../assets/schools/shelves.jpg";
 import BarGraph from "../../../components/Graph/BarGraph";
 
-import WareHouseSideNavigation from "../../../components/Navigations/ConditionalSideNavigation";
-import InventoryItemContext from "../../../context/Item/InventoryItemContext";
+ import InventoryItemContext from "../../../context/Item/InventoryItemContext";
 import AnalysisContext from "../../../context/Analysis/AnalysisContext";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -36,7 +35,7 @@ import * as XLSX from 'xlsx'
 import LineGraph from "../../../components/Graph/LineGraph";
 import DoughnutGraph from "../../../components/Graph/DoughnutGraph";
 import HeadTeacherNavigation from "../Navigation/HeadTeacherNavigation";
-
+ 
 
 
 // Register the components
@@ -486,8 +485,8 @@ function HeadTeacherDashboard() {
     <div>
       <NavigationHeader toggleSidebar={toggleSidebar} />
       <div className="d-flex justify-content-between">
-        <WareHouseSideNavigation
-          isOpen={isSidebarOpen}
+        <HeadTeacherNavigation
+          isOpen={isSidebarOpen} 
           toggleSidebar={toggleSidebar}
         />
         <Container className="reportContainer">

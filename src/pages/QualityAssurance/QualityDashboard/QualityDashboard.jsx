@@ -286,11 +286,7 @@ function QualityDashboard() {
                 </span>
               </div>
             </div>
-<<<<<<< HEAD
-          </Row>
-=======
-          </Row> */}
->>>>>>> 1674b69b8dbf8b9dfe9f02955129283c5c98120d
+          </Row> 
           <Row className="mb-5 mt-5">
             <TitleHeader
               text={"Your Schools"}

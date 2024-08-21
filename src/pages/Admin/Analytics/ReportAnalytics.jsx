@@ -215,7 +215,7 @@ function ReportAnalytics() {
               </div> */}
            
           {/* </Row> */}
-          // </Row>
+           </Row>
           <Row>
             <Col md={6} className="p-3 grid-container mb-5">
               <Row className="rowContainer">

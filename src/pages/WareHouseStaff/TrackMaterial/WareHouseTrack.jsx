@@ -317,15 +317,7 @@ function WareHouseTrack() {
                 <Loading loading={getTrackingsIsLoading} />
               </Container>
             )}
-             <Button
-                variant="success"
-                className="w-100 p-3"
-                // clickEvent={() => handleaddmovement()}
-                onClick={handleaddmovement}
-              >
-                 Add Movement 
-                
-              </Button>
+            
           </Container>
           <Container className="">
             <TitleHeader text={"Movement Log"} headerTextStyle={"headerTextStyle"} />
@@ -338,8 +330,21 @@ function WareHouseTrack() {
                 />
               </Col>
             </Row>
+            <Col lg={2} md={3} xl={2} sm={3} xs={4}>
+            <Button
+                variant="success"
+                className="w-100 p-3"
+                // clickEvent={() => handleaddmovement()}
+                onClick={handleaddmovement}
+              >
+                 Add Movement 
+                
+              </Button>
+            </Col>
             <Col className="mt-5" ref={movementLogRef}> {/* Ref applied here */}
               {renderContent()}
+            </Col>
+            <Col>
             </Col>
           </Container>
         </Container>

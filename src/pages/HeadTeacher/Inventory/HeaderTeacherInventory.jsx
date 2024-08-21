@@ -146,48 +146,8 @@ function HeaderTeacherInventory() {
             </Col> */}
           </Row>
           <Row className="d-lg-none ">
-            <Col className="d-flex justify-content-between ms-auto gap-3">
-<<<<<<< HEAD
-              <Filter
-                Filterstyle={"responsive"}
-                optionTitle={"Filter by"}
-                options={filterOption}
-                defult={"All"}
-                onSelect={(value) => setSortBy(value)}
-              />
-              <Filter
-                Filterstyle={"responsive"}
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"All"}
-                onSelect={(value) => setSortBy(value)}
-              />
-=======
-              <Filter Filterstyle={"responsive"} optionTitle={"Filter by"} options={filterOption} defult={"Ramdom"} onSelect={(value) => setSortBy(value)} />
-              <Filter Filterstyle={"responsive"} optionTitle={"Sort by"} options={sortOption} defult={"Ramdom"} onSelect={(value) => setSortBy(value)} />
->>>>>>> ab1af27c06e1538eadb8fb39a66fd6ffb67149eb
-            </Col>
-          </Row>
-          <Row className="d-none d-lg-flex d-flex justify-content-between">
-            <Col xl={2} className="d-flex justify-content-between  gap-3">
-<<<<<<< HEAD
-              <Filter
-                optionTitle={"Filter by"}
-                options={filterOption}
-                defult={"All"}
-                onSelect={(value) => setFilterBy(value)}
-              />
-              <Filter
-                optionTitle={"Sort by"}
-                options={sortOption}
-                defult={"All"}
-                onSelect={(value) => setSortBy(value)}
-              />
-=======
-              <Filter optionTitle={"Filter by"} options={filterOption} defult={"Ramdom"} onSelect={(value) => setFilterBy(value)} />
-              <Filter optionTitle={"Sort by"} options={sortOption} defult={"Ramdom"} onSelect={(value) => setSortBy(value)} />
->>>>>>> ab1af27c06e1538eadb8fb39a66fd6ffb67149eb
-            </Col>
+            {/* <Col className="d-flex justify-content-between ms-auto gap-3"> */}
+
             <Col xl={3}>
               <PrimaryButton text={"Generate Inventory Report"} Primarystyle={"WareHouseGenerateInventoryButton w-100"} clickEvent={() => handleGenerateReport()} />
             </Col>

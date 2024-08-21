@@ -666,12 +666,13 @@ function AdminDashboard() {
           className="pushNotificationTitle"
           style={{ width: 150 }}
         />
-        <div className="d-none d-lg-flex">
+        <div className="d-none d-lg-flex" style={{gap:3}}>
         <Filter
           optionTitle={"School Type"}
           options={filterOptionForType}
           defult={"All"}
           onSelect={(value) => setFilter(value)}
+          
         />
         <Filter
           optionTitle={"LGA"}
@@ -721,7 +722,8 @@ function AdminDashboard() {
       </Row>
     </Col>
     <Col lg={6} md={12} xl={8} sm={12} xs={12}>
-      <BarGraph data={Bardata} options={Baroptions} />
+      {/* <BarGraph data={Bardata} options={Baroptions} /> */}
+      <UserBox items={lowItems} show={showModal} handleClose={handleClose} />
       <div style={{ width: 150, margin: 'auto' }}>
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -739,7 +741,7 @@ function AdminDashboard() {
 
 
 
-          <Row className="d-none d-lg-flex mobileCreateButton my-3">
+          {/* <Row className="d-none d-lg-flex mobileCreateButton my-3">
             <Col className="d-flex justify-content-end">
               <Filter
                 optionTitle={"Export Data"}
@@ -749,9 +751,9 @@ function AdminDashboard() {
                 
               />
             </Col>
-          </Row>
+          </Row> */}
 
-          <Row className="d-none d-lg-flex">
+          {/* <Row className="d-none d-lg-flex">
             <Col lg={6} md={5} xl={6}>
               <TitleHeader
                 text={"Inventory Insights"}
@@ -763,22 +765,22 @@ function AdminDashboard() {
                 optionTitle={"Predictive Analytics"}
                 options={""}
                 defult={""}
-              />
+              /> */}
               {/* <Filter
                 optionTitle={"Sort by"}
                 // options={filterData}
                 defult={"All"}
               /> */}
-            </Col>
-          </Row>
-          <Row className="mb-3">
+            {/* </Col> */}
+          {/* </Row> */}
+          {/* <Row className="mb-3">
             <Col lg={6} md={6} xl={4} sm={12} xs={12} className="mb-3">
               <DoughnutGraph data={Piedata} options={Pieoptions} />
             </Col>
             <Col lg={6} md={6} xl={8} sm={12} xs={12} className="">
               <LineGraph data={Arkdata} options={Arkoptions} />
             </Col>
-          </Row>
+          </Row> */}
 
           <Row className="mb-3 mt-5">
             <Col lg={12} md={12} xl={12} sm={12} xs={12}>

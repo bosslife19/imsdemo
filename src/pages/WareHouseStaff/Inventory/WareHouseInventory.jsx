@@ -196,21 +196,7 @@ function WareHouseInventory() {
             </Col>
           </Row>
           <Row className="d-none d-lg-flex">
-<<<<<<< HEAD
-            <Col xl={2} style={{marginRight:20}}>
-            <Filter
-                optionTitle={"Filter by"}
-                options={filterOption}
-                defult={"Category"}
-                onSelect={(value) => setFilterBy(value)}
-                
-              />
-            </Col> 
-=======
-            <Col xl={2} style={{ marginRight: 20 }}>
-              <Filter optionTitle={"Filter by"} options={filterOption} defult={"Category"} onSelect={(value) => setFilterBy(value)} />
-            </Col>
->>>>>>> ab1af27c06e1538eadb8fb39a66fd6ffb67149eb
+
             {/* <Col xl={2}>
             <Filter
                 optionTitle={"Sort by"}

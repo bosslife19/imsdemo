@@ -38,3 +38,36 @@
     line-height: 25.6px;
     background-color: transparent;
 }
+
+/* Inventory.css */
+
+/* Ensure the pagination container is centered and has margin from content above */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Style the pagination buttons */
+.pagination button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff; /* Bootstrap primary color */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #6c757d; /* Bootstrap secondary color for disabled state */
+  cursor: not-allowed;
+}
+
+/* Add spacing between the page number text and buttons */
+.pagination span {
+  font-size: 16px;
+}
+

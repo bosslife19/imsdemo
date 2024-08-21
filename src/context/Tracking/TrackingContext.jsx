@@ -49,7 +49,7 @@ export const TrackingProvider = ({ children }) => {
         try {
           const result = await axios.post(`${baseUrl}/api/tracking`, formData);
           setAddTrackingResponse(result.data);
-          console.log(result);
+          
         } catch (error) {
             setAddTrackingError(error.response.data.message);
           console.log(error);

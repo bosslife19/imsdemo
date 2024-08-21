@@ -236,6 +236,7 @@ function WareHouseAddMovement() {
                     >
                       <option value="">Action</option>
                       <option value="In transit">In transit</option>
+                      <option value="received">Received</option>
                     </Form.Select>
                   </Col>
                 </Row>
